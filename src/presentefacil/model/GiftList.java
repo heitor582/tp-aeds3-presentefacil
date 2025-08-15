@@ -33,7 +33,21 @@ public class GiftList extends Entity {
         this.expirationDate = expirationDate;
         this.shareCode = shareCode;
     }
-
+    public String getName() {
+        return this.name;
+    }
+    public String getDescription() {
+        return this.detailedDescription;
+    }
+    public LocalDate getCreatedAt() {
+        return this.createdAt;
+    }
+    public Optional<LocalDate> getExpirationDate() {
+        return this.expirationDate;
+    }
+    public String getCode() {
+        return this.shareCode;
+    }
     public static GiftList from(
         final String name,
         final String detailedDescription,
@@ -43,7 +57,7 @@ public class GiftList extends Entity {
     ) {
         return new GiftList(-1, name, detailedDescription, createdAt, expirationDate, shareCode);
     }
-     public static GiftList create(
+    public static GiftList create(
         final String name,
         final String detailedDescription,
         final LocalDate createdAt,

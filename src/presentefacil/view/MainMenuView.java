@@ -1,8 +1,8 @@
 package view;
 
 public class MainMenuView extends View {
-
-    public MainMenuView() {
+    public static final MainMenuView INSTANCE = new MainMenuView();
+    private MainMenuView() {
         super("Início", true);
     }
 
@@ -55,7 +55,7 @@ public class MainMenuView extends View {
     }
 
     private void handleMyLists() {
-        this.nextPage(new MyListView());
+        this.nextPage(MyListView.INSTANCE);
     }
 
     private void handleProducts() {

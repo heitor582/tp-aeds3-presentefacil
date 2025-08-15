@@ -10,7 +10,7 @@ public abstract class View {
     private final String applicationTitle = """
     PresenteFácil 1.0
     -----------------""";
-    private String viewName = "";
+    protected String viewName = "";
     private boolean registerOnPath = false;
     public View(final String viewName, final boolean registerOnPath) {
         this.viewName = viewName;

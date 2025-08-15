@@ -3,7 +3,8 @@ package view;
 import shared.IsNumber;
 
 public class MyListView extends View {
-    public MyListView() {
+    public static final MyListView INSTANCE = new MyListView();
+    private MyListView() {
         super("Minhas listas", true);
     }
 
@@ -53,7 +54,7 @@ public class MyListView extends View {
 
     private void handleListSelection(int listNumber) {
         System.out.println(">> [You selected list #" + listNumber + " - not implemented yet]");
-        this.nextPage(new ListDetailsView("test"));
+        this.nextPage(ListDetailsView.INSTANCE.set(null));
     }
 
     private void createNewList() {

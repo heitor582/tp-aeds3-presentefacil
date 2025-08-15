@@ -1,7 +1,8 @@
 package view;
 
 public class LoginView extends View {
-    public LoginView() {
+    public static final LoginView INSTANCE = new LoginView();
+    private LoginView() {
         super("", false);
     }
 
