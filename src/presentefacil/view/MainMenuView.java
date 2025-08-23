@@ -38,7 +38,7 @@ public class MainMenuView extends View {
                     handleSearchList();
                     break;
                 case "S":
-                    this.exit();
+                    this.back();
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
