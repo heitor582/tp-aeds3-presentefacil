@@ -1,8 +1,8 @@
-import view.MainMenuView;
+import view.LoginView;
 
 public class Main {
-    public static void main(String[] args){
-        MainMenuView mm = MainMenuView.INSTANCE;
-        mm.display();
+    public static void main(String[] args) {
+        LoginView lv = LoginView.INSTANCE;
+        lv.display();
     }
 }
