@@ -51,7 +51,7 @@ public class MainMenuView extends View {
     }
 
     private void handleMyData() {
-        System.out.println(">> [My data - not implemented yet]");
+        this.nextPage(MyDataView.INSTANCE);
     }
 
     private void handleMyLists() {
@@ -63,6 +63,6 @@ public class MainMenuView extends View {
     }
 
     private void handleSearchList() {
-        System.out.println(">> [Search list - not implemented yet]");
-    } 
+        this.nextPage(SearchListView.INSTANCE);
+    }
 }
