@@ -16,6 +16,7 @@ public class GiftList extends Entity {
     private LocalDate createdAt = LocalDate.now();
     private Optional<LocalDate> expirationDate = null;
     private String shareCode = "";
+    private int userId = -1;;
 
     public GiftList(){}
     private GiftList(
@@ -24,7 +25,8 @@ public class GiftList extends Entity {
         final String detailedDescription,
         final LocalDate createdAt,
         final Optional<LocalDate> expirationDate,
-        final String shareCode
+        final String shareCode,
+        final int userId
     ) {
         super(id);
         this.name = name;
@@ -32,6 +34,11 @@ public class GiftList extends Entity {
         this.createdAt = createdAt;
         this.expirationDate = expirationDate;
         this.shareCode = shareCode;
+        this.userId = userId;
+    }
+    
+    public int getUserId(){
+        return this.userId;
     }
     public String getName() {
         return this.name;
@@ -53,17 +60,19 @@ public class GiftList extends Entity {
         final String detailedDescription,
         final LocalDate createdAt,
         final Optional<LocalDate> expirationDate,
-        final String shareCode
+        final String shareCode,
+        final int userId
     ) {
-        return new GiftList(-1, name, detailedDescription, createdAt, expirationDate, shareCode);
+        return new GiftList(-1, name, detailedDescription, createdAt, expirationDate, shareCode, userId);
     }
     public static GiftList create(
         final String name,
         final String detailedDescription,
         final LocalDate createdAt,
-        final Optional<LocalDate> expirationDate
+        final Optional<LocalDate> expirationDate,
+        final int userId
     ) {
-        return new GiftList(-1, name, detailedDescription, createdAt, expirationDate, NanoID.nanoid());
+        return new GiftList(-1, name, detailedDescription, createdAt, expirationDate, NanoID.nanoid(), userId);
     }
     @Override
     public void fromByteArray(byte[] array) throws IOException {
@@ -85,7 +94,6 @@ public class GiftList extends Entity {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         
-
         dos.writeInt(this.id);
         dos.writeUTF(this.name);
         dos.writeUTF(this.detailedDescription);
