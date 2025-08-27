@@ -167,7 +167,6 @@ public class DBFile<T extends Entity> {
         return false;
     }
 
-    
     public void addDeleted(int necessaryLength, long newAddress) throws Exception {
         long previous = 4; 
         file.seek(previous);

@@ -3,7 +3,7 @@ package repository;
 import java.io.IOException;
 
 public interface ExtensibleHashContract {
-    public int hashCode();
+  public int hashCode();
 
   public short size();
 

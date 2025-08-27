@@ -13,8 +13,8 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
     String directoryNameFile;
     String nomeArquivoCestos;
     RandomAccessFile directoryFile;
-    RandomAccessFile arqCestos;
-    int quantityDadosPorCesto;
+    RandomAccessFile bucketFile;
+    int quantityPerBucket;
     Directory directory;
     Constructor<T> constructor;
 
@@ -251,24 +251,24 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
 
     }
 
-    public ExtensibleHash(Constructor<T> ct, int n, String nd, String nc) throws Exception {
-        constructor = ct;
-        quantityDadosPorCesto = n;
-        directoryNameFile = nd;
-        nomeArquivoCestos = nc;
+    public ExtensibleHash(Constructor<T> constructor, int quantityPerBucket, String directoryNameFile, String nomeArquivoCestos) throws Exception {
+        this.constructor = constructor;
+        this.quantityPerBucket = quantityPerBucket;
+        this.directoryNameFile = directoryNameFile;
+        this.nomeArquivoCestos = nomeArquivoCestos;
 
         directoryFile = new RandomAccessFile(directoryNameFile, "rw");
-        arqCestos = new RandomAccessFile(nomeArquivoCestos, "rw");
+        bucketFile = new RandomAccessFile(nomeArquivoCestos, "rw");
         
-        if (directoryFile.length() == 0 || arqCestos.length() == 0) {
+        if (directoryFile.length() == 0 || bucketFile.length() == 0) {
             directory = new Directory();
             byte[] bd = directory.toByteArray();
             directoryFile.write(bd);
 
-            Cesto c = new Cesto(constructor, quantityDadosPorCesto);
+            Cesto c = new Cesto(constructor, quantityPerBucket);
             bd = c.toByteArray();
-            arqCestos.seek(0);
-            arqCestos.write(bd);
+            bucketFile.seek(0);
+            bucketFile.write(bd);
         }
     }
 
@@ -282,10 +282,10 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         int i = directory.hash(elem.hashCode());
         
         long enderecoCesto = directory.address(i);
-        Cesto c = new Cesto(constructor, quantityDadosPorCesto);
+        Cesto c = new Cesto(constructor, quantityPerBucket);
         byte[] ba = new byte[c.size()];
-        arqCestos.seek(enderecoCesto);
-        arqCestos.read(ba);
+        bucketFile.seek(enderecoCesto);
+        bucketFile.read(ba);
         c.fromByteArray(ba);
         
         if (c.read(elem.hashCode()) != null)
@@ -294,8 +294,8 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         if (!c.full()) {
         
         c.create(elem);
-        arqCestos.seek(enderecoCesto);
-        arqCestos.write(c.toByteArray());
+        bucketFile.seek(enderecoCesto);
+        bucketFile.write(c.toByteArray());
         return true;
         }
 
@@ -306,14 +306,14 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         byte pg = directory.profundidadeGlobal;
 
         
-        Cesto c1 = new Cesto(constructor, quantityDadosPorCesto, pl + 1);
-        arqCestos.seek(enderecoCesto);
-        arqCestos.write(c1.toByteArray());
+        Cesto c1 = new Cesto(constructor, quantityPerBucket, pl + 1);
+        bucketFile.seek(enderecoCesto);
+        bucketFile.write(c1.toByteArray());
 
-        Cesto c2 = new Cesto(constructor, quantityDadosPorCesto, pl + 1);
-        long novoEndereco = arqCestos.length();
-        arqCestos.seek(novoEndereco);
-        arqCestos.write(c2.toByteArray());
+        Cesto c2 = new Cesto(constructor, quantityPerBucket, pl + 1);
+        long novoEndereco = bucketFile.length();
+        bucketFile.seek(novoEndereco);
+        bucketFile.write(c2.toByteArray());
 
         
         int inicio = directory.hash2(elem.hashCode(), c.localDepth);
@@ -350,10 +350,10 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         int i = directory.hash(chave);
 
         long enderecoCesto = directory.address(i);
-        Cesto c = new Cesto(constructor, quantityDadosPorCesto);
+        Cesto c = new Cesto(constructor, quantityPerBucket);
         byte[] ba = new byte[c.size()];
-        arqCestos.seek(enderecoCesto);
-        arqCestos.read(ba);
+        bucketFile.seek(enderecoCesto);
+        bucketFile.read(ba);
         c.fromByteArray(ba);
 
         return c.read(chave);
@@ -369,17 +369,17 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         int i = directory.hash(elem.hashCode());
 
         long enderecoCesto = directory.address(i);
-        Cesto c = new Cesto(constructor, quantityDadosPorCesto);
+        Cesto c = new Cesto(constructor, quantityPerBucket);
         byte[] ba = new byte[c.size()];
-        arqCestos.seek(enderecoCesto);
-        arqCestos.read(ba);
+        bucketFile.seek(enderecoCesto);
+        bucketFile.read(ba);
         c.fromByteArray(ba);
         
         if (!c.update(elem))
             return false;
 
-        arqCestos.seek(enderecoCesto);
-        arqCestos.write(c.toByteArray());
+        bucketFile.seek(enderecoCesto);
+        bucketFile.write(c.toByteArray());
         return true;
 
     }
@@ -394,17 +394,17 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         int i = directory.hash(key);
 
         long enderecoCesto = directory.address(i);
-        Cesto c = new Cesto(constructor, quantityDadosPorCesto);
+        Cesto c = new Cesto(constructor, quantityPerBucket);
         byte[] ba = new byte[c.size()];
-        arqCestos.seek(enderecoCesto);
-        arqCestos.read(ba);
+        bucketFile.seek(enderecoCesto);
+        bucketFile.read(ba);
         c.fromByteArray(ba);
         
         if (!c.delete(key))
             return false;
 
-        arqCestos.seek(enderecoCesto);
-        arqCestos.write(c.toByteArray());
+        bucketFile.seek(enderecoCesto);
+        bucketFile.write(c.toByteArray());
         return true;
     }
 
@@ -419,12 +419,12 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
             System.out.println(directory);
 
             System.out.println("\nCESTOS ---------------------");
-            arqCestos.seek(0);
-            while (arqCestos.getFilePointer() != arqCestos.length()) {
-                System.out.println("Endereço: " + arqCestos.getFilePointer());
-                Cesto c = new Cesto(constructor, quantityDadosPorCesto);
+            bucketFile.seek(0);
+            while (bucketFile.getFilePointer() != bucketFile.length()) {
+                System.out.println("Endereço: " + bucketFile.getFilePointer());
+                Cesto c = new Cesto(constructor, quantityPerBucket);
                 byte[] ba = new byte[c.size()];
-                arqCestos.read(ba);
+                bucketFile.read(ba);
                 c.fromByteArray(ba);
                 System.out.println(c + "\n");
             }
@@ -435,6 +435,6 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
 
     public void close() throws Exception {
         directoryFile.close();
-        arqCestos.close();
+        bucketFile.close();
     }
 }
