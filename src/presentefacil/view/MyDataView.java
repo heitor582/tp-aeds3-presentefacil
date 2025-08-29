@@ -1,5 +1,9 @@
 package view;
 
+import controller.UserController;
+import model.User;
+import repository.GlobalMemory;
+
 public class MyDataView extends View {
     public static final MyDataView INSTANCE = new MyDataView();
 
@@ -9,22 +13,29 @@ public class MyDataView extends View {
 
     @Override
     public void viewDisplay() {
+        User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId());
+
         String option;
 
         do {
-            String menu = """
+            String menu = String.format("""
                 MEUS DADOS
-                ID:
-                Nome:
-                Email:
-                Pergunta secreta:
+                ID: %s
+                Nome: %s
+                Email: %s
+                Pergunta secreta: %s
 
                 (1) Alterar dados
                 (2) Excluir conta
 
                 (R) Retornar ao menu anterior
 
-                Opção: """;
+                Opção: """,
+                    user.getId(),
+                    user.getName(),
+                    user.getEmail(),
+                    user.getSecretQuestion()
+                );
 
             System.out.print(menu);
 

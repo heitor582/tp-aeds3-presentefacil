@@ -28,7 +28,7 @@ public abstract class View {
             }
         }
         if(snapshot.size()>0) path += " ";
-        path += "> " + this.viewName; 
+        if(this.registerOnPath) path += "> " + this.viewName; 
         System.out.println(path + "\n");
     }
     public void display() {
