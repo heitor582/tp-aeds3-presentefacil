@@ -25,7 +25,10 @@ public class UserController {
         return null;
     }
 
-    // public boolean login(String email){}
+    public boolean login(String email,String password) throws Exception{        
+        
+        return true;
+    }
     // public boolean logout(){}
     // public int create(){}
     // public int update(){}
