@@ -1,7 +1,13 @@
 package view;
 
+import java.util.Scanner;
+
+import controller.UserController;
+import model.User;
+
 public class LoginView extends View {
     public static final LoginView INSTANCE = new LoginView();
+    UserController controller = new UserController();
     private LoginView() {
         super("", false);
     }
@@ -42,10 +48,64 @@ public class LoginView extends View {
     }
 
     private void login() {
-        System.out.println(">> Tela de login (a implementar)");
+        String email;
+        String senha;
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Digite o seu email : ");
+        email = input.nextLine();
+
+        System.out.println("Digite sua senha : ");
+        senha = input.nextLine();
+
+        boolean login = controller.login(email, senha);
+
+        if(login){
+            //Mudar tela para do main Menu
+        }else{
+            System.out.println("Senha ou Email incorretos ou inexistentes !!! ");
+        }
+
+        input.close();
+
     }
 
-    private void signup() {
-        System.out.println(">> Tela de cadastro de novo usuário (a implementar)");
+    private void signup()  {
+        String nome;
+        String email;
+        String senha;
+        String perguntaSecreta;
+        String respostaSecreta;
+
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("Qual é seu nome ?");
+        nome = input.nextLine();
+
+        System.out.println("Qual e seu e-mail ?");
+        email = input.nextLine();
+
+        System.out.println("Qual é sua senha ?");
+        senha = input.nextLine();
+
+        System.out.println("Qual é sua pergunta secreta ?");
+        perguntaSecreta = input.nextLine();
+
+        System.out.println("Qual é a reposta da sua pergunta secreta ?");
+        respostaSecreta = input.nextLine();
+
+        User user = User.from(nome, email, senha, perguntaSecreta, respostaSecreta);
+
+        
+        int id = controller.create(user);
+
+        if(id == -1){
+            System.out.println("Não foi possivel cadastrar !!!");
+        }else{
+            System.out.println("Cadastrado com sucesso !!!");
+        }
+
+        input.close();
     }
 }
