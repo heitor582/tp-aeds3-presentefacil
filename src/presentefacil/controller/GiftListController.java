@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.List;
-
-import model.GiftList;
 import repository.GiftListRepository;
 
 public class GiftListController {

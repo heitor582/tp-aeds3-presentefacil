@@ -11,6 +11,9 @@ clean: ## Remove all .class files
 removeJar: ## Delete jar
 	@rm -rf *.jar
 
+removeDB: ## Delete all .db files
+	@rm -rf ./data/*.db
+
 build: ## Compile all .java files
 	@mkdir -p out
 	@find ./src/presentefacil -name "*.java" | xargs javac -d out

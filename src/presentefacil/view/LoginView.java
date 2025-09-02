@@ -1,7 +1,11 @@
 package view;
 
+import controller.UserController;
+import model.User;
+
 public class LoginView extends View {
     public static final LoginView INSTANCE = new LoginView();
+    UserController controller = new UserController();
     private LoginView() {
         super("", false);
     }
@@ -9,7 +13,6 @@ public class LoginView extends View {
     @Override
     public void viewDisplay() {
         String option;
-
         do {             
             String menu = """
                 (1) Login
@@ -42,10 +45,59 @@ public class LoginView extends View {
     }
 
     private void login() {
-        System.out.println(">> Tela de login (a implementar)");
+        String email;
+        String senha;
+
+
+        System.out.println("Digite o seu email : ");
+        email = scanner.nextLine();
+
+        System.out.println("Digite sua senha : ");
+        senha = scanner.nextLine();
+
+        boolean login = controller.login(email, senha);
+
+        if(login){
+            super.nextPage(MainMenuView.INSTANCE);
+        }else{
+            System.out.println("Senha ou Email incorretos ou inexistentes !!! ");
+        }
+
     }
 
-    private void signup() {
-        System.out.println(">> Tela de cadastro de novo usuário (a implementar)");
+    private void signup()  {
+        String nome;
+        String email;
+        String senha;
+        String perguntaSecreta;
+        String respostaSecreta;
+
+        
+        System.out.println("Qual é seu nome ?");
+        nome = scanner.nextLine();
+
+        System.out.println("Qual e seu e-mail ?");
+        email = scanner.nextLine();
+
+        System.out.println("Qual é sua senha ?");
+        senha = scanner.nextLine();
+
+        System.out.println("Qual é sua pergunta secreta ?");
+        perguntaSecreta = scanner.nextLine();
+
+        System.out.println("Qual é a reposta da sua pergunta secreta ?");
+        respostaSecreta = scanner.nextLine();
+
+        User user = User.from(nome, email, senha, perguntaSecreta, respostaSecreta);
+
+        
+        int id = controller.create(user);
+
+        if(id == -1){
+            System.out.println("Não foi possivel cadastrar !!!");
+        }else{
+            System.out.println("Cadastrado com sucesso !!!");
+        }
+
     }
 }
