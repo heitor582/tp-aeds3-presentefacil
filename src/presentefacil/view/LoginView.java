@@ -17,6 +17,7 @@ public class LoginView extends View {
             String menu = """
                 (1) Login
                 (2) Novo usuário
+                (3) Pular Login (only used in dev)
 
                 (S) Sair
 
@@ -30,6 +31,9 @@ public class LoginView extends View {
                     break;
                 case "2":
                     signup();
+                    break;
+                case "3":
+                    this.handleMainMenu();
                     break;
                 case "S":
                     this.exit();
@@ -47,7 +51,6 @@ public class LoginView extends View {
     private void login() {
         String email;
         String senha;
-
 
         System.out.println("Digite o seu email : ");
         email = scanner.nextLine();
@@ -98,6 +101,9 @@ public class LoginView extends View {
         }else{
             System.out.println("Cadastrado com sucesso !!!");
         }
-
+    }
+  
+    private void handleMainMenu() {
+        this.nextPage(MainMenuView.INSTANCE);
     }
 }
