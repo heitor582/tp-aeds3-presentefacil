@@ -34,8 +34,8 @@ public class DBFile<T extends Entity> {
         directIndex = new ExtensibleHash<>(
             IdAddressIndexPair.class.getConstructor(),
             4,
-            dirName+"/"+className+".d.db",
-            dirName+"/"+className+".c.db"
+            className+"/"+className,
+            className+"/"+className
         );
     }
 

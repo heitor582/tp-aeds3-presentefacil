@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
@@ -251,14 +252,32 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
 
     }
 
-    public ExtensibleHash(Constructor<T> constructor, int quantityPerBucket, String directoryNameFile, String nomeArquivoCestos) throws Exception {
+    public ExtensibleHash(
+        Constructor<T> constructor, 
+        int quantityPerBucket, 
+        String directoryNameFile, 
+        String nomeArquivoCestos
+    ) throws Exception {
         this.constructor = constructor;
         this.quantityPerBucket = quantityPerBucket;
-        this.directoryNameFile = directoryNameFile;
-        this.nomeArquivoCestos = nomeArquivoCestos;
+        this.directoryNameFile = "data/"+directoryNameFile+".d.db";
+        this.nomeArquivoCestos = "data/"+nomeArquivoCestos+".c.db";
 
-        directoryFile = new RandomAccessFile(directoryNameFile, "rw");
-        bucketFile = new RandomAccessFile(nomeArquivoCestos, "rw");
+        File file = new File(this.directoryNameFile);
+
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        }
+        directoryFile = new RandomAccessFile(this.directoryNameFile, "rw");
+        
+        file = new File(this.nomeArquivoCestos);
+
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        }
+        bucketFile = new RandomAccessFile(this.nomeArquivoCestos, "rw");
         
         if (directoryFile.length() == 0 || bucketFile.length() == 0) {
             directory = new Directory();

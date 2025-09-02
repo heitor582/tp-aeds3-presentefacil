@@ -12,7 +12,7 @@ public class UserController {
     public final static UserController INSTANCE = new UserController();
     private UserRepository repository;
 
-    public UserController() {
+    private UserController() {
         try {
             this.repository = new UserRepository();
         } catch (Exception e) {
@@ -22,20 +22,19 @@ public class UserController {
 
     public User findUserById(int id) {
         try {
-            return repository.read(id);
+            return this.repository.read(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public boolean login(String email,String password){
+    public boolean login(final String email, final String password){
         try{        
-            User user = repository.readByEmail(email);
+            User user = this.repository.readByEmail(email);
             if(user == null) return false;
             if(!user.getHashPassword().equals(toMd5(password))) return false;
             GlobalMemory.setUserId(user.getId());
-        
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -45,12 +44,11 @@ public class UserController {
 
     // public boolean logout(){}
 
-
     public int create(User user){
         int id = -1;
         try{
             user.setHashPassword(toMd5(user.getHashPassword()));
-           id =  repository.create(user);
+            id = this.repository.create(user);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -62,7 +60,7 @@ public class UserController {
 
     public boolean delete(){
         try {
-            if(!repository.delete(GlobalMemory.getUserId())){// tem que ver qq vai fzr se vai deixar deletar por causa das listas ou n ou, se sim deletar as listas tbm
+            if(!this.repository.delete(GlobalMemory.getUserId())){// tem que ver qq vai fzr se vai deixar deletar por causa das listas ou n ou, se sim deletar as listas tbm
                 return false;
             }
         } catch (Exception e) {
