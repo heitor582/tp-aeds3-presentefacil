@@ -56,7 +56,4 @@ public class LoginMenuView extends View {
         this.nextPage(SignUpView.INSTANCE);
     }
   
-    private void handleMainMenu() {
-        this.nextPage(MainMenuView.INSTANCE);
-    }
 }

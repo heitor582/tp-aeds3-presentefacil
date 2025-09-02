@@ -28,4 +28,5 @@ public class LoginView extends View {
         }else{
             System.out.println("Senha ou Email incorretos ou inexistentes !!! ");
         }
+    }
 }
