@@ -14,17 +14,17 @@ public class DBFile<T extends Entity> {
         this.clazz = clazz;
 
         String className = this.clazz.getSimpleName().toLowerCase();
-        String geralDirName = ".\\data";
+        String geralDirName = "data";
         File dir = new File(geralDirName);
         if(!dir.exists())
             dir.mkdir();
 
-        String dirName = geralDirName+"\\"+className;
+        String dirName = geralDirName+"/"+className;
         dir = new File(dirName);
         if(!dir.exists())
             dir.mkdir();
 
-        String fileName = dirName+"\\"+className+".db";
+        String fileName = dirName+"/"+className+".db";
         file = new RandomAccessFile(fileName, "rw");
         if(file.length()<HEAD_LENGTH) {
             file.writeInt(0);
@@ -34,8 +34,8 @@ public class DBFile<T extends Entity> {
         directIndex = new ExtensibleHash<>(
             IdAddressIndexPair.class.getConstructor(),
             4,
-            dirName+"\\"+className+".d.db",
-            dirName+"\\"+className+".c.db" 
+            dirName+"/"+className+".d.db",
+            dirName+"/"+className+".c.db"
         );
     }
 

@@ -31,7 +31,6 @@ public class UserController {
 
     public boolean login(String email,String password){
         try{        
-            MessageDigest.getInstance("MD5");
             User user = repository.readByEmail(email);
             if(user == null) return false;
             if(!user.getHashPassword().equals(toMd5(password))) return false;

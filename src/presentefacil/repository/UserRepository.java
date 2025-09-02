@@ -9,7 +9,7 @@ public class UserRepository extends DBFile<User> {
     public UserRepository() throws Exception {
         super(User.class);
         //FALAR COM O HEITOR DPS PARA SABER O NOME QUE ELE COLOCOU; :)
-        indrectIndex = new ExtensibleHash<idEmailIndexPair>(idEmailIndexPair.class.getConstructor(), 5,"user.id.email.d.db", "user.id.email.c.bd");
+        indrectIndex = new ExtensibleHash<idEmailIndexPair>(idEmailIndexPair.class.getConstructor(), 5,"data/user/user.id.email.d.db", "data/user/user.id.email.c.db");
     }
 
     public int create(User user) throws Exception{
@@ -23,7 +23,7 @@ public class UserRepository extends DBFile<User> {
         User user = null;
         try{
             idEmailIndexPair pair = indrectIndex.read(email.hashCode());
-
+            
             if(pair == null) return null;
             id = pair.getId();
             

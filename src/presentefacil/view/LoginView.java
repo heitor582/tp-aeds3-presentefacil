@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Scanner;
-
 import controller.UserController;
 import model.User;
 
@@ -60,7 +58,7 @@ public class LoginView extends View {
         boolean login = controller.login(email, senha);
 
         if(login){
-            MainMenuView.INSTANCE.display();
+            super.nextPage(MainMenuView.INSTANCE);
         }else{
             System.out.println("Senha ou Email incorretos ou inexistentes !!! ");
         }
