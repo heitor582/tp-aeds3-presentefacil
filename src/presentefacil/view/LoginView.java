@@ -1,10 +1,11 @@
 package view;
 
-import dao.UserDAO;
+import controller.UserController;
 import model.User;
 
 public class LoginView extends View {
     public static final LoginView INSTANCE = new LoginView();
+    UserController controller = new UserController();
     private LoginView() {
         super("", false);
     }
@@ -12,7 +13,6 @@ public class LoginView extends View {
     @Override
     public void viewDisplay() {
         String option;
-
         do {             
             String menu = """
                 (1) Login
@@ -49,61 +49,60 @@ public class LoginView extends View {
     }
 
     private void login() {
-        try {
-            System.out.print("Email: ");
-            String email = scanner.nextLine().trim();
-            System.out.print("Senha: ");
-            String password = scanner.nextLine().trim();
+        String email;
+        String senha;
 
-            User user = UserDAO.findByEmail(email);
+        System.out.println("Digite o seu email : ");
+        email = scanner.nextLine();
 
-            if (user != null) { // != temporário
-                System.out.println("Usuário não encontrado.");
-                return;
-            }
+        System.out.println("Digite sua senha : ");
+        senha = scanner.nextLine();
 
-            String hash = UserDAO.hashPassword(password);
+        boolean login = controller.login(email, senha);
 
-            String userHash = ""; // user.getHashPassword();
-
-            if (hash.equals(userHash)) {
-                this.handleMainMenu();
-            } else {
-                System.out.println("Senha incorreta.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(login){
+            super.nextPage(MainMenuView.INSTANCE);
+        }else{
+            System.out.println("Senha ou Email incorretos ou inexistentes !!! ");
         }
+
     }
 
-    private void signup() {
-        try {
-            System.out.print("Nome: ");
-            String name = scanner.nextLine().trim();
-            System.out.print("Email: ");
-            String email = scanner.nextLine().trim();
-            System.out.print("Senha: ");
-            String password = scanner.nextLine().trim();
-            System.out.print("Pergunta secreta: ");
-            String question = scanner.nextLine().trim();
-            System.out.print("Resposta secreta: ");
-            String answer = scanner.nextLine().trim();
+    private void signup()  {
+        String nome;
+        String email;
+        String senha;
+        String perguntaSecreta;
+        String respostaSecreta;
 
-            if (UserDAO.findByEmail(email) != null) {
-                System.out.println("Já existe um usuário com esse email.");
-                return;
-            }
+        
+        System.out.println("Qual é seu nome ?");
+        nome = scanner.nextLine();
 
-            String hash = UserDAO.hashPassword(password);
-            User user = User.from(name, email, hash, question, answer);
-            UserDAO.save(user);
-            System.out.println("Usuário criado com sucesso!\n");
-            this.viewDisplay();
-        } catch (Exception e) {
-            e.printStackTrace();
+        System.out.println("Qual e seu e-mail ?");
+        email = scanner.nextLine();
+
+        System.out.println("Qual é sua senha ?");
+        senha = scanner.nextLine();
+
+        System.out.println("Qual é sua pergunta secreta ?");
+        perguntaSecreta = scanner.nextLine();
+
+        System.out.println("Qual é a reposta da sua pergunta secreta ?");
+        respostaSecreta = scanner.nextLine();
+
+        User user = User.from(nome, email, senha, perguntaSecreta, respostaSecreta);
+
+        
+        int id = controller.create(user);
+
+        if(id == -1){
+            System.out.println("Não foi possivel cadastrar !!!");
+        }else{
+            System.out.println("Cadastrado com sucesso !!!");
         }
     }
-
+  
     private void handleMainMenu() {
         this.nextPage(MainMenuView.INSTANCE);
     }

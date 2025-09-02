@@ -28,7 +28,24 @@ public class User extends Entity{
         this.secretQuestion = secretQuestion;
         this.secretAnswer = secretAnswer;
     }
-
+    public String getName(){
+        return this.name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setHashPassword(String hashPassoword){
+        this.hashPassword = hashPassoword;
+    }
+    public String getHashPassword(){
+        return this.hashPassword;
+    }
+    public String getEmail() {
+        return this.email;
+    }
+    public String getSecretQuestion(){
+        return this.secretQuestion;
+    }
     public static User from(
         final String name,
         final String email,
