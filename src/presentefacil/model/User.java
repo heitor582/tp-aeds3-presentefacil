@@ -56,6 +56,10 @@ public class User extends Entity{
         return new User(-1, name, email, hashPassword, secretQuestion, secretAnswer);
     }
 
+    public String getHashPassword() {
+        return this.hashPassword;
+    }
+
     @Override
     public void fromByteArray(byte[] array) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(array);

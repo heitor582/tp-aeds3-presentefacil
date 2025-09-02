@@ -1,8 +1,8 @@
 import view.LoginView;
 
 public class Main {
-    public static void main(String[] args){
-        LoginView mm = LoginView.INSTANCE;
-        mm.display();
+    public static void main(String[] args) {
+        LoginView lv = LoginView.INSTANCE;
+        lv.display();
     }
 }
