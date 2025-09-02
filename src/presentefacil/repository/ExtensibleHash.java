@@ -96,15 +96,15 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         }
 
         public T read(int chave) {
-        if (empty())
-            return null;
-        int i = 0;
-        while (i < quantity && chave > elements.get(i).hashCode())
-            i++;
-        if (i < quantity && chave == elements.get(i).hashCode())
-            return elements.get(i);
-        else
-            return null;
+            if (empty())
+                return null;
+            int i = 0;
+            while (i < quantity && chave > elements.get(i).hashCode())
+                i++;
+            if (i < quantity && chave == elements.get(i).hashCode())
+                return elements.get(i);
+            else
+                return null;
         }
         
         public boolean update(T elem) {
@@ -135,7 +135,7 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         }
 
         public boolean empty() {
-        return quantity == 0;
+            return quantity == 0;
         }
 
         public boolean full() {
@@ -311,20 +311,17 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
             throw new Exception("Elemento já existe");
 
         if (!c.full()) {
-        
-        c.create(elem);
-        bucketFile.seek(enderecoCesto);
-        bucketFile.write(c.toByteArray());
-        return true;
+            c.create(elem);
+            bucketFile.seek(enderecoCesto);
+            bucketFile.write(c.toByteArray());
+            return true;
         }
-
         
         byte pl = c.localDepth;
         if (pl >= directory.profundidadeGlobal)
         directory.duplica();
         byte pg = directory.profundidadeGlobal;
 
-        
         Cesto c1 = new Cesto(constructor, quantityPerBucket, pl + 1);
         bucketFile.seek(enderecoCesto);
         bucketFile.write(c1.toByteArray());
@@ -334,39 +331,36 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         bucketFile.seek(novoEndereco);
         bucketFile.write(c2.toByteArray());
 
-        
         int inicio = directory.hash2(elem.hashCode(), c.localDepth);
         int deslocamento = (int) Math.pow(2, pl);
         int max = (int) Math.pow(2, pg);
         boolean troca = false;
         for (int j = inicio; j < max; j += deslocamento) {
-        if (troca)
-            directory.updateAddress(j, novoEndereco);
-        troca = !troca;
+            if (troca)
+                directory.updateAddress(j, novoEndereco);
+            troca = !troca;
         }
-
         
         bd = directory.toByteArray();
         directoryFile.seek(0);
         directoryFile.write(bd);
 
-        
         for (int j = 0; j < c.quantity; j++) {
-        create(c.elements.get(j));
+            create(c.elements.get(j));
         }
         create(elem); 
         return true;
 
     }
 
-    public T read(int chave) throws Exception {
+    public T read(final int key) throws Exception {
         byte[] bd = new byte[(int) directoryFile.length()];
         directoryFile.seek(0);
         directoryFile.read(bd);
         directory = new Directory();
         directory.fromByteArray(bd);
 
-        int i = directory.hash(chave);
+        int i = directory.hash(key);
 
         long enderecoCesto = directory.address(i);
         Cesto c = new Cesto(constructor, quantityPerBucket);
@@ -375,7 +369,7 @@ public class ExtensibleHash<T extends ExtensibleHashContract>  {
         bucketFile.read(ba);
         c.fromByteArray(ba);
 
-        return c.read(chave);
+        return c.read(key);
     }
 
     public boolean update(T elem) throws Exception {

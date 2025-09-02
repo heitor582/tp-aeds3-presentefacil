@@ -9,7 +9,7 @@ import java.io.IOException;
 public class IdEmailIndexPair implements ExtensibleHashContract {
     private int id = -1;
     private String email = "";
-    private short SIZE = 12;
+    private short SIZE = 30;
 
     public IdEmailIndexPair(){};
     
@@ -52,6 +52,10 @@ public class IdEmailIndexPair implements ExtensibleHashContract {
         this.email = dis.readUTF();
     }
 
+    @Override
+    public int hashCode() {
+        return this.email.hashCode();
+    }
 
 
 }

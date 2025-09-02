@@ -31,7 +31,7 @@ public class UserController {
 
     public boolean login(final String email, final String password){
         try{        
-            User user = this.repository.readByEmail(email);
+            User user = this.repository.findByEmail(email);
             if(user == null) return false;
             if(!user.getHashPassword().equals(toMd5(password))) return false;
             GlobalMemory.setUserId(user.getId());

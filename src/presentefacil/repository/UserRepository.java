@@ -3,11 +3,11 @@ package repository;
 import model.User;
 
 public class UserRepository extends DBFile<User> {
-    ExtensibleHash<IdEmailIndexPair> indrectIndex;
+    ExtensibleHash<IdEmailIndexPair> indirectIndex;
 
     public UserRepository() throws Exception {
         super(User.class);
-        indrectIndex = new ExtensibleHash<IdEmailIndexPair>(
+        this.indirectIndex = new ExtensibleHash<IdEmailIndexPair>(
             IdEmailIndexPair.class.getConstructor(), 
             5,
             "user/id.email",
@@ -17,15 +17,15 @@ public class UserRepository extends DBFile<User> {
 
     public int create(final User user) throws Exception{
         int id = super.create(user);
-        indrectIndex.create(IdEmailIndexPair.create(user.getId(), user.getEmail()));
+        this.indirectIndex.create(IdEmailIndexPair.create(user.getId(), user.getEmail()));
         return id;
     }
 
-    public User readByEmail(String email){
-        int id = 0; 
+    public User findByEmail(String email){
+        int id = -1; 
         User user = null;
         try{
-            IdEmailIndexPair pair = indrectIndex.read(email.hashCode());
+            IdEmailIndexPair pair = this.indirectIndex.read(email.hashCode());
             
             if(pair == null) return null;
             id = pair.getId();
