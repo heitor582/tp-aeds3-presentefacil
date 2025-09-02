@@ -4,7 +4,7 @@ import controller.UserController;
 
 public class LoginView extends View {
     public static final LoginView INSTANCE = new LoginView();
-    UserController controller = new UserController();
+    UserController controller = UserController.INSTANCE;
     
     private LoginView() {
         super("", false);

@@ -5,7 +5,7 @@ import model.User;
 
 public class SignUpView extends View {
     public static final SignUpView INSTANCE = new SignUpView();
-    UserController controller = new UserController();
+    UserController controller = UserController.INSTANCE;
 
     private SignUpView() {
         super("", false);
@@ -13,29 +13,28 @@ public class SignUpView extends View {
 
     @Override
     public void viewDisplay() {
-        String nome;
+        String name;
         String email;
-        String senha;
-        String perguntaSecreta;
-        String respostaSecreta;
+        String password;
+        String secretQuestion;
+        String secretAnswer;
 
-        
         System.out.println("Qual é seu nome ?");
-        nome = scanner.nextLine();
+        name = scanner.nextLine();
 
         System.out.println("Qual e seu e-mail ?");
         email = scanner.nextLine();
 
         System.out.println("Qual é sua senha ?");
-        senha = scanner.nextLine();
+        password = scanner.nextLine();
 
         System.out.println("Qual é sua pergunta secreta ?");
-        perguntaSecreta = scanner.nextLine();
+        secretQuestion = scanner.nextLine();
 
         System.out.println("Qual é a reposta da sua pergunta secreta ?");
-        respostaSecreta = scanner.nextLine();
+        secretAnswer = scanner.nextLine();
 
-        User user = User.from(nome, email, senha, perguntaSecreta, respostaSecreta);
+        User user = User.from(name, email, password, secretQuestion, secretAnswer);
 
         
         int id = controller.create(user);

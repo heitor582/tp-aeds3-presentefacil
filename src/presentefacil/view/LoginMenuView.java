@@ -1,7 +1,11 @@
 package view;
 
+import controller.UserController;
+
 public class LoginMenuView extends View {
     public static final LoginMenuView INSTANCE = new LoginMenuView();
+    UserController controller = UserController.INSTANCE;
+
     private LoginMenuView() {
         super("", false);
     }
@@ -29,7 +33,7 @@ public class LoginMenuView extends View {
                     signup();
                     break;
                 case "3":
-                    this.handleMainMenu();
+                    this.nextPage(MainMenuView.INSTANCE); //TODO: deletar dps
                     break;
                 case "S":
                     this.exit();
