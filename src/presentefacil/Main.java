@@ -1,8 +1,8 @@
-import view.LoginView;
+import view.LoginMenuView;
 
 public class Main {
     public static void main(String[] args) {
-        LoginView lv = LoginView.INSTANCE;
+        LoginMenuView lv = LoginMenuView.INSTANCE;
         lv.display();
     }
 }
