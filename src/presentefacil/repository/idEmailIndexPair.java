@@ -56,6 +56,4 @@ public class IdEmailIndexPair implements ExtensibleHashContract {
     public int hashCode() {
         return this.email.hashCode();
     }
-
-
 }
