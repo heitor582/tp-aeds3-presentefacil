@@ -5,7 +5,7 @@ import model.User;
 
 public class LoginView extends View {
     public static final LoginView INSTANCE = new LoginView();
-    UserController controller = new UserController();
+    UserController controller = UserController.INSTANCE;
     private LoginView() {
         super("", false);
     }
@@ -33,7 +33,7 @@ public class LoginView extends View {
                     signup();
                     break;
                 case "3":
-                    this.handleMainMenu();
+                    this.nextPage(MainMenuView.INSTANCE); //TODO: deletar dps
                     break;
                 case "S":
                     this.exit();
@@ -69,30 +69,28 @@ public class LoginView extends View {
     }
 
     private void signup()  {
-        String nome;
+        String name;
         String email;
-        String senha;
-        String perguntaSecreta;
-        String respostaSecreta;
+        String password;
+        String secretQuestion;
+        String secretAnswer;
 
-        
         System.out.println("Qual é seu nome ?");
-        nome = scanner.nextLine();
+        name = scanner.nextLine();
 
         System.out.println("Qual e seu e-mail ?");
         email = scanner.nextLine();
 
         System.out.println("Qual é sua senha ?");
-        senha = scanner.nextLine();
+        password = scanner.nextLine();
 
         System.out.println("Qual é sua pergunta secreta ?");
-        perguntaSecreta = scanner.nextLine();
+        secretQuestion = scanner.nextLine();
 
         System.out.println("Qual é a reposta da sua pergunta secreta ?");
-        respostaSecreta = scanner.nextLine();
+        secretAnswer = scanner.nextLine();
 
-        User user = User.from(nome, email, senha, perguntaSecreta, respostaSecreta);
-
+        User user = User.from(name, email, password, secretQuestion, secretAnswer);
         
         int id = controller.create(user);
 
@@ -102,8 +100,9 @@ public class LoginView extends View {
             System.out.println("Cadastrado com sucesso !!!");
         }
     }
-  
-    private void handleMainMenu() {
-        this.nextPage(MainMenuView.INSTANCE);
+    @Override
+    protected void exit(){
+        UserController.INSTANCE.logout();
+        this.back();
     }
 }
