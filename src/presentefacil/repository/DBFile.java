@@ -9,6 +9,7 @@ public class DBFile<T extends Entity> {
     private RandomAccessFile file;
     private Class<T> clazz;
     ExtensibleHash<IdAddressIndexPair> directIndex;
+    
     public DBFile(final Class<T> clazz) throws Exception {
         this.clazz = clazz;
 

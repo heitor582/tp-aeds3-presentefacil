@@ -16,9 +16,20 @@ public class UserRepository extends DBFile<User> {
         return super.create(user);
     }
 
-    public int readBYEmail(String email){
+    public User readByEmail(String email){
         int id = 0; 
+        User user = null;
+        try{
+            idEmailIndexPair pair = hash.read(email.hashCode());
 
-        return id;
+            if(pair == null) return null;
+            id = pair.getId();
+            
+            user = super.read(id);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        return user;
     }
 }

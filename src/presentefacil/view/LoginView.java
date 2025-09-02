@@ -15,7 +15,6 @@ public class LoginView extends View {
     @Override
     public void viewDisplay() {
         String option;
-
         do {             
             String menu = """
                 (1) Login
@@ -51,23 +50,20 @@ public class LoginView extends View {
         String email;
         String senha;
 
-        Scanner input = new Scanner(System.in);
 
         System.out.println("Digite o seu email : ");
-        email = input.nextLine();
+        email = scanner.nextLine();
 
         System.out.println("Digite sua senha : ");
-        senha = input.nextLine();
+        senha = scanner.nextLine();
 
         boolean login = controller.login(email, senha);
 
         if(login){
-            //Mudar tela para do main Menu
+            MainMenuView.INSTANCE.display();
         }else{
             System.out.println("Senha ou Email incorretos ou inexistentes !!! ");
         }
-
-        input.close();
 
     }
 
@@ -78,22 +74,21 @@ public class LoginView extends View {
         String perguntaSecreta;
         String respostaSecreta;
 
-        Scanner input = new Scanner(System.in);
         
         System.out.println("Qual é seu nome ?");
-        nome = input.nextLine();
+        nome = scanner.nextLine();
 
         System.out.println("Qual e seu e-mail ?");
-        email = input.nextLine();
+        email = scanner.nextLine();
 
         System.out.println("Qual é sua senha ?");
-        senha = input.nextLine();
+        senha = scanner.nextLine();
 
         System.out.println("Qual é sua pergunta secreta ?");
-        perguntaSecreta = input.nextLine();
+        perguntaSecreta = scanner.nextLine();
 
         System.out.println("Qual é a reposta da sua pergunta secreta ?");
-        respostaSecreta = input.nextLine();
+        respostaSecreta = scanner.nextLine();
 
         User user = User.from(nome, email, senha, perguntaSecreta, respostaSecreta);
 
@@ -106,6 +101,5 @@ public class LoginView extends View {
             System.out.println("Cadastrado com sucesso !!!");
         }
 
-        input.close();
     }
 }

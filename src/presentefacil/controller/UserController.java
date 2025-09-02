@@ -3,18 +3,14 @@ package controller;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import javax.management.RuntimeErrorException;
 
 import model.User;
-import repository.ExtensibleHash;
 import repository.GlobalMemory;
 import repository.UserRepository;
-import repository.idEmailIndexPair;
 
 public class UserController {
     public final static UserController INSTANCE = new UserController();
     private UserRepository repository;
-    private ExtensibleHash<idEmailIndexPair> hash;
 
     public UserController() {
         try {
@@ -36,13 +32,20 @@ public class UserController {
     public boolean login(String email,String password){
         try{        
             MessageDigest.getInstance("MD5");
-            // User user = repository.read(hash.read(email.hashCode()));
+            User user = repository.readByEmail(email);
+            if(user == null) return false;
+            if(!user.getHashPassword().equals(toMd5(password))) return false;
+            GlobalMemory.setUserId(user.getId());
+        
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
         return true;
     }
+
+
     // public boolean logout(){}
+
 
     public int create(User user){
         int id = -1;
