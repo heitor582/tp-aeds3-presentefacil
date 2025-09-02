@@ -33,7 +33,7 @@ public class LoginView extends View {
                     signup();
                     break;
                 case "3":
-                    this.handleMainMenu();
+                    this.nextPage(MainMenuView.INSTANCE); //TODO: deletar dps
                     break;
                 case "S":
                     this.exit();
@@ -100,8 +100,9 @@ public class LoginView extends View {
             System.out.println("Cadastrado com sucesso !!!");
         }
     }
-  
-    private void handleMainMenu() {
-        this.nextPage(MainMenuView.INSTANCE);
+    @Override
+    protected void exit(){
+        UserController.INSTANCE.logout();
+        this.back();
     }
 }
