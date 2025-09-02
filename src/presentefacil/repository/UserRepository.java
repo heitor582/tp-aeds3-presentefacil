@@ -3,26 +3,29 @@ package repository;
 import model.User;
 
 public class UserRepository extends DBFile<User> {
-    //Para pegar o email do id;
-    ExtensibleHash<idEmailIndexPair> indrectIndex;
+    ExtensibleHash<IdEmailIndexPair> indirectIndex;
 
     public UserRepository() throws Exception {
         super(User.class);
-        //FALAR COM O HEITOR DPS PARA SABER O NOME QUE ELE COLOCOU; :)
-        indrectIndex = new ExtensibleHash<idEmailIndexPair>(idEmailIndexPair.class.getConstructor(), 5,"data/user/user.id.email.d.db", "data/user/user.id.email.c.db");
+        this.indirectIndex = new ExtensibleHash<IdEmailIndexPair>(
+            IdEmailIndexPair.class.getConstructor(), 
+            5,
+            "user/id.email",
+            "user/id.email"
+        );
     }
 
-    public int create(User user) throws Exception{
+    public int create(final User user) throws Exception{
         int id = super.create(user);
-        indrectIndex.create(idEmailIndexPair.create(user.getId(), user.getEmail()));
+        this.indirectIndex.create(IdEmailIndexPair.create(user.getId(), user.getEmail()));
         return id;
     }
 
-    public User readByEmail(String email){
-        int id = 0; 
+    public User findByEmail(String email){
+        int id = -1; 
         User user = null;
         try{
-            idEmailIndexPair pair = indrectIndex.read(email.hashCode());
+            IdEmailIndexPair pair = this.indirectIndex.read(email.hashCode());
             
             if(pair == null) return null;
             id = pair.getId();

@@ -3,7 +3,7 @@ package repository;
 import java.io.IOException;
 
 public interface ExtensibleHashContract {
-  public int hashCode();
+  public int hashCode(); // the Object already have this method so dont throw an error for not implement this
 
   public short size();
 

@@ -6,20 +6,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class idEmailIndexPair implements ExtensibleHashContract {
+public class IdEmailIndexPair implements ExtensibleHashContract {
     private int id = -1;
     private String email = "";
-    private short SIZE = 12;
+    private short SIZE = 30;
 
-    public idEmailIndexPair(){};
+    public IdEmailIndexPair(){};
     
-    private idEmailIndexPair(int id,String email){
+    private IdEmailIndexPair(final int id, final String email){
         this.id = id;
         this.email = email;
     }
 
-    public static idEmailIndexPair create(final int id, final String email){
-        return new idEmailIndexPair(id, email);
+    public static IdEmailIndexPair create(final int id, final String email){
+        return new IdEmailIndexPair(id, email);
     }
 
     public String getEmail(){
@@ -52,6 +52,8 @@ public class idEmailIndexPair implements ExtensibleHashContract {
         this.email = dis.readUTF();
     }
 
-
-
+    @Override
+    public int hashCode() {
+        return this.email.hashCode();
+    }
 }

@@ -5,7 +5,7 @@ import controller.UserController;
 public class LoginView extends View {
     public static final LoginView INSTANCE = new LoginView();
     UserController controller = UserController.INSTANCE;
-    
+
     private LoginView() {
         super("", false);
     }
@@ -28,5 +28,4 @@ public class LoginView extends View {
         }else{
             System.out.println("Senha ou Email incorretos ou inexistentes !!! ");
         }
-    }
 }
