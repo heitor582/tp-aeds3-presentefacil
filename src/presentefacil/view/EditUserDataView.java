@@ -4,8 +4,6 @@ import controller.UserController;
 import model.User;
 import repository.GlobalMemory;
 
-import java.util.Scanner;
-
 public class EditUserDataView extends View {
     public static final EditUserDataView INSTANCE = new EditUserDataView();
 
@@ -15,8 +13,6 @@ public class EditUserDataView extends View {
 
     @Override
     public void viewDisplay() {
-        Scanner scanner = new Scanner(System.in);
-
         User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId());
         if (user == null) {
             System.out.println("Usuário não encontrado!");
