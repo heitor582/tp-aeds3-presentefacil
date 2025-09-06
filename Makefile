@@ -12,7 +12,7 @@ removeJar: ## Delete jar
 	@rm -rf *.jar
 
 removeDB: ## Delete all .db files
-	@rm -rf ./data/*.db
+	@rm -rf ./data/*/*.db
 
 build: ## Compile all .java files
 	@mkdir -p out
