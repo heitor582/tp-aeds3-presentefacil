@@ -6,6 +6,7 @@ import model.GiftList;
 
 public class GiftListRepository extends DBFile<GiftList>  {
     // private BPlusTree<IdIdIndexPair> nameIndex;
+    private ExtensibleHash<IdShareCodeIndexPair> indirectIndex;
 
     public GiftListRepository() throws Exception {
         super(GiftList.class);
@@ -38,17 +39,20 @@ public class GiftListRepository extends DBFile<GiftList>  {
     }
 
     public GiftList findByShareCode(String shareCode) throws Exception {
-        /* GiftList giftList = null;
+        int id = -1;
+        GiftList giftList = null;
+
         try {
-            ShareCodeIndexPair pair = this.shareCodeIndex.read(shareCode.hashCode());
-            if (pair == null)
-                return null;
-            giftList = super.read(pair.getId());
+            IdShareCodeIndexPair pair = this.indirectIndex.read(shareCode.hashCode());
+            
+            if (pair == null) return null;
+            id = pair.getId();
+
+            giftList = super.read(id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        return giftList; */
-        return null;
+        return giftList;
     }
 }
