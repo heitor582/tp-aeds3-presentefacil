@@ -59,7 +59,31 @@ public class UserController {
         return id;
     }
 
-    // public int update(){}
+    public void updateUser(int id, String name, String email, String password, String secretQuestion, String secretAnswer) {
+        try {
+            User user = findUserById(id);
+            if (user != null) {
+                String oldEmail = user.getEmail();
+
+                user.setName(name);
+                user.setEmail(email);
+
+                if (password != null && !password.isBlank())
+                    user.setHashPassword(toMd5(password));
+
+                user.setSecretQuestion(secretQuestion);
+                user.setSecretAnswer(secretAnswer);
+
+                this.repository.update(user);
+                repository.updateIndirectIndex(user, oldEmail);
+
+            } else {
+                System.out.println("Usuário com ID " + id + " não encontrado.");
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar usuário: " + e.getMessage());
+        }
+    }
 
     public boolean delete(){
         try {

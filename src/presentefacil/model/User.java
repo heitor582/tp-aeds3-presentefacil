@@ -34,8 +34,8 @@ public class User extends Entity{
     public void setName(String name){
         this.name = name;
     }
-    public void setHashPassword(String hashPassoword){
-        this.hashPassword = hashPassoword;
+    public void setHashPassword(String hashPassword){
+        this.hashPassword = hashPassword;
     }
     public String getHashPassword(){
         return this.hashPassword;
@@ -43,9 +43,13 @@ public class User extends Entity{
     public String getEmail() {
         return this.email;
     }
+    public void setEmail(String email) {this.email = email;}
     public String getSecretQuestion(){
         return this.secretQuestion;
     }
+    public void setSecretQuestion(String secretQuestion) { this.secretQuestion = secretQuestion;}
+    public String getSecretAnswer() {return this.secretAnswer;}
+    public void setSecretAnswer(String secretAnswer) {this.secretAnswer = secretAnswer;}
     public static User from(
         final String name,
         final String email,

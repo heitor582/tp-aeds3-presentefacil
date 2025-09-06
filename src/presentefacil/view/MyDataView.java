@@ -13,11 +13,10 @@ public class MyDataView extends View {
 
     @Override
     public void viewDisplay() {
-        User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId());
-
         String option;
 
         do {
+            User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId()); //mostra os dados att ao voltar pag mas precisa selecionar R duas vezes
             String menu = String.format("""
                 MEUS DADOS
                 ID: %s
@@ -61,9 +60,7 @@ public class MyDataView extends View {
         } while (!option.equals("R"));
     }
 
-    private void editUserData() {
-        System.out.println(">> [Edit user data - not implemented yet]");
-    }
+    private void editUserData() { this.nextPage(EditUserDataView.INSTANCE);}
 
     private void deleteAccount() {
         System.out.println(">> [Delete account - not implemented yet]");

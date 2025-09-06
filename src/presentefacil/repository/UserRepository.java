@@ -37,4 +37,10 @@ public class UserRepository extends DBFile<User> {
 
         return user;
     }
+
+    public void updateIndirectIndex(User user, String oldEmail) throws Exception {
+        this.indirectIndex.delete(oldEmail.hashCode());
+        this.indirectIndex.create(IdEmailIndexPair.create(user.getId(), user.getEmail()));
+    }
+
 }
