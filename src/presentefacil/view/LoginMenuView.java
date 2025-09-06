@@ -17,7 +17,6 @@ public class LoginMenuView extends View {
             String menu = """
                 (1) Login
                 (2) Novo usuário
-                (3) Pular Login (only used in dev)
 
                 (S) Sair
 
@@ -31,9 +30,6 @@ public class LoginMenuView extends View {
                     break;
                 case "2":
                     signup();
-                    break;
-                case "3":
-                    this.nextPage(MainMenuView.INSTANCE); //TODO: deletar dps
                     break;
                 case "S":
                     this.exit();
