@@ -1,6 +1,8 @@
-package repository;
+package repository.user;
 
 import model.User;
+import repository.DBFile;
+import repository.ExtensibleHash;
 
 public class UserRepository extends DBFile<User> {
     ExtensibleHash<IdEmailIndexPair> indirectIndex;
@@ -21,7 +23,7 @@ public class UserRepository extends DBFile<User> {
         return id;
     }
 
-    public User findByEmail(String email){
+    public User findByEmail(final String email){
         int id = -1; 
         User user = null;
         try{
@@ -38,7 +40,7 @@ public class UserRepository extends DBFile<User> {
         return user;
     }
 
-    public void updateIndirectIndex(User user, String oldEmail) throws Exception {
+    public void updateIndirectIndex(final User user, final String oldEmail) throws Exception {
         this.indirectIndex.delete(oldEmail.hashCode());
         this.indirectIndex.create(IdEmailIndexPair.create(user.getId(), user.getEmail()));
     }

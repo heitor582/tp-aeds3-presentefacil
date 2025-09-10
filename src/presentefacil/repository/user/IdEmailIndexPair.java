@@ -1,4 +1,4 @@
-package repository;
+package repository.user;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,24 +6,26 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class IdShareCodeIndexPair implements ExtensibleHashContract {
+import repository.ExtensibleHashContract;
+
+public class IdEmailIndexPair implements ExtensibleHashContract {
     private int id = -1;
-    private String shareCode = "";
-    private short SIZE = 14;
+    private String email = "";
+    private short SIZE = 30;
 
-    public IdShareCodeIndexPair(){};
-
-    private IdShareCodeIndexPair(final int id, final String shareCode){
+    public IdEmailIndexPair(){};
+    
+    private IdEmailIndexPair(final int id, final String email){
         this.id = id;
-        this.shareCode = shareCode;
+        this.email = email;
     }
 
-    public static IdShareCodeIndexPair create(final int id, final String shareCode){
-        return new IdShareCodeIndexPair(id, shareCode);
+    public static IdEmailIndexPair create(final int id, final String email){
+        return new IdEmailIndexPair(id, email);
     }
 
-    public String getShareCode(){
-        return this.shareCode;
+    public String getEmail(){
+        return this.email;
     }
 
     public int getId(){
@@ -40,7 +42,7 @@ public class IdShareCodeIndexPair implements ExtensibleHashContract {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         dos.writeInt(this.id);
-        dos.writeUTF(this.shareCode);
+        dos.writeUTF(this.email);
         return baos.toByteArray();
     }
 
@@ -49,11 +51,11 @@ public class IdShareCodeIndexPair implements ExtensibleHashContract {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
         this.id = dis.readInt();
-        this.shareCode = dis.readUTF();
+        this.email = dis.readUTF();
     }
 
     @Override
     public int hashCode() {
-        return this.shareCode.hashCode();
+        return this.email.hashCode();
     }
 }

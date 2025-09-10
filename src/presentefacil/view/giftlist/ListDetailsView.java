@@ -1,14 +1,16 @@
-package view;
+package view.giftlist;
 
 import model.GiftList;
+import view.View;
 
 public class ListDetailsView extends View{
     public static final ListDetailsView INSTANCE = new ListDetailsView();
     private GiftList giftList;
     private ListDetailsView() {
-        super("",true);
+        super("Detalhes da lista",true);
     }
-    public ListDetailsView set(GiftList giftList) {
+    
+    public ListDetailsView set(final GiftList giftList) {
         this.giftList = giftList;
         this.viewName = giftList.getName();
         return this;

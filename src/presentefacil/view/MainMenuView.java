@@ -1,5 +1,10 @@
 package view;
 
+import controller.UserController;
+import view.giftlist.MyListView;
+import view.giftlist.SearchListView;
+import view.user.MyDataView;
+
 public class MainMenuView extends View {
     public static final MainMenuView INSTANCE = new MainMenuView();
     private MainMenuView() {
@@ -38,7 +43,8 @@ public class MainMenuView extends View {
                     handleSearchList();
                     break;
                 case "S":
-                    this.back();
+                    UserController.INSTANCE.logout();
+                    this.logout();
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");

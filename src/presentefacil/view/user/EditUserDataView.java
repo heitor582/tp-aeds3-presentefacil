@@ -1,8 +1,9 @@
-package view;
+package view.user;
 
 import controller.UserController;
 import model.User;
 import repository.GlobalMemory;
+import view.View;
 
 public class EditUserDataView extends View {
     public static final EditUserDataView INSTANCE = new EditUserDataView();
@@ -55,6 +56,6 @@ public class EditUserDataView extends View {
                 secretAnswer
         );
 
-        System.out.println("Dados atualizados com sucesso!");
+        this.alertMessage("Dados atualizados com sucesso!");
     }
 }

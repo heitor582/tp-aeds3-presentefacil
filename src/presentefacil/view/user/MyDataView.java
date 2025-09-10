@@ -1,8 +1,9 @@
-package view;
+package view.user;
 
 import controller.UserController;
 import model.User;
 import repository.GlobalMemory;
+import view.View;
 
 public class MyDataView extends View {
     public static final MyDataView INSTANCE = new MyDataView();
@@ -16,7 +17,7 @@ public class MyDataView extends View {
         String option;
 
         do {
-            User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId()); //mostra os dados att ao voltar pag mas precisa selecionar R duas vezes
+            User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId());
             String menu = String.format("""
                 MEUS DADOS
                 ID: %s

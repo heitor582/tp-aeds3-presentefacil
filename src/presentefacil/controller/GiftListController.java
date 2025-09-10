@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import model.GiftList;
-import repository.GiftListRepository;
+import repository.giftlist.GiftListRepository;
 import repository.GlobalMemory;
 
 public class GiftListController {
@@ -20,7 +20,7 @@ public class GiftListController {
         }
     }
 
-    public List<GiftList> findGiftListsByUser(int userId) {
+    public List<GiftList> findGiftListsByUser(final int userId) {
         try {
             return repository.findAllByUserId(userId);
         } catch (Exception e) {
@@ -29,7 +29,7 @@ public class GiftListController {
         return List.of();
     }
 
-    public GiftList findByShareCode(String shareCode) {
+    public GiftList findByShareCode(final String shareCode) {
         try {
             return repository.findByShareCode(shareCode);
         } catch (Exception e) {
@@ -38,7 +38,11 @@ public class GiftListController {
         return null;
     }
 
-    public int create(String name, String description, Optional<LocalDate> expirationDate) {
+    public int create(
+        final String name, 
+        final String description, 
+        final Optional<LocalDate> expirationDate
+    ) {
         try {
             GiftList list = GiftList.create(
                 name,
@@ -63,7 +67,7 @@ public class GiftListController {
         return false;
     }
 
-    public boolean delete(int listId) {
+    public boolean delete(final int listId) {
         try {
             return repository.delete(listId);
         } catch (Exception e) {

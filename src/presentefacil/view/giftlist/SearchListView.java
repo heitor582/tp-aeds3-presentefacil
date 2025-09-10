@@ -1,6 +1,7 @@
-package view;
+package view.giftlist;
 
 import model.GiftList;
+import view.View;
 
 public class SearchListView extends View {
     public static final SearchListView INSTANCE = new SearchListView();
@@ -10,7 +11,7 @@ public class SearchListView extends View {
         super("Buscar lista", true);
     }
 
-    public SearchListView set(GiftList giftList) {
+    public SearchListView set(final GiftList giftList) {
         this.foundList = giftList;
         return this;
     }

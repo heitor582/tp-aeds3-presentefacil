@@ -7,12 +7,12 @@ public abstract class Entity {
     public Entity(final int id) {
         this.id = id;
     }
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
     public int getId() {
         return this.id;
     }
-    public abstract void fromByteArray(byte[] array) throws IOException;
+    public abstract void fromByteArray(final byte[] array) throws IOException;
     public abstract byte[] toByteArray() throws IOException;
 }

@@ -1,8 +1,10 @@
-package repository;
+package repository.giftlist;
 
 import java.util.List;
 
 import model.GiftList;
+import repository.DBFile;
+import repository.ExtensibleHash;
 
 public class GiftListRepository extends DBFile<GiftList>  {
     // private BPlusTree<IdIdIndexPair> nameIndex;
@@ -16,11 +18,17 @@ public class GiftListRepository extends DBFile<GiftList>  {
             "giftlist/id", 
             "giftlist/id"
         ); */
+        this.indirectIndex = new ExtensibleHash<IdShareCodeIndexPair>(
+            IdShareCodeIndexPair.class.getConstructor(), 
+            5,
+            "giftlist/id.sharecode",
+            "giftlist/id.sharecode"
+        );
     }
 
     public int create(final GiftList list) throws Exception{
         int id = super.create(list);
-        // this.nameIndex.create(IdIdIndexPair.create(list.getUserId(), id));
+        this.indirectIndex.create(IdShareCodeIndexPair.create(list.getId(), list.getCode()));
         return id;
     }
 
@@ -38,7 +46,7 @@ public class GiftListRepository extends DBFile<GiftList>  {
         return null;
     }
 
-    public GiftList findByShareCode(String shareCode) throws Exception {
+    public GiftList findByShareCode(final String shareCode) throws Exception {
         int id = -1;
         GiftList giftList = null;
 
