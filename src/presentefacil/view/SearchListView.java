@@ -10,7 +10,7 @@ public class SearchListView extends View {
         super("Buscar lista", true);
     }
 
-    public SearchListView set(GiftList giftList) {
+    public SearchListView set(final GiftList giftList) {
         this.foundList = giftList;
         return this;
     }

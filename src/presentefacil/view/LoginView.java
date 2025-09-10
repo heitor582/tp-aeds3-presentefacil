@@ -7,7 +7,7 @@ public class LoginView extends View {
     UserController controller = UserController.INSTANCE;
 
     private LoginView() {
-        super("", false);
+        super("Login", false);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class LoginView extends View {
         if(login){
             super.nextPage(MainMenuView.INSTANCE);
         }else{
-            System.out.println("Senha ou Email incorretos ou inexistentes !!! ");
+            this.alertMessage("Senha ou email incorretos!!!");
         }
     }
 }

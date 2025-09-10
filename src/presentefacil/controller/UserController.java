@@ -41,13 +41,12 @@ public class UserController {
         return true;
     }
 
-
     public boolean logout(){
         GlobalMemory.logout();
         return true;
     }
 
-    public int create(User user){
+    public int create(final User user){
         int id = -1;
         try{
             user.setHashPassword(toMd5(user.getHashPassword()));
@@ -59,7 +58,14 @@ public class UserController {
         return id;
     }
 
-    public void updateUser(int id, String name, String email, String password, String secretQuestion, String secretAnswer) {
+    public void updateUser(
+        final int id, 
+        final String name,
+        final String email, 
+        final String password, 
+        final String secretQuestion,
+        final String secretAnswer
+        ) {
         try {
             User user = findUserById(id);
             if (user != null) {
@@ -68,15 +74,14 @@ public class UserController {
                 user.setName(name);
                 user.setEmail(email);
 
-                if (password != null && !password.isBlank())
-                    user.setHashPassword(toMd5(password));
+                if (password != null && !password.isBlank() && !password.equals(user.getHashPassword()))
+                    user.setHashPassword(toMd5(password.trim()));
 
                 user.setSecretQuestion(secretQuestion);
                 user.setSecretAnswer(secretAnswer);
 
                 this.repository.update(user);
                 repository.updateIndirectIndex(user, oldEmail);
-
             } else {
                 System.out.println("Usuário com ID " + id + " não encontrado.");
             }

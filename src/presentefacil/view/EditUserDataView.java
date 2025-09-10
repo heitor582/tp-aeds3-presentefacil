@@ -55,6 +55,6 @@ public class EditUserDataView extends View {
                 secretAnswer
         );
 
-        System.out.println("Dados atualizados com sucesso!");
+        this.alertMessage("Dados atualizados com sucesso!");
     }
 }

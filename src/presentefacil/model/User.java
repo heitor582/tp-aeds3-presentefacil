@@ -31,25 +31,25 @@ public class User extends Entity{
     public String getName(){
         return this.name;
     }
-    public void setName(String name){
+    public void setName(final String name){
         this.name = name;
     }
-    public void setHashPassword(String hashPassword){
+    public void setHashPassword(final String hashPassword){
         this.hashPassword = hashPassword;
     }
     public String getHashPassword(){
-        return this.hashPassword;
+        return this.hashPassword.trim();
     }
     public String getEmail() {
         return this.email;
     }
-    public void setEmail(String email) {this.email = email;}
+    public void setEmail(final String email) {this.email = email;}
     public String getSecretQuestion(){
         return this.secretQuestion;
     }
-    public void setSecretQuestion(String secretQuestion) { this.secretQuestion = secretQuestion;}
+    public void setSecretQuestion(final String secretQuestion) { this.secretQuestion = secretQuestion;}
     public String getSecretAnswer() {return this.secretAnswer;}
-    public void setSecretAnswer(String secretAnswer) {this.secretAnswer = secretAnswer;}
+    public void setSecretAnswer(final String secretAnswer) {this.secretAnswer = secretAnswer;}
     public static User from(
         final String name,
         final String email,
@@ -61,7 +61,7 @@ public class User extends Entity{
     }
 
     @Override
-    public void fromByteArray(byte[] array) throws IOException {
+    public void fromByteArray(final byte[] array) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(array);
         DataInputStream dis = new DataInputStream(bais);
 

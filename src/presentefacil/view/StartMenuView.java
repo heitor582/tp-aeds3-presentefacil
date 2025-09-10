@@ -2,12 +2,12 @@ package view;
 
 import controller.UserController;
 
-public class LoginMenuView extends View {
-    public static final LoginMenuView INSTANCE = new LoginMenuView();
+public class StartMenuView extends View {
+    public static final StartMenuView INSTANCE = new StartMenuView();
     UserController controller = UserController.INSTANCE;
 
-    private LoginMenuView() {
-        super("", false);
+    private StartMenuView() {
+        super("Start Menu", false);
     }
 
     @Override

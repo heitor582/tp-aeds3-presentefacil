@@ -8,7 +8,7 @@ public class SignUpView extends View {
     UserController controller = UserController.INSTANCE;
 
     private SignUpView() {
-        super("", false);
+        super("Cadastrar", false);
     }
 
     @Override
@@ -36,14 +36,12 @@ public class SignUpView extends View {
 
         User user = User.from(name, email, password, secretQuestion, secretAnswer);
 
-        
         int id = controller.create(user);
 
         if(id == -1){
-            System.out.println("Não foi possivel cadastrar !!!");
+            this.alertMessage("Não foi possivel cadastrar !!!");
         }else{
-            System.out.println("Cadastrado com sucesso !!! Para continuar, faça login.");
-            this.nextPage(LoginView.INSTANCE);
+            this.alertMessage("Cadastrado com sucesso !!! Para continuar, faça login.");
         }
     }
 }
