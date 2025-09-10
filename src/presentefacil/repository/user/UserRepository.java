@@ -1,6 +1,8 @@
-package repository;
+package repository.user;
 
 import model.User;
+import repository.DBFile;
+import repository.ExtensibleHash;
 
 public class UserRepository extends DBFile<User> {
     ExtensibleHash<IdEmailIndexPair> indirectIndex;

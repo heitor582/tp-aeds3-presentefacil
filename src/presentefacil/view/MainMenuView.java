@@ -1,6 +1,9 @@
 package view;
 
 import controller.UserController;
+import view.giftlist.MyListView;
+import view.giftlist.SearchListView;
+import view.user.MyDataView;
 
 public class MainMenuView extends View {
     public static final MainMenuView INSTANCE = new MainMenuView();

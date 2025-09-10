@@ -1,6 +1,7 @@
-package view;
+package view.giftlist;
 
 import model.GiftList;
+import view.View;
 
 public class ListDetailsView extends View{
     public static final ListDetailsView INSTANCE = new ListDetailsView();

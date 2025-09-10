@@ -1,7 +1,8 @@
-package view;
+package view.user;
 
 import controller.UserController;
 import model.User;
+import view.View;
 
 public class SignUpView extends View {
     public static final SignUpView INSTANCE = new SignUpView();

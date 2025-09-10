@@ -54,8 +54,7 @@ public abstract class View {
             Thread.sleep(1000);
         } catch (final Exception e) {
             e.printStackTrace();
-        }
-        
+        } 
     }
     protected void back(){
         View backView = ViewStackMemory.pop();

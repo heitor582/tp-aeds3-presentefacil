@@ -1,6 +1,6 @@
 package controller;
 
-import repository.GiftListRepository;
+import repository.giftlist.GiftListRepository;
 
 public class GiftListController {
     public final static GiftListController INSTANCE = new GiftListController();

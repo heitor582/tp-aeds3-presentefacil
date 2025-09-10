@@ -1,8 +1,9 @@
-package view;
+package view.user;
 
 import controller.UserController;
 import model.User;
 import repository.GlobalMemory;
+import view.View;
 
 public class EditUserDataView extends View {
     public static final EditUserDataView INSTANCE = new EditUserDataView();

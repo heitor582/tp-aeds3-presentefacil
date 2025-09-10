@@ -1,6 +1,8 @@
-package view;
+package view.user;
 
 import controller.UserController;
+import view.MainMenuView;
+import view.View;
 
 public class LoginView extends View {
     public static final LoginView INSTANCE = new LoginView();

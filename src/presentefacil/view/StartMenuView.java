@@ -1,6 +1,8 @@
 package view;
 
 import controller.UserController;
+import view.user.LoginView;
+import view.user.SignUpView;
 
 public class StartMenuView extends View {
     public static final StartMenuView INSTANCE = new StartMenuView();

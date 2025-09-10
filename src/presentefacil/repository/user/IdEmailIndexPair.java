@@ -1,10 +1,12 @@
-package repository;
+package repository.user;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+import repository.ExtensibleHashContract;
 
 public class IdEmailIndexPair implements ExtensibleHashContract {
     private int id = -1;

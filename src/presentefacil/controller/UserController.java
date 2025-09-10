@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import model.User;
 import repository.GlobalMemory;
-import repository.UserRepository;
+import repository.user.UserRepository;
 
 public class UserController {
     public final static UserController INSTANCE = new UserController();

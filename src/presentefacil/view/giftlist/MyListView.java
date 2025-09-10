@@ -1,6 +1,7 @@
-package view;
+package view.giftlist;
 
 import shared.IsNumber;
+import view.View;
 
 public class MyListView extends View {
     public static final MyListView INSTANCE = new MyListView();
