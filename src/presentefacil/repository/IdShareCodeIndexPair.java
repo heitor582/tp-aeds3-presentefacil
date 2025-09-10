@@ -9,7 +9,7 @@ import java.io.IOException;
 public class IdShareCodeIndexPair implements ExtensibleHashContract {
     private int id = -1;
     private String shareCode = "";
-    private short SIZE = 30;
+    private short SIZE = 14;
 
     public IdShareCodeIndexPair(){};
 
