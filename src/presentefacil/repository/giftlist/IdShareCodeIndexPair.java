@@ -1,10 +1,12 @@
-package repository;
+package repository.giftlist;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+import repository.ExtensibleHashContract;
 
 public class IdShareCodeIndexPair implements ExtensibleHashContract {
     private int id = -1;
@@ -40,7 +42,7 @@ public class IdShareCodeIndexPair implements ExtensibleHashContract {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         dos.writeInt(this.id);
-        dos.writeUTF(this.shareCode);
+        dos.write(this.shareCode.getBytes());
         return baos.toByteArray();
     }
 
