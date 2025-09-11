@@ -1,5 +1,6 @@
 package view.giftlist;
 
+import controller.GiftListController;
 import model.GiftList;
 import view.View;
 
@@ -18,43 +19,20 @@ public class SearchListView extends View {
 
     @Override
     public void viewDisplay() {
-        String option;
+        System.out.println("Digite o código da lista a buscar: ");
+        String code = scanner.nextLine().trim();
 
-        if (foundList == null) {
-            System.out.print("Digite o código da lista a buscar: ");
-            String code = scanner.nextLine().trim();
-
-            System.out.println(">> [Buscar lista por código '" + code + "' - not implemented yet]");
-            this.back();
+        if(code == null){
+            this.alertMessage("Codigo Inválido");
             return;
         }
 
-        do {
-            String menu = """
-                LISTA ENCONTRADA
-
-                CÓDIGO:
-                NOME:
-                DESCRIÇÃO:
-                DATA DE CRIAÇÃO:
-                DATA LIMITE:
-
-                (R) Retornar ao menu anterior
-
-                Opção: """;
-            System.out.print(menu);
-
-            option = scanner.nextLine().trim().toUpperCase();
-
-            if (option.equals("R")) {
-                this.back();
-            } else {
-                System.out.println("Opção inválida. Tente novamente.");
-            }
-
-            System.out.println();
-
-        } while (!option.equals("R"));
+        foundList = GiftListController.INSTANCE.findByShareCode(code);
+        if(foundList != null) {
+            this.nextPage(ListDetailsView.INSTANCE.set(foundList));
+        }
+        this.alertMessage("List with code %s not found", code);
+        return;
     }
 }
 

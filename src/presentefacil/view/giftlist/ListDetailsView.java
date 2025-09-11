@@ -71,14 +71,14 @@ public class ListDetailsView extends View{
     }
 
     private void manageProducts() {
-        System.out.println(">> [Manage products - not implemented yet]");
+        this.alertMessage(">> [Manage products - not implemented yet]");
     }
 
     private void editListData() {
-        System.out.println(">> [Edit list data - not implemented yet]");
+        this.alertMessage(">> [Edit list data - not implemented yet]");
     }
 
     private void deleteList() {
-        System.out.println(">> [Delete list - not implemented yet]");
+        this.alertMessage(">> [Delete list - not implemented yet]");
     }
 }

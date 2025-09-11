@@ -43,7 +43,7 @@ public class GiftListRepository extends DBFile<GiftList>  {
             }
         }
         return giftLists; */
-        return null;
+        return List.of();
     }
 
     public GiftList findByShareCode(final String shareCode) throws Exception {

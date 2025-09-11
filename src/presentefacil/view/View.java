@@ -48,9 +48,9 @@ public abstract class View {
         newView.display();
         this.back();
     }
-    protected void alertMessage(final String message){
+    protected void alertMessage(final String message, Object... args){
         try {
-            System.out.println(message);
+            System.out.println(String.format(message, args));
             Thread.sleep(1000);
         } catch (final Exception e) {
             e.printStackTrace();

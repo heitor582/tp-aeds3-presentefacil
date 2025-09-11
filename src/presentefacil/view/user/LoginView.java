@@ -6,7 +6,6 @@ import view.View;
 
 public class LoginView extends View {
     public static final LoginView INSTANCE = new LoginView();
-    UserController controller = UserController.INSTANCE;
 
     private LoginView() {
         super("Login", false);
@@ -23,12 +22,12 @@ public class LoginView extends View {
         System.out.println("Digite sua senha : ");
         senha = scanner.nextLine();
 
-        boolean login = controller.login(email, senha);
+        boolean login = UserController.INSTANCE.login(email, senha);
 
         if(login){
             super.nextPage(MainMenuView.INSTANCE);
         }else{
-            this.alertMessage("Senha ou email incorretos!!!");
+            this.alertMessage("Email ou senha incorretos!!!");
         }
     }
 }

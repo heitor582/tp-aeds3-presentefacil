@@ -64,6 +64,6 @@ public class MyDataView extends View {
     private void editUserData() { this.nextPage(EditUserDataView.INSTANCE);}
 
     private void deleteAccount() {
-        System.out.println(">> [Delete account - not implemented yet]");
+        this.alertMessage(">> [Delete account - not implemented yet]");
     }
 }
