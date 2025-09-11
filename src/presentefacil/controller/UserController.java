@@ -3,7 +3,6 @@ package controller;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
 import model.User;
 import repository.GlobalMemory;
 import repository.user.UserRepository;
@@ -100,6 +99,21 @@ public class UserController {
         }
         this.logout();
         return true;
+    }
+
+     public boolean changeStatus(final boolean active) {
+        int id = GlobalMemory.getUserId();
+        try {
+            User user = this.findUserById(id);
+            user.changeStatus(active);
+
+            GiftListController.INSTANCE.changeStatusByUserId(false);
+            
+            return repository.update(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public String toMd5(final String password){

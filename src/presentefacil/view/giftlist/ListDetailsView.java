@@ -24,7 +24,6 @@ public class ListDetailsView extends View{
                 ? giftList.getExpirationDate().get().toString()
                 : "(sem data)";
             String menu = String.format("""
-                ID: %d
                 CÓDIGO: %s
                 NOME: %s
                 DESCRIÇÃO: %s
@@ -38,7 +37,6 @@ public class ListDetailsView extends View{
                 (R) Retornar ao menu anterior
 
                 Opção: """,
-                giftList.getId(),
                 giftList.getCode(),
                 giftList.getName(),
                 giftList.getDescription(),
@@ -77,7 +75,7 @@ public class ListDetailsView extends View{
     }
 
     private void editListData() {
-        this.nextPage(EditGiftListView.INSTANCE);
+        this.nextPage(EditGiftListView.INSTANCE.setGiftListId(giftList.getId()));
     }
 
     private void deleteList() {

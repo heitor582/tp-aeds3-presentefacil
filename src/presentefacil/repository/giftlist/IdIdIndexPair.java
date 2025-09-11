@@ -50,8 +50,6 @@ public class IdIdIndexPair implements BPlusTreeContract<IdIdIndexPair> {
     if (this.userId != a.userId)
       return this.userId - a.userId;
     else
-      // Só compara os valores de Num2, se o Num2 da busca for diferente de -1
-      // Isso é necessário para que seja possível a busca de lista
       return this.listId == -1 ? 0 : this.listId - a.listId;
   }
 

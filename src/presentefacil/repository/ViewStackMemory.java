@@ -14,6 +14,9 @@ public class ViewStackMemory {
     public static void push(View view) {
         inMemoryViewStack.push(view);
     }
+    public static void reset() {
+        inMemoryViewStack.clear();
+    }
 
     public static List<View> toList() {
         return inMemoryViewStack.subList(0, inMemoryViewStack.size());

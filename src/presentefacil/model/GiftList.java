@@ -88,6 +88,7 @@ public class GiftList extends Entity {
         this.expirationDate = Optional.ofNullable(optionalExpDate == -1 ? null : LocalDate.ofEpochDay(optionalExpDate));
         dis.read(shareCode);
         this.shareCode = new String(shareCode);
+        this.isActive = dis.readBoolean();
     }
     @Override
     public byte[] toByteArray() throws IOException {
@@ -100,7 +101,7 @@ public class GiftList extends Entity {
         dos.writeInt((int) this.createdAt.toEpochDay());
         dos.writeInt(this.expirationDate.map(expDate -> (int)expDate.toEpochDay()).orElse(-1));
         dos.write(this.shareCode.getBytes());
-
+        dos.writeBoolean(this.isActive);
         return baos.toByteArray();
     }
 }

@@ -26,7 +26,7 @@ public class MyDataView extends View {
                 Pergunta secreta: %s
 
                 (1) Alterar dados
-                (2) Excluir conta
+                (2) Desativar conta
 
                 (R) Retornar ao menu anterior
 
@@ -64,6 +64,7 @@ public class MyDataView extends View {
     private void editUserData() { this.nextPage(EditUserDataView.INSTANCE);}
 
     private void deleteAccount() {
-        this.alertMessage(">> [Delete account - not implemented yet]");
+        UserController.INSTANCE.changeStatus(false);
+        this.logout();
     }
 }

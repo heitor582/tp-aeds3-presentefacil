@@ -75,10 +75,37 @@ public class GiftListController {
         }
         return false;
     }
-
     public boolean delete(final int listId) {
         try {
             return repository.delete(listId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean changeStatus(final int id, final boolean active) {
+        try {
+            GiftList giftList = this.findById(id);
+            giftList.changeStatus(active);
+            return repository.update(giftList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean changeStatusByUserId(final boolean active) {
+        try {
+            List<GiftList> giftList = this.findGiftListsByUser(GlobalMemory.getUserId());
+            return giftList.stream().allMatch(v -> {
+                v.changeStatus(active);
+                try {
+                    return repository.update(v);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

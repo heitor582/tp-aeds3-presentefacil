@@ -64,9 +64,8 @@ public abstract class View {
         backView.display();
     }
     protected void logout(){
-        ViewStackMemory.pop();
-        View backView = ViewStackMemory.pop();
-        backView.display();
+        ViewStackMemory.reset();
+        this.nextPage(StartMenuView.INSTANCE);
     }
     protected void exit() {
         System.out.println("Saindo do sistema. Até logo!");

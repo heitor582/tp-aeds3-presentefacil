@@ -9,17 +9,18 @@ import java.util.Optional;
 
 public class EditGiftListView extends View {
     public static final EditGiftListView INSTANCE = new EditGiftListView();
-
+    private int giftListId = -1;
     private EditGiftListView() {
         super("Editar Lista de Presentes", true);
+    }
+    public EditGiftListView setGiftListId(final int giftListId) {
+        this.giftListId = giftListId;
+        return this;
     }
 
     @Override
     public void viewDisplay() {
-        System.out.print("ID da lista que deseja editar: ");
-        int listId = Integer.parseInt(scanner.nextLine());
-
-        GiftList giftList = GiftListController.INSTANCE.findById(listId);
+        GiftList giftList = GiftListController.INSTANCE.findById(giftListId);
         if (giftList == null) {
             System.out.println("Lista não encontrada!");
             return;

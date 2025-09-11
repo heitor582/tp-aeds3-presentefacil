@@ -71,6 +71,7 @@ public class User extends Entity{
         this.hashPassword = dis.readUTF();
         this.secretQuestion = dis.readUTF();
         this.secretAnswer = dis.readUTF();
+        this.isActive = dis.readBoolean();
     }
     @Override
     public byte[] toByteArray() throws IOException {
@@ -82,6 +83,7 @@ public class User extends Entity{
         dos.writeUTF(this.hashPassword);
         dos.writeUTF(this.secretQuestion);
         dos.writeUTF(this.secretAnswer);
+        dos.writeBoolean(isActive);
         return baos.toByteArray();
     }
 }
