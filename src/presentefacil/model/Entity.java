@@ -20,6 +20,7 @@ public abstract class Entity {
     public void changeStatus(final boolean isActive){
         this.isActive = isActive;
     }
+    public void setActive(final boolean isActive) { this.isActive = isActive;}
     public abstract void fromByteArray(final byte[] array) throws IOException;
     public abstract byte[] toByteArray() throws IOException;
 }
