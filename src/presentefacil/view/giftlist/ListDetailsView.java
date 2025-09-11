@@ -89,7 +89,7 @@ public class ListDetailsView extends View {
     }
 
     private void deleteList() {
-        giftList.setActive(false);
+        giftList.changeStatus(false);
         GiftListController.INSTANCE.update(giftList);
     }
 }
