@@ -68,11 +68,10 @@ public class GiftList extends Entity {
     public static GiftList create(
         final String name,
         final String detailedDescription,
-        final LocalDate createdAt,
         final Optional<LocalDate> expirationDate,
         final int userId
     ) {
-        return new GiftList(-1, name, detailedDescription, createdAt, expirationDate, NanoID.nanoid(), userId);
+        return new GiftList(-1, name, detailedDescription, LocalDate.now(), expirationDate, NanoID.nanoid(), userId);
     }
     @Override
     public void fromByteArray(byte[] array) throws IOException {

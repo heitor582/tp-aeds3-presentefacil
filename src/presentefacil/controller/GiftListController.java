@@ -47,7 +47,6 @@ public class GiftListController {
             GiftList list = GiftList.create(
                 name,
                 description,
-                LocalDate.now(),
                 expirationDate,
                 GlobalMemory.getUserId()
             );
