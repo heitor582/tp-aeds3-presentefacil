@@ -76,7 +76,7 @@ public class MyListView extends View {
     }
 
     private void handleListSelection(GiftList list) {
-        this.nextPage(ListDetailsView.INSTANCE.set(list));
+        this.nextPage(ListDetailsView.INSTANCE.set(list.getId()));
     }
 
     private void createNewList() {

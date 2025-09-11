@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.Scanner;
 
+import repository.GlobalMemory;
 import repository.ViewStackMemory;
 
 public abstract class View { 
@@ -46,6 +47,11 @@ public abstract class View {
         } catch (Exception e) {}
         System.out.flush();
     }
+    protected void reload() {
+        clearScreen();
+        System.out.println(applicationTitle);
+        printPath();
+    }
     protected void nextPage(View newView) {
         ViewStackMemory.push(this);
         newView.display();
@@ -65,6 +71,7 @@ public abstract class View {
     }
     protected void logout(){
         ViewStackMemory.reset();
+        GlobalMemory.logout();
         this.nextPage(StartMenuView.INSTANCE);
     }
     protected void exit() {

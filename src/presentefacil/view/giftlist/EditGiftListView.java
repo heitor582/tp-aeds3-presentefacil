@@ -5,6 +5,7 @@ import model.GiftList;
 import view.View;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class EditGiftListView extends View {
@@ -38,14 +39,14 @@ public class EditGiftListView extends View {
             description = giftList.getDescription();
         }
 
-        System.out.print("Nova data de expiração (AAAA-MM-DD) (atual: " + 
-            giftList.getExpirationDate().map(LocalDate::toString).orElse("sem data") + "): ");
+        System.out.print("Nova data de expiração (DD/MM/YYYY) (atual: " + 
+            giftList.getExpirationDate().map(v-> v.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).orElse("sem data") + "): ");
         String expirationInput = scanner.nextLine();
         Optional<LocalDate> expirationDate = giftList.getExpirationDate();
 
         if (!expirationInput.isBlank()) {
             try {
-                expirationDate = Optional.of(LocalDate.parse(expirationInput));
+                expirationDate = Optional.of(LocalDate.parse(expirationInput, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             } catch (Exception e) {
                 System.out.println("Data inválida. Mantendo a anterior.");
             }

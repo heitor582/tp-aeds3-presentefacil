@@ -1,22 +1,29 @@
 package view.giftlist;
 
+import controller.GiftListController;
 import model.GiftList;
 import view.View;
 
 public class ListDetailsView extends View{
     public static final ListDetailsView INSTANCE = new ListDetailsView();
+    private int id = -1;
     private GiftList giftList;
     private ListDetailsView() {
         super("Detalhes da lista",true);
     }
     
-    public ListDetailsView set(final GiftList giftList) {
-        this.giftList = giftList;
+    public ListDetailsView set(final int id) {
+        this.giftList = GiftListController.INSTANCE.findById(id);
+        this.id = id;
         this.viewName = giftList.getName();
         return this;
     }
 
     public void viewDisplay() {
+        // TODO: resolver isso
+        this.set(id);
+        this.reload();
+        
         String option;
 
         do {
@@ -29,6 +36,7 @@ public class ListDetailsView extends View{
                 DESCRIÇÃO: %s
                 DATA DE CRIAÇÃO: %s
                 DATA LIMITE: %s
+                STATUS: %s
 
                 (1) Gerenciar produtos da lista
                 (2) Alterar dados da lista
@@ -41,7 +49,8 @@ public class ListDetailsView extends View{
                 giftList.getName(),
                 giftList.getDescription(),
                 giftList.getCreatedAt(),
-                expirationDate
+                expirationDate,
+                giftList.isActive() ? "" : "(Desativado)" 
             );
             System.out.print(menu);
 

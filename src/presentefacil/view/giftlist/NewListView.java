@@ -1,6 +1,7 @@
 package view.giftlist;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import controller.GiftListController;
@@ -30,7 +31,7 @@ public class NewListView extends View{
             System.out.print("Digite a data de expiração (dd/mm/aaaa): ");
             String dateInput = scanner.nextLine().trim();
             try {
-                LocalDate expDate = LocalDate.parse(dateInput, java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate expDate = LocalDate.parse(dateInput, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 expirationDate = Optional.of(expDate);
             } catch (Exception e) {
                 System.out.println("Data inválida. Nenhuma data de expiração será definida.");

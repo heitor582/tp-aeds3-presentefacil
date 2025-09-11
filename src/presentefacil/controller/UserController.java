@@ -35,7 +35,7 @@ public class UserController {
             if(!user.getHashPassword().equals(toMd5(password))) return false;
             GlobalMemory.setUserId(user.getId());
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return true;
     }

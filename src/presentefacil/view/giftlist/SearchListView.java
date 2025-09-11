@@ -26,9 +26,10 @@ public class SearchListView extends View {
 
         GiftList foundList = GiftListController.INSTANCE.findByShareCode(code);
         if(foundList != null) {
-            this.nextPage(ListDetailsView.INSTANCE.set(foundList));
+            this.nextPage(ListDetailsView.INSTANCE.set(foundList.getId()));
+        }else{
+            this.alertMessage("List with code %s not found", code);
         }
-        this.alertMessage("List with code %s not found", code);
         return;
     }
 }
