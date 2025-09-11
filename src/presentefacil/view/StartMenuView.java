@@ -52,6 +52,5 @@ public class StartMenuView extends View {
 
     private void signup()  {
         this.nextPage(SignUpView.INSTANCE);
-    }
-  
+    } 
 }

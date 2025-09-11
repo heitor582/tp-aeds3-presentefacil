@@ -15,7 +15,7 @@ public class UserController {
     private UserController() {
         try {
             this.repository = new UserRepository();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }

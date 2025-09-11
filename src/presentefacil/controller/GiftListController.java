@@ -12,10 +12,10 @@ public class GiftListController {
     public final static GiftListController INSTANCE = new GiftListController();
     private GiftListRepository repository;
 
-    public GiftListController() {
+    private GiftListController() {
         try {
             this.repository = new GiftListRepository();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
