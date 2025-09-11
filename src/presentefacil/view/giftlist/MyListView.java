@@ -29,9 +29,11 @@ public class MyListView extends View {
                 GiftList giftList = list.get(i);
                 Optional<LocalDate> expirationDate = giftList.getExpirationDate();
                 menuBuilder.append(
-                    String.format("(%d) %s %s\n", i + 1, 
-                    giftList.getName(), 
-                    expirationDate.isPresent() ? "- " + expirationDate.get() : "")
+                    String.format("(%d) %s %s %s\n", i + 1, 
+                        giftList.getName(), 
+                        expirationDate.isPresent() ? "- " + expirationDate.get() : "",
+                        giftList.isActive() ? "" : "(Desativado)"
+                    )
                 );
             }
         }

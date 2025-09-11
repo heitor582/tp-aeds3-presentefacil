@@ -23,7 +23,7 @@ public class ListDetailsView extends View{
         // TODO: resolver isso
         this.set(id);
         this.reload();
-        
+
         String option;
 
         do {
@@ -50,7 +50,7 @@ public class ListDetailsView extends View{
                 giftList.getDescription(),
                 giftList.getCreatedAt(),
                 expirationDate,
-                giftList.isActive() ? "" : "(Desativado)" 
+                giftList.isActive() ? "" : "Desativado" 
             );
             System.out.print(menu);
 
