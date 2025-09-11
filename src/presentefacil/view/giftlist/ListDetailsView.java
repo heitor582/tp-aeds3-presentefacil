@@ -24,7 +24,6 @@ public class ListDetailsView extends View {
         String option;
 
         do {
-            // TODO: resolver isso
             this.set(id);
             this.reload();
 
@@ -89,7 +88,6 @@ public class ListDetailsView extends View {
     }
 
     private void deactive() {
-        giftList.changeStatus(false);
-        GiftListController.INSTANCE.update(giftList);
+        GiftListController.INSTANCE.deactivate(giftList.getId());
     }
 }

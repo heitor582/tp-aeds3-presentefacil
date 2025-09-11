@@ -35,7 +35,7 @@ public class SignUpView extends View {
         System.out.println("Qual é a reposta da sua pergunta secreta ?");
         secretAnswer = scanner.nextLine();
 
-        User user = User.from(name, email, password, secretQuestion, secretAnswer);
+        User user = User.create(name, email, password, secretQuestion, secretAnswer);
 
         int id = controller.create(user);
 

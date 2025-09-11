@@ -52,6 +52,14 @@ public class EditGiftListView extends View {
             }
         }
 
+        String phrase = giftList.isActive() ? "desativar" : "ativar";
+        System.out.print(String.format("Deseja %s: (S/N)",phrase));
+        String confirmation = scanner.nextLine();
+        boolean newStatus = giftList.isActive();
+        if (confirmation.toUpperCase().equals("S")) {
+            newStatus = !newStatus;
+        }
+
         GiftListController.INSTANCE.update(
             GiftList.from(
                 name,
@@ -60,7 +68,8 @@ public class EditGiftListView extends View {
                 expirationDate,
                 giftList.getCode(),
                 giftList.getUserId(),
-                giftList.getId()
+                giftList.getId(),
+                newStatus
             )
         );
 

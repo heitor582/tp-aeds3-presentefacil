@@ -8,6 +8,10 @@ public abstract class Entity {
     public Entity(final int id) {
         this.id = id;
     }
+    public Entity(final int id, final boolean status) {
+        this.id = id;
+        this.isActive = status;
+    }
     public void setId(final int id) {
         this.id = id;
     }

@@ -46,7 +46,7 @@ public class MyDataView extends View {
                     editUserData();
                     break;
                 case "2":
-                    deleteAccount();
+                    deactivate();
                     break;
                 case "R":
                     this.back();
@@ -63,7 +63,7 @@ public class MyDataView extends View {
 
     private void editUserData() { this.nextPage(EditUserDataView.INSTANCE);}
 
-    private void deleteAccount() {
+    private void deactivate() {
         UserController.INSTANCE.changeStatus(false);
         this.logout();
     }

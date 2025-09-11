@@ -38,7 +38,6 @@ public class GiftListController {
         return null;
     }
 
-
     public GiftList findByShareCode(final String shareCode) {
         try {
             return repository.findByShareCode(shareCode);
@@ -67,7 +66,7 @@ public class GiftListController {
         return -1;
     }
 
-    public boolean update(GiftList list) {
+    public boolean update(final GiftList list) {
         try {
             return repository.update(list);
         } catch (Exception e) {
@@ -92,6 +91,10 @@ public class GiftListController {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean deactivate(final int id){
+        return this.changeStatus(id, false);
     }
 
     public boolean changeStatusByUserId(final boolean active) {

@@ -5,6 +5,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import shared.NonBlank;
+
 public class User extends Entity{
     private String name = "";
     private String email = "";
@@ -19,14 +21,15 @@ public class User extends Entity{
         final String email,
         final String hashPassword,
         final String secretQuestion,
-        final String secretAnswer
+        final String secretAnswer,
+        final boolean isActive
     ) {
-        super(id);
-        this.name = name;
-        this.email = email;
-        this.hashPassword = hashPassword;
-        this.secretQuestion = secretQuestion;
-        this.secretAnswer = secretAnswer;
+        super(id, isActive);
+        this.name = NonBlank.require(name);
+        this.email = NonBlank.require(email);
+        this.hashPassword = NonBlank.require(hashPassword);
+        this.secretQuestion = NonBlank.require(secretQuestion);
+        this.secretAnswer = NonBlank.require(secretAnswer);
     }
     public String getName(){
         return this.name;
@@ -51,13 +54,24 @@ public class User extends Entity{
     public String getSecretAnswer() {return this.secretAnswer;}
     public void setSecretAnswer(final String secretAnswer) {this.secretAnswer = secretAnswer;}
     public static User from(
+        final int id,
+        final String name,
+        final String email,
+        final String hashPassword,
+        final String secretQuestion,
+        final String secretAnswer,
+        final boolean isActive
+    ) {
+        return new User(id, name, email, hashPassword, secretQuestion, secretAnswer, isActive);
+    }
+    public static User create(
         final String name,
         final String email,
         final String hashPassword,
         final String secretQuestion,
         final String secretAnswer
     ) {
-        return new User(-1, name, email, hashPassword, secretQuestion, secretAnswer);
+        return new User(-1, name, email, hashPassword, secretQuestion, secretAnswer, true);
     }
 
     @Override
