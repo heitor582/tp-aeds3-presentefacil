@@ -29,6 +29,16 @@ public class GiftListController {
         return List.of();
     }
 
+    public GiftList findById(final int id) {
+        try {
+            return this.repository.read(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public GiftList findByShareCode(final String shareCode) {
         try {
             return repository.findByShareCode(shareCode);

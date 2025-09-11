@@ -61,9 +61,10 @@ public class GiftList extends Entity {
         final LocalDate createdAt,
         final Optional<LocalDate> expirationDate,
         final String shareCode,
-        final int userId
+        final int userId,
+        final int id
     ) {
-        return new GiftList(-1, name, detailedDescription, createdAt, expirationDate, shareCode, userId);
+        return new GiftList(id, name, detailedDescription, createdAt, expirationDate, shareCode, userId);
     }
     public static GiftList create(
         final String name,

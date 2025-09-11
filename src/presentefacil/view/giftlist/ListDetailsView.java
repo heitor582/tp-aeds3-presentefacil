@@ -75,7 +75,7 @@ public class ListDetailsView extends View{
     }
 
     private void editListData() {
-        this.alertMessage(">> [Edit list data - not implemented yet]");
+        this.nextPage(EditGiftListView.INSTANCE);
     }
 
     private void deleteList() {
