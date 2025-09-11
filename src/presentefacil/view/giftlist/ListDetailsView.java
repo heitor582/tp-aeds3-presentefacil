@@ -21,13 +21,13 @@ public class ListDetailsView extends View {
     }
 
     public void viewDisplay() {
-        // TODO: resolver isso
-        this.set(id);
-        this.reload();
-
         String option;
 
         do {
+            // TODO: resolver isso
+            this.set(id);
+            this.reload();
+
             String expirationDate = giftList.getExpirationDate().isPresent()
                     ? giftList.getExpirationDate().get().toString()
                     : "(sem data)";
@@ -41,7 +41,7 @@ public class ListDetailsView extends View {
                             
                             (1) Gerenciar produtos da lista
                             (2) Alterar dados da lista
-                            (3) Excluir lista
+                            (3) Desativar lista
                             
                             (R) Retornar ao menu anterior
                             
@@ -65,7 +65,7 @@ public class ListDetailsView extends View {
                     editListData();
                     break;
                 case "3":
-                    deleteList();
+                    deactive();
                     break;
                 case "R":
                     this.back();
@@ -88,7 +88,7 @@ public class ListDetailsView extends View {
         this.nextPage(EditGiftListView.INSTANCE.setGiftListId(giftList.getId()));
     }
 
-    private void deleteList() {
+    private void deactive() {
         giftList.changeStatus(false);
         GiftListController.INSTANCE.update(giftList);
     }
