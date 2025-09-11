@@ -20,10 +20,13 @@ public abstract class View {
     private void printPath() {
         List<View> snapshot = ViewStackMemory.toList();
         String path = "";
+        boolean first = true;
         for(int i = 0; i<snapshot.size(); i++) {
             View view = snapshot.get(i);
             if(view.registerOnPath){
+                if(!first) path += " ";
                 path += "> " + view.viewName; 
+                first = false;
             }
         }
         if(snapshot.size()>2) path += " ";

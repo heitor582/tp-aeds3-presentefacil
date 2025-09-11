@@ -21,7 +21,7 @@ public class ListDetailsView extends View{
 
         do {
             String expirationDate = giftList.getExpirationDate().isPresent()
-                ? giftList.getExpirationDate().toString()
+                ? giftList.getExpirationDate().get().toString()
                 : "(sem data)";
             String menu = String.format("""
                 CÓDIGO: %s

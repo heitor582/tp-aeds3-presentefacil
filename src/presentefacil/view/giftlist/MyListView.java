@@ -1,6 +1,8 @@
 package view.giftlist;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import controller.GiftListController;
 import model.GiftList;
@@ -25,7 +27,12 @@ public class MyListView extends View {
         } else {
             for (int i = 0; i < list.size(); i++) {
                 GiftList giftList = list.get(i);
-                menuBuilder.append(String.format("(%d) %s - %s\n", i + 1, giftList.getName(), giftList.getExpirationDate()));
+                Optional<LocalDate> expirationDate = giftList.getExpirationDate();
+                menuBuilder.append(
+                    String.format("(%d) %s %s\n", i + 1, 
+                    giftList.getName(), 
+                    expirationDate.isPresent() ? "- " + expirationDate.get() : "")
+                );
             }
         }
         

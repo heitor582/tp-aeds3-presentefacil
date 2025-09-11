@@ -13,11 +13,14 @@ public class SearchListView extends View {
 
     @Override
     public void viewDisplay() {
-        System.out.println("Digite o código da lista a buscar: ");
+        System.out.println("Digite o código da lista a buscar: (ou R para voltar)");
         String code = scanner.nextLine().trim();
 
-        if(code == null || code.isBlank()){
+        
+        if(code == null || code.isBlank() || (!code.equals("R") && code.length()<10)){
             this.alertMessage("Codigo Inválido");
+            return;
+        } else if(code.equals("R")){
             return;
         }
 

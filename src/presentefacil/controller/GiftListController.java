@@ -22,7 +22,7 @@ public class GiftListController {
 
     public List<GiftList> findGiftListsByUser(final int userId) {
         try {
-            return repository.findAllByUserId(userId);
+            return this.repository.findAllByUserId(userId);
         } catch (Exception e) {
             e.printStackTrace();
         }

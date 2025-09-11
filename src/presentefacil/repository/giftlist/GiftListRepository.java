@@ -1,23 +1,24 @@
 package repository.giftlist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.GiftList;
+import repository.BPlusTree;
 import repository.DBFile;
 import repository.ExtensibleHash;
 
 public class GiftListRepository extends DBFile<GiftList>  {
-    // private BPlusTree<IdIdIndexPair> nameIndex;
+    private BPlusTree<IdIdIndexPair> userIndirectIndex;
     private ExtensibleHash<IdShareCodeIndexPair> indirectIndex;
 
     public GiftListRepository() throws Exception {
         super(GiftList.class);
-        /* this.nameIndex = new BPlusTree<IdIdIndexPair>(
+        this.userIndirectIndex = new BPlusTree<IdIdIndexPair>(
             IdIdIndexPair.class.getConstructor(), 
-            3, 
-            "giftlist/id", 
-            "giftlist/id"
-        ); */
+            5, 
+            "giftlist/userId.name"
+        );
         this.indirectIndex = new ExtensibleHash<IdShareCodeIndexPair>(
             IdShareCodeIndexPair.class.getConstructor(), 
             5,
@@ -29,21 +30,21 @@ public class GiftListRepository extends DBFile<GiftList>  {
     public int create(final GiftList list) throws Exception{
         int id = super.create(list);
         this.indirectIndex.create(IdShareCodeIndexPair.create(list.getId(), list.getCode()));
+        this.userIndirectIndex.create(new IdIdIndexPair(list.getUserId(), id));
         return id;
     }
 
     public List<GiftList> findAllByUserId(int userId) throws Exception {
-        /* List<GiftList> giftLists = new ArrayList<GiftList>();
+        List<GiftList> giftLists = new ArrayList<GiftList>();
         IdIdIndexPair searchPair = new IdIdIndexPair(userId, -1);
-        List<IdIdIndexPair> pairs = this.nameIndex.read(searchPair);
+        List<IdIdIndexPair> pairs = this.userIndirectIndex.read(searchPair);
         for(IdIdIndexPair pair : pairs){
-            GiftList giftList = super.read(pair.getId2());
+            GiftList giftList = super.read(pair.getListId());
             if(giftList != null){
                 giftLists.add(giftList);
             }
         }
-        return giftLists; */
-        return List.of();
+        return giftLists;
     }
 
     public GiftList findByShareCode(final String shareCode) throws Exception {
