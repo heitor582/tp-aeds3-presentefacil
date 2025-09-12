@@ -33,7 +33,7 @@ public class UserRepository extends DBFile<User> {
             id = pair.getId();
             
             user = super.read(id);
-        }catch(Exception e){
+        }catch(final Exception e){
             System.out.println(e.getMessage());
         }
 

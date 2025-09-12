@@ -58,7 +58,7 @@ public class GiftListRepository extends DBFile<GiftList>  {
             id = pair.getId();
 
             giftList = super.read(id);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             System.out.println(e.getMessage());
         }
 

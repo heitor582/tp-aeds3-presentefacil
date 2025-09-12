@@ -31,7 +31,7 @@ public class GiftListController {
     public GiftList findById(final int id) {
         try {
             return this.repository.read(id);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return null;
         }
     }
@@ -39,7 +39,7 @@ public class GiftListController {
     public GiftList findByShareCode(final String shareCode) {
         try {
             return repository.findByShareCode(shareCode);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return null;
         }
     }
