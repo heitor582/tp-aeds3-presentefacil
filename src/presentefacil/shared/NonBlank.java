@@ -7,4 +7,10 @@ public class NonBlank {
         }
         return value;
     }
+    public static boolean isValid(final String value) {
+        return !(value == null || value.isBlank());
+    }
+    public static boolean isNotValid(final String value) {
+        return (value == null || value.isBlank());
+    }
 }

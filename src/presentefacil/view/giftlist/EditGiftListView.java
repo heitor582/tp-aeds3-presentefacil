@@ -2,6 +2,7 @@ package view.giftlist;
 
 import controller.GiftListController;
 import model.GiftList;
+import shared.NonBlank;
 import view.View;
 
 import java.time.LocalDate;
@@ -29,13 +30,13 @@ public class EditGiftListView extends View {
 
         System.out.print("Novo nome (atual: " + giftList.getName() + "): ");
         String name = scanner.nextLine();
-        if (name.isBlank()) {
+        if (NonBlank.isNotValid(name)) {
             name = giftList.getName();
         }
 
         System.out.print("Nova descrição (atual: " + giftList.getDescription() + "): ");
         String description = scanner.nextLine();
-        if (description.isBlank()) {
+        if (NonBlank.isNotValid(description)) {
             description = giftList.getDescription();
         }
 
@@ -44,16 +45,16 @@ public class EditGiftListView extends View {
         String expirationInput = scanner.nextLine();
         Optional<LocalDate> expirationDate = giftList.getExpirationDate();
 
-        if (!expirationInput.isBlank()) {
+        if (NonBlank.isValid(expirationInput)) {
             try {
                 expirationDate = Optional.of(LocalDate.parse(expirationInput, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 System.out.println("Data inválida. Mantendo a anterior.");
             }
         }
 
         String phrase = giftList.isActive() ? "desativar" : "ativar";
-        System.out.print(String.format("Deseja %s: (S/N)",phrase));
+        System.out.printf("Deseja %s: (S/N)",phrase);
         String confirmation = scanner.nextLine();
         boolean newStatus = giftList.isActive();
         if (confirmation.toUpperCase().equals("S")) {

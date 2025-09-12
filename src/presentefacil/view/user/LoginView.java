@@ -1,6 +1,7 @@
 package view.user;
 
 import controller.UserController;
+import shared.NonBlank;
 import view.MainMenuView;
 import view.View;
 
@@ -14,20 +15,20 @@ public class LoginView extends View {
     @Override
     public void viewDisplay() {
         String email;
-        String senha;
+        String password;
 
         System.out.println("Digite o seu email : ");
         email = scanner.nextLine();
 
         System.out.println("Digite sua senha : ");
-        senha = scanner.nextLine();
+        password = scanner.nextLine();
 
-        if (email.isBlank() || senha.isBlank()) {
+        if (NonBlank.isNotValid(email) || NonBlank.isNotValid(password)) {
             this.alertMessage("Todos os campos são obrigatórios!");
             return;
         }
 
-        boolean login = UserController.INSTANCE.login(email, senha);
+        boolean login = UserController.INSTANCE.login(email, password);
 
         if(login){
             super.nextPage(MainMenuView.INSTANCE);
