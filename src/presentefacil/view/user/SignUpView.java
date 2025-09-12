@@ -35,6 +35,11 @@ public class SignUpView extends View {
         System.out.println("Qual é a reposta da sua pergunta secreta ?");
         secretAnswer = scanner.nextLine();
 
+        if (name.isBlank() || email.isBlank() || password.isBlank() || secretQuestion.isBlank() || secretAnswer.isBlank()) {
+            this.alertMessage("Todos os campos são obrigatórios!");
+            return;
+        }
+
         User user = User.create(name, email, password, secretQuestion, secretAnswer);
 
         int id = controller.create(user);

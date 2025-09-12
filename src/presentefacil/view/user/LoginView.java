@@ -22,6 +22,11 @@ public class LoginView extends View {
         System.out.println("Digite sua senha : ");
         senha = scanner.nextLine();
 
+        if (email.isBlank() || senha.isBlank()) {
+            this.alertMessage("Todos os campos são obrigatórios!");
+            return;
+        }
+
         boolean login = UserController.INSTANCE.login(email, senha);
 
         if(login){
