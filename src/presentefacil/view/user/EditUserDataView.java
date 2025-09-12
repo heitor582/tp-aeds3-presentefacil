@@ -20,7 +20,7 @@ public class EditUserDataView extends View {
             this.alertMessage("Usuário não encontrado!");
             return;
         }
-
+        System.out.println("Ao não digitar nada novo será utilizado o anterior");
         System.out.print("Novo nome (atual: " + user.getName() + "): ");
         String name = scanner.nextLine();
         if (NonBlank.isNotValid(name)) {
@@ -47,6 +47,9 @@ public class EditUserDataView extends View {
 
         System.out.print("Nova resposta de segurança: ");
         String secretAnswer = scanner.nextLine();
+        if (NonBlank.isNotValid(secretAnswer)) {
+            secretAnswer = user.getSecretAnswer();
+        }
 
         UserController.INSTANCE.updateUser(
                 user.getId(),

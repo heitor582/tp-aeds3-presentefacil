@@ -43,8 +43,8 @@ public class UserController {
     public List<String> getUserQuestion(final String email, final String password){
         try{        
             User user = this.repository.findByEmail(email);
-            if(user == null) return null;
-            if(!user.getHashPassword().equals(Cryptography.toMd5(password))) return null;
+            if(user == null) return List.of();
+            if(!user.getHashPassword().equals(Cryptography.toMd5(password))) return List.of();
             GlobalMemory.setUserId(user.getId());
             return List.of(user.getSecretQuestion(), user.getSecretAnswer());
         }catch(final Exception e){
