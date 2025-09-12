@@ -59,7 +59,7 @@ public abstract class View {
     }
     protected void alertMessage(final String message, Object... args){
         try {
-            System.out.println(String.format(message, args));
+            System.out.printf(message+"\n", args);
             Thread.sleep(1000);
         } catch (final Exception e) {
             e.printStackTrace();

@@ -18,7 +18,9 @@ public class MyDataView extends View {
 
         do {
             User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId());
-            String menu = String.format("""
+            
+            System.out.printf(
+                """
                 MEUS DADOS
                 Nome: %s
                 Email: %s
@@ -33,9 +35,7 @@ public class MyDataView extends View {
                     user.getName(),
                     user.getEmail(),
                     user.getSecretQuestion()
-                );
-
-            System.out.print(menu);
+            );
 
             option = scanner.nextLine().trim().toUpperCase();
 

@@ -40,7 +40,7 @@ public class EditGiftListView extends View {
         }
 
         System.out.print("Nova data de expiração (DD/MM/YYYY) (atual: " + 
-            giftList.getExpirationDate().map(v-> v.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).orElse("sem data") + "): ");
+            giftList.getExpirationDateFormated() + "): ");
         String expirationInput = scanner.nextLine();
         Optional<LocalDate> expirationDate = giftList.getExpirationDate();
 
@@ -53,7 +53,7 @@ public class EditGiftListView extends View {
         }
 
         String phrase = giftList.isActive() ? "desativar" : "ativar";
-        System.out.print(String.format("Deseja %s: (S/N)",phrase));
+        System.out.printf("Deseja %s: (S/N)",phrase);
         String confirmation = scanner.nextLine();
         boolean newStatus = giftList.isActive();
         if (confirmation.toUpperCase().equals("S")) {

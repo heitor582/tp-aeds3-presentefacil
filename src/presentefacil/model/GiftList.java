@@ -5,6 +5,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 import shared.NanoID;
@@ -53,6 +56,17 @@ public class GiftList extends Entity {
     }
     public Optional<LocalDate> getExpirationDate() {
         return this.expirationDate;
+    }
+    public String getExpirationDateFormated(Object... pre) {
+        String prefix = (pre != null && pre.length > 0)
+        ? String.join(" ", Arrays.stream(pre)
+                                 .filter(Objects::nonNull)
+                                 .map(Object::toString)
+                                 .toArray(String[]::new)) + " "
+        : "";
+        return this.expirationDate
+                .map(v-> prefix + v.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                .orElse(prefix + "sem data");
     }
     public String getCode() {
         return this.shareCode;
