@@ -12,6 +12,10 @@ public final class Product extends Entity{
     private String description;
     private String gtin;
 
+    public String getGtin() {
+        return this.gtin;
+    }
+
     public Product(){}
     private Product(
         final int id,
