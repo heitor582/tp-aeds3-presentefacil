@@ -58,6 +58,9 @@ O projeto foi estruturado em diversas classes para garantir modularidade e organ
 - **Visualização de listas de terceiros:**  
   Usuários podem acessar listas de outros participantes por meio do código NanoID, sem acesso a informações privadas.
 
+- **Soft Delete:**
+  A função de exclusão foi implementada utilizando o conceito de Soft Delete, onde os registros são marcados com uma lápide em vez de serem removidos fisicamente dos arquivos. Isso permite preservar o histórico dos dados e facilita eventuais recuperações ou auditorias, sem comprometer a integridade do sistema.
+
 ## Checklist
 
 - **Há um CRUD de usuários (que estende a classe ArquivoIndexado, acrescentando Tabelas Hash Extensíveis e Árvores B+ como índices diretos e indiretos conforme necessidade) que funciona corretamente?**  
