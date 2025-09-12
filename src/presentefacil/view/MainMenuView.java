@@ -65,7 +65,7 @@ public class MainMenuView extends View {
     }
 
     private void handleProducts() {
-        System.out.println(">> [Products - not implemented yet]");
+        this.alertMessage(">> [Products - not implemented yet]");
     }
 
     private void handleSearchList() {

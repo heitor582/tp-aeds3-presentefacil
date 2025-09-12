@@ -1,60 +1,36 @@
 package view.giftlist;
 
+import controller.GiftListController;
 import model.GiftList;
 import view.View;
 
 public class SearchListView extends View {
     public static final SearchListView INSTANCE = new SearchListView();
-    private GiftList foundList;
 
     private SearchListView() {
         super("Buscar lista", true);
     }
 
-    public SearchListView set(final GiftList giftList) {
-        this.foundList = giftList;
-        return this;
-    }
-
     @Override
     public void viewDisplay() {
-        String option;
+        System.out.println("Digite o código da lista a buscar: (ou R para voltar)");
+        String code = scanner.nextLine().trim();
 
-        if (foundList == null) {
-            System.out.print("Digite o código da lista a buscar: ");
-            String code = scanner.nextLine().trim();
-
-            System.out.println(">> [Buscar lista por código '" + code + "' - not implemented yet]");
-            this.back();
+        
+        if(code == null || code.isBlank() || (!code.equals("R") && code.length()<10)){
+            this.alertMessage("Codigo Inválido");
+            return;
+        } else if(code.equals("R")){
             return;
         }
 
-        do {
-            String menu = """
-                LISTA ENCONTRADA
-
-                CÓDIGO:
-                NOME:
-                DESCRIÇÃO:
-                DATA DE CRIAÇÃO:
-                DATA LIMITE:
-
-                (R) Retornar ao menu anterior
-
-                Opção: """;
-            System.out.print(menu);
-
-            option = scanner.nextLine().trim().toUpperCase();
-
-            if (option.equals("R")) {
-                this.back();
-            } else {
-                System.out.println("Opção inválida. Tente novamente.");
-            }
-
-            System.out.println();
-
-        } while (!option.equals("R"));
+        GiftList foundList = GiftListController.INSTANCE.findByShareCode(code);
+        if(foundList != null) {
+            this.nextPage(ListDetailsView.INSTANCE.set(foundList.getId()));
+        }else{
+            this.alertMessage("List with code %s not found", code);
+        }
+        return;
     }
 }
 

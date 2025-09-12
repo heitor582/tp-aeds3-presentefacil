@@ -2,6 +2,7 @@ package view;
 
 import controller.UserController;
 import view.user.LoginView;
+import view.user.ReactivateUserView;
 import view.user.SignUpView;
 
 public class StartMenuView extends View {
@@ -19,6 +20,7 @@ public class StartMenuView extends View {
             String menu = """
                 (1) Login
                 (2) Novo usuário
+                (3) Ativar usuário novamente
 
                 (S) Sair
 
@@ -32,6 +34,9 @@ public class StartMenuView extends View {
                     break;
                 case "2":
                     signup();
+                    break;
+                case "3":
+                    this.reactivate();
                     break;
                 case "S":
                     this.exit();
@@ -49,9 +54,10 @@ public class StartMenuView extends View {
     private void login() {
         this.nextPage(LoginView.INSTANCE);
     }
-
+    private void reactivate() {
+        this.nextPage(ReactivateUserView.INSTANCE);
+    }
     private void signup()  {
         this.nextPage(SignUpView.INSTANCE);
-    }
-  
+    } 
 }

@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.Scanner;
 
+import repository.GlobalMemory;
 import repository.ViewStackMemory;
 
 public abstract class View { 
@@ -20,10 +21,13 @@ public abstract class View {
     private void printPath() {
         List<View> snapshot = ViewStackMemory.toList();
         String path = "";
+        boolean first = true;
         for(int i = 0; i<snapshot.size(); i++) {
             View view = snapshot.get(i);
             if(view.registerOnPath){
+                if(!first) path += " ";
                 path += "> " + view.viewName; 
+                first = false;
             }
         }
         if(snapshot.size()>2) path += " ";
@@ -43,14 +47,19 @@ public abstract class View {
         } catch (Exception e) {}
         System.out.flush();
     }
+    protected void reload() {
+        clearScreen();
+        System.out.println(applicationTitle);
+        printPath();
+    }
     protected void nextPage(View newView) {
         ViewStackMemory.push(this);
         newView.display();
         this.back();
     }
-    protected void alertMessage(final String message){
+    protected void alertMessage(final String message, Object... args){
         try {
-            System.out.println(message);
+            System.out.println(String.format(message, args));
             Thread.sleep(1000);
         } catch (final Exception e) {
             e.printStackTrace();
@@ -61,9 +70,9 @@ public abstract class View {
         backView.display();
     }
     protected void logout(){
-        ViewStackMemory.pop();
-        View backView = ViewStackMemory.pop();
-        backView.display();
+        ViewStackMemory.reset();
+        GlobalMemory.logout();
+        this.nextPage(StartMenuView.INSTANCE);
     }
     protected void exit() {
         System.out.println("Saindo do sistema. Até logo!");

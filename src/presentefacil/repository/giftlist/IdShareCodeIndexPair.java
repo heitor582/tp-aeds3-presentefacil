@@ -50,8 +50,10 @@ public class IdShareCodeIndexPair implements ExtensibleHashContract {
     public void fromByteArray(final byte[] ba) throws IOException{
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
+        byte[] shareCode = new byte[10];
         this.id = dis.readInt();
-        this.shareCode = dis.readUTF();
+        dis.read(shareCode);
+        this.shareCode = new String(shareCode);
     }
 
     @Override

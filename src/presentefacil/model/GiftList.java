@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import shared.NanoID;
+import shared.NonBlank;
 
 
 public class GiftList extends Entity {
@@ -26,14 +27,15 @@ public class GiftList extends Entity {
         final LocalDate createdAt,
         final Optional<LocalDate> expirationDate,
         final String shareCode,
-        final int userId
+        final int userId,
+        final boolean status
     ) {
         super(id);
-        this.name = name;
+        this.name = NonBlank.require(name);
         this.detailedDescription = detailedDescription;
         this.createdAt = createdAt;
         this.expirationDate = expirationDate;
-        this.shareCode = shareCode;
+        this.shareCode = NonBlank.require(shareCode);
         this.userId = userId;
     }
     
@@ -61,18 +63,19 @@ public class GiftList extends Entity {
         final LocalDate createdAt,
         final Optional<LocalDate> expirationDate,
         final String shareCode,
-        final int userId
+        final int userId,
+        final int id,
+        final boolean status
     ) {
-        return new GiftList(-1, name, detailedDescription, createdAt, expirationDate, shareCode, userId);
+        return new GiftList(id, name, detailedDescription, createdAt, expirationDate, shareCode, userId, status);
     }
     public static GiftList create(
         final String name,
         final String detailedDescription,
-        final LocalDate createdAt,
         final Optional<LocalDate> expirationDate,
         final int userId
     ) {
-        return new GiftList(-1, name, detailedDescription, createdAt, expirationDate, NanoID.nanoid(), userId);
+        return new GiftList(-1, name, detailedDescription, LocalDate.now(), expirationDate, NanoID.nanoid(), userId, true);
     }
     @Override
     public void fromByteArray(byte[] array) throws IOException {
@@ -88,6 +91,7 @@ public class GiftList extends Entity {
         this.expirationDate = Optional.ofNullable(optionalExpDate == -1 ? null : LocalDate.ofEpochDay(optionalExpDate));
         dis.read(shareCode);
         this.shareCode = new String(shareCode);
+        this.isActive = dis.readBoolean();
     }
     @Override
     public byte[] toByteArray() throws IOException {
@@ -100,7 +104,7 @@ public class GiftList extends Entity {
         dos.writeInt((int) this.createdAt.toEpochDay());
         dos.writeInt(this.expirationDate.map(expDate -> (int)expDate.toEpochDay()).orElse(-1));
         dos.write(this.shareCode.getBytes());
-
+        dos.writeBoolean(this.isActive);
         return baos.toByteArray();
     }
 }

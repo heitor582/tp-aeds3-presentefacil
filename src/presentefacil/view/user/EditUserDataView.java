@@ -16,7 +16,7 @@ public class EditUserDataView extends View {
     public void viewDisplay() {
         User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId());
         if (user == null) {
-            System.out.println("Usuário não encontrado!");
+            this.alertMessage("Usuário não encontrado!");
             return;
         }
 

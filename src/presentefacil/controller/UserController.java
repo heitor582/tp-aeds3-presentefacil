@@ -2,7 +2,7 @@ package controller;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+import java.util.List;
 
 import model.User;
 import repository.GlobalMemory;
@@ -15,7 +15,7 @@ public class UserController {
     private UserController() {
         try {
             this.repository = new UserRepository();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -35,10 +35,24 @@ public class UserController {
             if(user == null) return false;
             if(!user.getHashPassword().equals(toMd5(password))) return false;
             GlobalMemory.setUserId(user.getId());
+            return user.isActive();
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        return true;
+        return false;
+    }
+
+    public List<String> getUserQuestion(final String email, final String password){
+        try{        
+            User user = this.repository.findByEmail(email);
+            if(user == null) return null;
+            if(!user.getHashPassword().equals(toMd5(password))) return null;
+            GlobalMemory.setUserId(user.getId());
+            return List.of(user.getSecretQuestion(), user.getSecretAnswer());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return List.of();
     }
 
     public boolean logout(){
@@ -67,21 +81,24 @@ public class UserController {
         final String secretAnswer
         ) {
         try {
-            User user = findUserById(id);
-            if (user != null) {
-                String oldEmail = user.getEmail();
+            final User oldUser = findUserById(id);
+            if (oldUser != null) {
+                String oldEmail = oldUser.getEmail();
 
-                user.setName(name);
-                user.setEmail(email);
+                boolean isNewPassword = password != null && !password.isBlank() && !password.equals(oldUser.getHashPassword());
+               
+                User newUser = User.from(
+                    oldUser.getId(), 
+                    name, 
+                    email, 
+                    isNewPassword ? toMd5(password.trim()) : oldUser.getHashPassword(), 
+                    secretQuestion, 
+                    secretAnswer, 
+                    true
+                );
 
-                if (password != null && !password.isBlank() && !password.equals(user.getHashPassword()))
-                    user.setHashPassword(toMd5(password.trim()));
-
-                user.setSecretQuestion(secretQuestion);
-                user.setSecretAnswer(secretAnswer);
-
-                this.repository.update(user);
-                repository.updateIndirectIndex(user, oldEmail);
+                this.repository.update(newUser);
+                repository.updateIndirectIndex(newUser, oldEmail);
             } else {
                 System.out.println("Usuário com ID " + id + " não encontrado.");
             }
@@ -100,6 +117,21 @@ public class UserController {
         }
         this.logout();
         return true;
+    }
+
+    public boolean changeStatus(final boolean active) {
+        int id = GlobalMemory.getUserId();
+        try {
+            User user = this.findUserById(id);
+            user.changeStatus(active);
+
+            GiftListController.INSTANCE.changeStatusByUserId(false);
+            
+            return repository.update(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public String toMd5(final String password){
