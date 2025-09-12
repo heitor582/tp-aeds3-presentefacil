@@ -1,6 +1,6 @@
 package shared;
 
-public class IsNumber {
+public final class IsNumber {
     public static boolean validate(final String input) {
         try {
             Integer.parseInt(input);

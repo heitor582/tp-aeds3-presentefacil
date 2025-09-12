@@ -5,7 +5,7 @@ import model.User;
 import repository.GlobalMemory;
 import view.View;
 
-public class EditUserDataView extends View {
+public final class EditUserDataView extends View {
     public static final EditUserDataView INSTANCE = new EditUserDataView();
 
     private EditUserDataView() {

@@ -5,7 +5,7 @@ import java.util.List;
 import controller.UserController;
 import view.View;
 
-public class ReactivateUserView extends View {
+public final class ReactivateUserView extends View {
     public static final ReactivateUserView INSTANCE = new ReactivateUserView();
 
     private ReactivateUserView() {

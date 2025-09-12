@@ -1,7 +1,7 @@
 package shared;
 import java.security.SecureRandom;
 
-public class NanoID {
+public final class NanoID {
     private static final String ALPHABET = "useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict";
     private static final SecureRandom RANDOM = new SecureRandom();
 

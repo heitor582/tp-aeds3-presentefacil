@@ -5,7 +5,7 @@ import model.User;
 import repository.GlobalMemory;
 import view.View;
 
-public class MyDataView extends View {
+public final class MyDataView extends View {
     public static final MyDataView INSTANCE = new MyDataView();
 
     private MyDataView() {

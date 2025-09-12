@@ -4,7 +4,7 @@ import controller.GiftListController;
 import model.GiftList;
 import view.View;
 
-public class ListDetailsView extends View {
+public final class ListDetailsView extends View {
     public static final ListDetailsView INSTANCE = new ListDetailsView();
     private int id = -1;
     private GiftList giftList;

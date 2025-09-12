@@ -4,7 +4,7 @@ import controller.GiftListController;
 import model.GiftList;
 import view.View;
 
-public class SearchListView extends View {
+public final class SearchListView extends View {
     public static final SearchListView INSTANCE = new SearchListView();
 
     private SearchListView() {

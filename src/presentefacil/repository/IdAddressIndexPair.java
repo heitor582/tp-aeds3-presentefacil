@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class IdAddressIndexPair implements ExtensibleHashContract {
+public final class IdAddressIndexPair implements ExtensibleHashContract {
     private int id = -1;
     private long address = -1;
     private final short SIZE = 12;

@@ -8,10 +8,10 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import shared.NanoID;
-import shared.NonBlank;
+import shared.StringValidate;
 
 
-public class GiftList extends Entity {
+public final class GiftList extends Entity {
     private String name = "";
     private String detailedDescription = "";
     private LocalDate createdAt = LocalDate.now();
@@ -31,11 +31,11 @@ public class GiftList extends Entity {
         final boolean status
     ) {
         super(id);
-        this.name = NonBlank.require(name);
+        this.name = StringValidate.requireNonBlank(name);
         this.detailedDescription = detailedDescription;
         this.createdAt = createdAt;
         this.expirationDate = expirationDate;
-        this.shareCode = NonBlank.require(shareCode);
+        this.shareCode = StringValidate.requireNonBlank(shareCode);
         this.userId = userId;
     }
     

@@ -10,7 +10,7 @@ import repository.GlobalMemory;
 import shared.IsNumber;
 import view.View;
 
-public class MyListView extends View {
+public final class MyListView extends View {
     public static final MyListView INSTANCE = new MyListView();
     private MyListView() {
         super("Minhas listas", true);

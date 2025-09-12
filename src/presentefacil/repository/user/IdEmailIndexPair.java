@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import repository.ExtensibleHashContract;
 
-public class IdEmailIndexPair implements ExtensibleHashContract {
+public final class IdEmailIndexPair implements ExtensibleHashContract {
     private int id = -1;
     private String email = "";
     private short SIZE = 30;

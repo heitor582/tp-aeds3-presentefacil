@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import repository.ExtensibleHashContract;
 
-public class IdShareCodeIndexPair implements ExtensibleHashContract {
+public final class IdShareCodeIndexPair implements ExtensibleHashContract {
     private int id = -1;
     private String shareCode = "";
     private short SIZE = 14;

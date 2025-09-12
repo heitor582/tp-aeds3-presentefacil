@@ -5,9 +5,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import shared.NonBlank;
+import shared.StringValidate;
 
-public class User extends Entity{
+public final class User extends Entity{
     private String name = "";
     private String email = "";
     private String hashPassword = "";
@@ -25,11 +25,11 @@ public class User extends Entity{
         final boolean isActive
     ) {
         super(id, isActive);
-        this.name = NonBlank.require(name);
-        this.email = NonBlank.require(email);
-        this.hashPassword = NonBlank.require(hashPassword);
-        this.secretQuestion = NonBlank.require(secretQuestion);
-        this.secretAnswer = NonBlank.require(secretAnswer);
+        this.name = StringValidate.requireNonBlank(name);
+        this.email = StringValidate.requireNonBlank(email);
+        this.hashPassword = StringValidate.requireNonBlank(hashPassword);
+        this.secretQuestion = StringValidate.requireNonBlank(secretQuestion);
+        this.secretAnswer = StringValidate.requireNonBlank(secretAnswer);
     }
     public String getName(){
         return this.name;

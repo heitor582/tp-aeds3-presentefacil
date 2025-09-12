@@ -8,7 +8,7 @@ import model.GiftList;
 import repository.giftlist.GiftListRepository;
 import repository.GlobalMemory;
 
-public class GiftListController {
+public final class GiftListController {
     public final static GiftListController INSTANCE = new GiftListController();
     private GiftListRepository repository;
 
