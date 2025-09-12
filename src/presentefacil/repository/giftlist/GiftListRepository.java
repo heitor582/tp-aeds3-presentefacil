@@ -17,7 +17,7 @@ public class GiftListRepository extends DBFile<GiftList>  {
         this.userIndirectIndex = new BPlusTree<IdIdIndexPair>(
             IdIdIndexPair.class.getConstructor(), 
             5, 
-            "giftlist/userId.name"
+            "giftlist/userId.giftListId"
         );
         this.indirectIndex = new ExtensibleHash<IdShareCodeIndexPair>(
             IdShareCodeIndexPair.class.getConstructor(), 
