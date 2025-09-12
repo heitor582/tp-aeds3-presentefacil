@@ -1,11 +1,14 @@
 # Relatório do Trabalho Prático - Presentefacil
 
 ## Participantes
-- Gustavo Silva
-- [Adicionar outros nomes dos participantes]
+- Caio Fernandes da Silva
+- Gustavo Lopes Oliveira
+- Heitor Canhestro Vieira Moreira
+- Lucas Soares Tavares
 
 ## Descrição do Sistema
 O sistema Presentefacil é uma aplicação para gerenciamento de listas de presentes, permitindo que usuários criem, editem e compartilhem listas vinculadas ao seu perfil. O objetivo é facilitar a organização de eventos e presentes, tornando o processo mais eficiente e colaborativo.
+
 
 ### Funcionalidades Principais
 - Cadastro, edição, exclusão e consulta de usuários.
@@ -15,9 +18,11 @@ O sistema Presentefacil é uma aplicação para gerenciamento de listas de prese
 - Visualização de listas de outros usuários utilizando o código NanoID.
 
 ### Telas do Sistema
-![Tela de Cadastro de Usuário](imagens/cadastro_usuario.png)
-![Tela de Listas de Presentes](imagens/listas_presentes.png)
-![Tela de Compartilhamento por NanoID](imagens/compartilhar_nanoid.png)
+![Menu Principal](imagens/menuPrincipal.png)
+![Tela de Dados do Usuário](imagens/meusDados.png)
+![Tela de Listas de Presentes](imagens/minhasListas.png)
+![Dados das listas](imagens/listaExemplo.png)
+![Tela de Compartilhamento por NanoID](imagens/buscaLista.png)
 
 ### Classes Criadas
 - `Usuario`

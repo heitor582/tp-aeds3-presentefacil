@@ -20,7 +20,6 @@ public class MyDataView extends View {
             User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId());
             String menu = String.format("""
                 MEUS DADOS
-                ID: %s
                 Nome: %s
                 Email: %s
                 Pergunta secreta: %s
@@ -31,7 +30,6 @@ public class MyDataView extends View {
                 (R) Retornar ao menu anterior
 
                 Opção: """,
-                    user.getId(),
                     user.getName(),
                     user.getEmail(),
                     user.getSecretQuestion()
