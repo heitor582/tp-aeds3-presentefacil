@@ -2,6 +2,7 @@ package view.giftlist;
 
 import controller.GiftListController;
 import model.GiftList;
+import shared.NonBlank;
 import view.View;
 
 public class SearchListView extends View {
@@ -16,8 +17,7 @@ public class SearchListView extends View {
         System.out.println("Digite o código da lista a buscar: (ou R para voltar)");
         String code = scanner.nextLine().trim();
 
-        
-        if(code == null || code.isBlank() || (!code.equals("R") && code.length()<10)){
+        if(NonBlank.isNotValid(code) || (!code.equals("R") && code.length()<10)){
             this.alertMessage("Codigo Inválido");
             return;
         } else if(code.equals("R")){

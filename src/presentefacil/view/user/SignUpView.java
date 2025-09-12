@@ -1,12 +1,11 @@
 package view.user;
 
 import controller.UserController;
-import model.User;
+import shared.NonBlank;
 import view.View;
 
 public class SignUpView extends View {
     public static final SignUpView INSTANCE = new SignUpView();
-    UserController controller = UserController.INSTANCE;
 
     private SignUpView() {
         super("Cadastrar", false);
@@ -35,9 +34,18 @@ public class SignUpView extends View {
         System.out.println("Qual é a reposta da sua pergunta secreta ?");
         secretAnswer = scanner.nextLine();
 
-        User user = User.create(name, email, password, secretQuestion, secretAnswer);
+        if (
+            NonBlank.isNotValid(name) || 
+            NonBlank.isNotValid(email) || 
+            NonBlank.isNotValid(password) || 
+            NonBlank.isNotValid(secretQuestion) || 
+            NonBlank.isNotValid(secretAnswer)
+        ) {
+            this.alertMessage("Todos os campos são obrigatórios!");
+            return;
+        }
 
-        int id = controller.create(user);
+        int id = UserController.INSTANCE.create(name, email, password, secretQuestion, secretAnswer);
 
         if(id == -1){
             this.alertMessage("Não foi possivel cadastrar !!!");

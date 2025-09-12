@@ -17,7 +17,7 @@ public class UserRepository extends DBFile<User> {
         );
     }
 
-    public int create(final User user) throws Exception{
+    public int create(final User user) throws Exception {
         int id = super.create(user);
         this.indirectIndex.create(IdEmailIndexPair.create(user.getId(), user.getEmail()));
         return id;
@@ -33,7 +33,7 @@ public class UserRepository extends DBFile<User> {
             id = pair.getId();
             
             user = super.read(id);
-        }catch(Exception e){
+        }catch(final Exception e){
             System.out.println(e.getMessage());
         }
 
