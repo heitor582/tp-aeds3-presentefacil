@@ -1,4 +1,4 @@
-package repository.user;
+package repository.product;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,25 +7,26 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import repository.ExtensibleHashContract;
+import shared.StringValidate;
 
-public final class IdEmailIndexPair implements ExtensibleHashContract {
+public final class IdGTINCodeIndexPair implements ExtensibleHashContract {
     private int id = -1;
-    private String email = "";
-    private short SIZE = 30;
+    private String gtin = "";
+    private short SIZE = 17;
 
-    public IdEmailIndexPair(){};
-    
-    private IdEmailIndexPair(final int id, final String email){
+    public IdGTINCodeIndexPair(){};
+
+    private IdGTINCodeIndexPair(final int id, final String gtin){
         this.id = id;
-        this.email = email;
+        this.gtin = StringValidate.requireMinSize(gtin, 13);
     }
 
-    public static IdEmailIndexPair create(final int id, final String email){
-        return new IdEmailIndexPair(id, email);
+    public static IdGTINCodeIndexPair create(final int id, final String gtin){
+        return new IdGTINCodeIndexPair(id, gtin);
     }
 
-    public String getEmail(){
-        return this.email;
+    public String getGtin(){
+        return this.gtin;
     }
 
     public int getId(){
@@ -42,7 +43,7 @@ public final class IdEmailIndexPair implements ExtensibleHashContract {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         dos.writeInt(this.id);
-        dos.writeUTF(this.email);
+        dos.write(this.gtin.getBytes());
         return baos.toByteArray();
     }
 
@@ -50,12 +51,14 @@ public final class IdEmailIndexPair implements ExtensibleHashContract {
     public void fromByteArray(final byte[] ba) throws IOException{
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
+        byte[] gtin = new byte[13];
         this.id = dis.readInt();
-        this.email = dis.readUTF();
+        dis.read(gtin);
+        this.gtin = new String(gtin);
     }
 
     @Override
     public int hashCode() {
-        return this.email.hashCode();
+        return this.gtin.hashCode();
     }
 }

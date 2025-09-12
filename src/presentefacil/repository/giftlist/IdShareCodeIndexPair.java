@@ -7,8 +7,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import repository.ExtensibleHashContract;
+import shared.StringValidate;
 
-public class IdShareCodeIndexPair implements ExtensibleHashContract {
+public final class IdShareCodeIndexPair implements ExtensibleHashContract {
     private int id = -1;
     private String shareCode = "";
     private short SIZE = 14;
@@ -17,7 +18,7 @@ public class IdShareCodeIndexPair implements ExtensibleHashContract {
 
     private IdShareCodeIndexPair(final int id, final String shareCode){
         this.id = id;
-        this.shareCode = shareCode;
+        this.shareCode = StringValidate.requireNonBlank(shareCode);
     }
 
     public static IdShareCodeIndexPair create(final int id, final String shareCode){

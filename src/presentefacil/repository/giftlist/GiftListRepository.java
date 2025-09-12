@@ -7,8 +7,9 @@ import model.GiftList;
 import repository.BPlusTree;
 import repository.DBFile;
 import repository.ExtensibleHash;
+import repository.IdIdIndexPair;
 
-public class GiftListRepository extends DBFile<GiftList>  {
+public final class GiftListRepository extends DBFile<GiftList>  {
     private BPlusTree<IdIdIndexPair> userIndirectIndex;
     private ExtensibleHash<IdShareCodeIndexPair> indirectIndex;
 
@@ -39,7 +40,7 @@ public class GiftListRepository extends DBFile<GiftList>  {
         IdIdIndexPair searchPair = new IdIdIndexPair(userId, -1);
         List<IdIdIndexPair> pairs = this.userIndirectIndex.read(searchPair);
         for(IdIdIndexPair pair : pairs){
-            GiftList giftList = super.read(pair.getListId());
+            GiftList giftList = super.read(pair.getID2());
             if(giftList != null){
                 giftLists.add(giftList);
             }

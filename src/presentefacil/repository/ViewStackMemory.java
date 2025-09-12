@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import view.View;
 
-public class ViewStackMemory {
+public final class ViewStackMemory {
     private static Stack<View> inMemoryViewStack = new Stack<>();
 
     public static View pop() {
