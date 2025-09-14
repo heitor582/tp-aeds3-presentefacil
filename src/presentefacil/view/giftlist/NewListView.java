@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import controller.GiftListController;
+import shared.NonBlank;
 import view.View;
 
 public class NewListView extends View{
@@ -33,9 +34,14 @@ public class NewListView extends View{
             try {
                 LocalDate expDate = LocalDate.parse(dateInput, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 expirationDate = Optional.of(expDate);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 System.out.println("Data inválida. Nenhuma data de expiração será definida.");
             }
+        }
+
+        if (NonBlank.isNotValid(name) || NonBlank.isNotValid(description)) {
+            this.alertMessage("Email e descrição são obrigatórios!");
+            return;
         }
 
         int resultId = GiftListController.INSTANCE.create(name,description, expirationDate);

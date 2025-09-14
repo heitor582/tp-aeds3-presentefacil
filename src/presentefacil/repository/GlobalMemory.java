@@ -11,4 +11,7 @@ public class GlobalMemory {
     public static void logout() {
         setUserId(-1);
     }
+    public static boolean isLogout(){
+        return userId == -1;
+    }
 }
