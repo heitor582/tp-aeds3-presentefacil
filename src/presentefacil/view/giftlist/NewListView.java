@@ -7,7 +7,7 @@ import java.util.Optional;
 import controller.GiftListController;
 import view.View;
 
-public class NewListView extends View{
+public final class NewListView extends View{
     public static final NewListView INSTANCE = new NewListView();
 
     private NewListView() {

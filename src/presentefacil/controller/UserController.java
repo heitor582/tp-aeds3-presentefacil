@@ -8,7 +8,7 @@ import model.User;
 import repository.GlobalMemory;
 import repository.user.UserRepository;
 
-public class UserController {
+public final class UserController {
     public final static UserController INSTANCE = new UserController();
     private UserRepository repository;
 

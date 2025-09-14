@@ -1,7 +1,7 @@
 package model;
 import java.io.IOException;
 
-public abstract class Entity {
+public abstract class Entity{
     protected int id = -1;
     protected boolean isActive = true;
     public Entity() {}
@@ -24,6 +24,7 @@ public abstract class Entity {
     public void changeStatus(final boolean isActive){
         this.isActive = isActive;
     }
+    
     public abstract void fromByteArray(final byte[] array) throws IOException;
     public abstract byte[] toByteArray() throws IOException;
 }

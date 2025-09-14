@@ -4,7 +4,7 @@ import model.User;
 import repository.DBFile;
 import repository.ExtensibleHash;
 
-public class UserRepository extends DBFile<User> {
+public final class UserRepository extends DBFile<User> {
     ExtensibleHash<IdEmailIndexPair> indirectIndex;
 
     public UserRepository() throws Exception {

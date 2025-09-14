@@ -5,7 +5,7 @@ import view.user.LoginView;
 import view.user.ReactivateUserView;
 import view.user.SignUpView;
 
-public class StartMenuView extends View {
+public final class StartMenuView extends View {
     public static final StartMenuView INSTANCE = new StartMenuView();
     UserController controller = UserController.INSTANCE;
 

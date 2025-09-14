@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-public class EditGiftListView extends View {
+public final class EditGiftListView extends View {
     public static final EditGiftListView INSTANCE = new EditGiftListView();
     private int giftListId = -1;
     private EditGiftListView() {
