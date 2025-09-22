@@ -3,6 +3,7 @@ package view;
 import controller.UserController;
 import view.giftlist.MyListView;
 import view.giftlist.SearchListView;
+import view.product.ProductMenuView;
 import view.user.MyDataView;
 
 public final class MainMenuView extends View {
@@ -65,7 +66,7 @@ public final class MainMenuView extends View {
     }
 
     private void handleProducts() {
-        this.alertMessage(">> [Products - not implemented yet]");
+        this.nextPage(ProductMenuView.INSTANCE);
     }
 
     private void handleSearchList() {
