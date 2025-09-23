@@ -16,6 +16,10 @@ public final class Product extends Entity {
         return this.gtin;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
     public Product() {
     }
 
@@ -31,7 +35,7 @@ public final class Product extends Entity {
         this.gtin = StringValidate.requireMinSize(gtin, 13);
     }
 
-    public Product create(
+    public static Product create(
             final String name,
             final String description,
             final String gtin) {

@@ -46,6 +46,18 @@ public final class GiftListRepository extends DBFile<GiftList> {
         return giftLists;
     }
 
+    public List<GiftList> findAllByIdIn(final List<Integer> ids) throws Exception {
+        return ids.stream().map(t -> {
+            try {
+                return read(t);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).toList();
+
+    }
+
     public GiftList findByShareCode(final String shareCode) throws Exception {
         int id = -1;
         GiftList giftList = null;

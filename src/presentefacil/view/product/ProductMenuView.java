@@ -49,14 +49,15 @@ public final class ProductMenuView extends View {
     }
 
     private void searchByGTIN() {
-        this.alertMessage(">> [Products - not implemented yet]");
+        this.nextPage(SearchProductView.INSTANCE);
     }
 
     private void listAllProducts() {
+        // TODO: fzr
         this.alertMessage(">> [Products - not implemented yet]");
     }
 
     private void newProducts() {
-        this.alertMessage(">> [Products - not implemented yet]");
+        this.nextPage(NewProductView.INSTANCE);
     }
 }
