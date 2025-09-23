@@ -37,6 +37,10 @@ public final class Product extends Entity {
             final String gtin) {
         return new Product(-1, name, description, true, gtin);
     }
+    
+    public String getName() {
+        return this.name;
+    }
 
     @Override
     public void fromByteArray(byte[] array) throws IOException {
