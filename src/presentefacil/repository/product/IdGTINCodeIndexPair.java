@@ -14,32 +14,33 @@ public final class IdGTINCodeIndexPair implements ExtensibleHashContract {
     private String gtin = "";
     private short SIZE = 17;
 
-    public IdGTINCodeIndexPair(){};
+    public IdGTINCodeIndexPair() {
+    };
 
-    private IdGTINCodeIndexPair(final int id, final String gtin){
+    private IdGTINCodeIndexPair(final int id, final String gtin) {
         this.id = id;
         this.gtin = StringValidate.requireMinSize(gtin, 13);
     }
 
-    public static IdGTINCodeIndexPair create(final int id, final String gtin){
+    public static IdGTINCodeIndexPair create(final int id, final String gtin) {
         return new IdGTINCodeIndexPair(id, gtin);
     }
 
-    public String getGtin(){
+    public String getGtin() {
         return this.gtin;
     }
 
-    public int getId(){
+    public int getId() {
         return this.id;
     }
 
     @Override
-    public short size(){
+    public short size() {
         return this.SIZE;
     }
 
     @Override
-    public byte[] toByteArray() throws IOException{
+    public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         dos.writeInt(this.id);
@@ -48,7 +49,7 @@ public final class IdGTINCodeIndexPair implements ExtensibleHashContract {
     }
 
     @Override
-    public void fromByteArray(final byte[] ba) throws IOException{
+    public void fromByteArray(final byte[] ba) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
         byte[] gtin = new byte[13];

@@ -1,4 +1,5 @@
 package shared;
+
 import java.security.SecureRandom;
 
 public final class NanoID {

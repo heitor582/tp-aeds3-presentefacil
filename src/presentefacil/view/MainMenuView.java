@@ -7,6 +7,7 @@ import view.user.MyDataView;
 
 public final class MainMenuView extends View {
     public static final MainMenuView INSTANCE = new MainMenuView();
+
     private MainMenuView() {
         super("Início", true);
     }
@@ -17,14 +18,14 @@ public final class MainMenuView extends View {
 
         do {
             String menu = """
-                (1) Meus dados
-                (2) Minhas listas
-                (3) Produtos
-                (4) Buscar lista
+                    (1) Meus dados
+                    (2) Minhas listas
+                    (3) Produtos
+                    (4) Buscar lista
 
-                (S) Sair
+                    (S) Sair
 
-                Opção: """;
+                    Opção: """;
             System.out.print(menu);
 
             option = scanner.nextLine().trim().toUpperCase();

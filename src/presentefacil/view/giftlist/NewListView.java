@@ -5,15 +5,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import controller.GiftListController;
-import shared.NonBlank;
+import shared.StringValidate;
 import view.View;
 
-public final class NewListView extends View{
+public final class NewListView extends View {
     public static final NewListView INSTANCE = new NewListView();
 
     private NewListView() {
         super("Criar Nova Lista", false);
     }
+
     @Override
     protected void viewDisplay() {
         System.out.println("=== Criar Nova Lista de Presentes ===");
@@ -39,12 +40,12 @@ public final class NewListView extends View{
             }
         }
 
-        if (NonBlank.isNotValid(name) || NonBlank.isNotValid(description)) {
+        if (StringValidate.isBlank(name) || StringValidate.isBlank(description)) {
             this.alertMessage("Email e descrição são obrigatórios!");
             return;
         }
 
-        int resultId = GiftListController.INSTANCE.create(name,description, expirationDate);
+        int resultId = GiftListController.INSTANCE.create(name, description, expirationDate);
 
         if (resultId == -1) {
             System.out.println("Erro ao criar a lista.");

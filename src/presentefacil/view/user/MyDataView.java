@@ -18,24 +18,23 @@ public final class MyDataView extends View {
 
         do {
             User user = UserController.INSTANCE.findUserById(GlobalMemory.getUserId());
-            
+
             System.out.printf(
-                """
-                MEUS DADOS
-                Nome: %s
-                Email: %s
-                Pergunta secreta: %s
+                    """
+                            MEUS DADOS
+                            Nome: %s
+                            Email: %s
+                            Pergunta secreta: %s
 
-                (1) Alterar dados
-                (2) Desativar conta
+                            (1) Alterar dados
+                            (2) Desativar conta
 
-                (R) Retornar ao menu anterior
+                            (R) Retornar ao menu anterior
 
-                Opção: """,
+                            Opção: """,
                     user.getName(),
                     user.getEmail(),
-                    user.getSecretQuestion()
-            );
+                    user.getSecretQuestion());
 
             option = scanner.nextLine().trim().toUpperCase();
 
@@ -59,7 +58,9 @@ public final class MyDataView extends View {
         } while (!option.equals("R"));
     }
 
-    private void editUserData() { this.nextPage(EditUserDataView.INSTANCE);}
+    private void editUserData() {
+        this.nextPage(EditUserDataView.INSTANCE);
+    }
 
     private void deactivate() {
         UserController.INSTANCE.changeStatus(false);

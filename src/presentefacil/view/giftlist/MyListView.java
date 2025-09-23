@@ -9,6 +9,7 @@ import view.View;
 
 public final class MyListView extends View {
     public static final MyListView INSTANCE = new MyListView();
+
     private MyListView() {
         super("Minhas listas", true);
     }
@@ -25,27 +26,24 @@ public final class MyListView extends View {
             for (int i = 0; i < list.size(); i++) {
                 GiftList giftList = list.get(i);
                 menuBuilder.append(
-                    String.format("(%d) %s %s %s\n", i + 1, 
-                        giftList.getName(), 
-                        giftList.getExpirationDateFormated("-"),
-                        giftList.isActive() ? "" : "(Desativado)"
-                    )
-                );
+                        String.format("(%d) %s %s %s\n", i + 1,
+                                giftList.getName(),
+                                giftList.getExpirationDateFormated("-"),
+                                giftList.isActive() ? "" : "(Desativado)"));
             }
         }
-        
+
         String option;
 
         do {
             System.out.printf(
-                """
-                %s
+                    """
+                            %s
 
-                (N) Nova lista
-                (R) Retornar ao menu anterior
+                            (N) Nova lista
+                            (R) Retornar ao menu anterior
 
-                Opção: """, menuBuilder.toString()
-            );
+                            Opção: """, menuBuilder.toString());
 
             option = scanner.nextLine().trim().toUpperCase();
 
@@ -60,7 +58,7 @@ public final class MyListView extends View {
                     if (IsNumber.validate(option)) {
                         int listNumber = Integer.parseInt(option);
                         if (listNumber >= 1 && listNumber <= list.size()) {
-                            handleListSelection(list.get(listNumber-1));
+                            handleListSelection(list.get(listNumber - 1));
                         }
                     } else {
                         System.out.println("Opção inválida. Tente novamente.");

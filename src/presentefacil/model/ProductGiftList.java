@@ -6,7 +6,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-
 public final class ProductGiftList extends Entity {
     private int productId = -1;
     private int giftListId = -1;
@@ -21,36 +20,37 @@ public final class ProductGiftList extends Entity {
         return this.giftListId;
     }
 
-    public ProductGiftList(){}
+    public ProductGiftList() {
+    }
+
     private ProductGiftList(
-        final int id,
-        final int productId,
-        final int giftListId,
-        final int quantity,
-        final String description,
-        final boolean status
-    ) { 
+            final int id,
+            final int productId,
+            final int giftListId,
+            final int quantity,
+            final String description,
+            final boolean status) {
         super(id, status);
         this.productId = productId;
         this.giftListId = giftListId;
-        if(quantity < 0){
+        if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be less than 0");
         }
         this.quantity = quantity;
         this.description = description;
     }
+
     public ProductGiftList create(
-        final int productId,
-        final int giftListId,
-        final int quantity,
-        final String description
-    ) {
+            final int productId,
+            final int giftListId,
+            final int quantity,
+            final String description) {
         return new ProductGiftList(-1, productId, giftListId, quantity, description, true);
     }
 
     @Override
     public void fromByteArray(byte[] array) throws IOException {
-       ByteArrayInputStream bais = new ByteArrayInputStream(array);
+        ByteArrayInputStream bais = new ByteArrayInputStream(array);
         DataInputStream dis = new DataInputStream(bais);
         this.id = dis.readInt();
         this.productId = dis.readInt();
@@ -59,6 +59,7 @@ public final class ProductGiftList extends Entity {
         this.description = dis.readUTF();
         this.isActive = dis.readBoolean();
     }
+
     @Override
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -71,5 +72,5 @@ public final class ProductGiftList extends Entity {
         dos.writeBoolean(this.isActive);
         return baos.toByteArray();
     }
-    
+
 }

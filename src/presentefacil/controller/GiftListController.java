@@ -45,22 +45,21 @@ public final class GiftListController {
     }
 
     public int create(
-        final String name, 
-        final String description, 
-        final Optional<LocalDate> expirationDate
-    ) {
+            final String name,
+            final String description,
+            final Optional<LocalDate> expirationDate) {
         try {
             GiftList list = GiftList.create(
-                name,
-                description,
-                expirationDate,
-                GlobalMemory.getUserId()
-            );
+                    name,
+                    description,
+                    expirationDate,
+                    GlobalMemory.getUserId());
             return repository.create(list);
         } catch (final Exception e) {
             return -1;
         }
     }
+
     public boolean update(final GiftList list) {
         try {
             return repository.update(list);
@@ -68,6 +67,7 @@ public final class GiftListController {
             return false;
         }
     }
+
     public boolean delete(final int listId) {
         try {
             return repository.delete(listId);
@@ -75,6 +75,7 @@ public final class GiftListController {
             return false;
         }
     }
+
     public boolean changeStatus(final int id, final boolean active) {
         try {
             GiftList giftList = this.findById(id);
@@ -84,9 +85,11 @@ public final class GiftListController {
             return false;
         }
     }
-    public boolean deactivate(final int id){
+
+    public boolean deactivate(final int id) {
         return this.changeStatus(id, false);
     }
+
     public boolean changeStatusByUserId(final boolean active) {
         try {
             List<GiftList> giftList = this.findGiftListsByUser(GlobalMemory.getUserId());

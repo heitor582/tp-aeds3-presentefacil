@@ -3,7 +3,8 @@ package view.user;
 import controller.UserController;
 import model.User;
 import repository.GlobalMemory;
-import shared.NonBlank;
+
+import shared.StringValidate;
 import view.View;
 
 public final class EditUserDataView extends View {
@@ -23,31 +24,31 @@ public final class EditUserDataView extends View {
         System.out.println("Ao não digitar nada novo será utilizado o anterior");
         System.out.print("Novo nome (atual: " + user.getName() + "): ");
         String name = scanner.nextLine();
-        if (NonBlank.isNotValid(name)) {
+        if (StringValidate.isBlank(name)) {
             name = user.getName();
         }
 
         System.out.print("Novo email (atual: " + user.getEmail() + "): ");
         String email = scanner.nextLine();
-        if (NonBlank.isNotValid(email)) {
+        if (StringValidate.isBlank(email)) {
             email = user.getEmail();
         }
 
         System.out.print("Nova senha: ");
         String password = scanner.nextLine();
-        if (NonBlank.isNotValid(password)) {
+        if (StringValidate.isBlank(password)) {
             password = user.getHashPassword();
         }
 
         System.out.print("Nova pergunta de segurança (atual: " + user.getSecretQuestion() + "): ");
         String secretQuestion = scanner.nextLine();
-        if (NonBlank.isNotValid(secretQuestion)) {
+        if (StringValidate.isBlank(secretQuestion)) {
             secretQuestion = user.getSecretQuestion();
         }
 
         System.out.print("Nova resposta de segurança: ");
         String secretAnswer = scanner.nextLine();
-        if (NonBlank.isNotValid(secretAnswer)) {
+        if (StringValidate.isBlank(secretAnswer)) {
             secretAnswer = user.getSecretAnswer();
         }
 
@@ -57,8 +58,7 @@ public final class EditUserDataView extends View {
                 email,
                 password,
                 secretQuestion,
-                secretAnswer
-        );
+                secretAnswer);
 
         this.alertMessage("Dados atualizados com sucesso!");
     }
