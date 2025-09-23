@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import shared.Cryptography;
 import shared.StringValidate;
 
 public final class User extends Entity{
@@ -67,11 +68,11 @@ public final class User extends Entity{
     public static User create(
         final String name,
         final String email,
-        final String hashPassword,
+        final String pasword,
         final String secretQuestion,
         final String secretAnswer
     ) {
-        return new User(-1, name, email, hashPassword, secretQuestion, secretAnswer, true);
+        return new User(-1, name, email, Cryptography.toMd5(pasword), secretQuestion, secretAnswer, true);
     }
 
     @Override

@@ -3,6 +3,7 @@ package view.user;
 import java.util.List;
 
 import controller.UserController;
+import shared.NonBlank;
 import view.View;
 
 public final class ReactivateUserView extends View {
@@ -15,16 +16,21 @@ public final class ReactivateUserView extends View {
     @Override
     public void viewDisplay() {
         String email;
-        String senha;
+        String password;
         String answer;
 
         System.out.println("Digite o seu email : ");
         email = scanner.nextLine();
 
         System.out.println("Digite sua senha : ");
-        senha = scanner.nextLine();
+        password = scanner.nextLine();
 
-        List<String> secret = UserController.INSTANCE.getUserQuestion(email, senha);
+        if (NonBlank.isNotValid(email) || NonBlank.isNotValid(password)) {
+            this.alertMessage("Todos os campos são obrigatórios!");
+            return;
+        }
+
+        List<String> secret = UserController.INSTANCE.getUserQuestion(email, password);
 
         if(secret.isEmpty()){
             this.alertMessage("Email ou senha incorretos!!!");
@@ -39,7 +45,11 @@ public final class ReactivateUserView extends View {
             return;
         }
 
-        UserController.INSTANCE.changeStatus(true);
+        boolean resp = UserController.INSTANCE.changeStatus(true);
+        if(!resp){
+            this.alertMessage("Ocorreu um erro");
+            return;
+        }
 
         this.alertMessage("Usuário reativado com sucesso");
     }

@@ -1,12 +1,12 @@
 package controller;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import model.User;
 import repository.GlobalMemory;
 import repository.user.UserRepository;
+import shared.Cryptography;
+import shared.NonBlank;
 
 public final class UserController {
     public final static UserController INSTANCE = new UserController();
@@ -23,50 +23,54 @@ public final class UserController {
     public User findUserById(final int id) {
         try {
             return this.repository.read(id);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+            return null;
         }
-        return null;
     }
 
     public boolean login(final String email, final String password){
         try{        
             User user = this.repository.findByEmail(email);
             if(user == null) return false;
-            if(!user.getHashPassword().equals(toMd5(password))) return false;
+            if(!user.getHashPassword().equals(Cryptography.toMd5(password))) return false;
             GlobalMemory.setUserId(user.getId());
             return user.isActive();
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch(final Exception e){
+            return false;
         }
-        return false;
     }
 
     public List<String> getUserQuestion(final String email, final String password){
         try{        
             User user = this.repository.findByEmail(email);
-            if(user == null) return null;
-            if(!user.getHashPassword().equals(toMd5(password))) return null;
+            if(user == null) return List.of();
+            if(!user.getHashPassword().equals(Cryptography.toMd5(password))) return List.of();
             GlobalMemory.setUserId(user.getId());
             return List.of(user.getSecretQuestion(), user.getSecretAnswer());
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch(final Exception e){
+            List.of();
         }
         return List.of();
     }
 
     public boolean logout(){
         GlobalMemory.logout();
-        return true;
+        return GlobalMemory.isLogout();
     }
 
-    public int create(final User user){
+    public int create(
+        final String name,
+        final String email,
+        final String password,
+        final String secretQuestion,
+        final String secretAnswer
+    ){
         int id = -1;
         try{
-            user.setHashPassword(toMd5(user.getHashPassword()));
+            User user = User.create(name, email, password, secretQuestion, secretAnswer);
             id = this.repository.create(user);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
+        }catch(final Exception e){
+            return -1;
         }
 
         return id;
@@ -85,13 +89,13 @@ public final class UserController {
             if (oldUser != null) {
                 String oldEmail = oldUser.getEmail();
 
-                boolean isNewPassword = password != null && !password.isBlank() && !password.equals(oldUser.getHashPassword());
+                boolean isNewPassword = NonBlank.isValid(password) && !password.equals(oldUser.getHashPassword());
                
                 User newUser = User.from(
                     oldUser.getId(), 
                     name, 
                     email, 
-                    isNewPassword ? toMd5(password.trim()) : oldUser.getHashPassword(), 
+                    isNewPassword ? Cryptography.toMd5(password.trim()) : oldUser.getHashPassword(), 
                     secretQuestion, 
                     secretAnswer, 
                     true
@@ -102,7 +106,7 @@ public final class UserController {
             } else {
                 System.out.println("Usuário com ID " + id + " não encontrado.");
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             System.out.println("Erro ao atualizar usuário: " + e.getMessage());
         }
     }
@@ -112,8 +116,8 @@ public final class UserController {
             if(!this.repository.delete(GlobalMemory.getUserId())){//TODO: tem que ver qq vai fzr se vai deixar deletar por causa das listas ou n ou, se sim deletar as listas tbm
                 return false;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+            return false;
         }
         this.logout();
         return true;
@@ -128,23 +132,8 @@ public final class UserController {
             GiftListController.INSTANCE.changeStatusByUserId(false);
             
             return repository.update(user);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+            return false;
         }
-        return false;
-    }
-
-    public String toMd5(final String password){
-        try{
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hashBytes = md.digest(password.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for(byte b : hashBytes){
-                sb.append(String.format("%02x",b));
-            }
-            return sb.toString();
-        }catch(NoSuchAlgorithmException e){
-            throw new RuntimeException("Erro ao gerar hash MD5",e);
-        }
-    }
+    }    
 }

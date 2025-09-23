@@ -27,32 +27,28 @@ public final class ListDetailsView extends View {
             this.set(id);
             this.reload();
 
-            String expirationDate = giftList.getExpirationDate().isPresent()
-                    ? giftList.getExpirationDate().get().toString()
-                    : "(sem data)";
-            String menu = String.format("""
-                            CÓDIGO: %s
-                            NOME: %s
-                            DESCRIÇÃO: %s
-                            DATA DE CRIAÇÃO: %s
-                            DATA LIMITE: %s
-                            STATUS: %s
-                            
-                            (1) Gerenciar produtos da lista
-                            (2) Alterar dados da lista
-                            (3) Desativar lista
-                            
-                            (R) Retornar ao menu anterior
-                            
-                            Opção: """,
-                    giftList.getCode(),
-                    giftList.getName(),
-                    giftList.getDescription(),
-                    giftList.getCreatedAt(),
-                    expirationDate,
-                    giftList.isActive() ? "" : "Desativado"
+            System.out.printf("""
+                CÓDIGO: %s
+                NOME: %s
+                DESCRIÇÃO: %s
+                DATA DE CRIAÇÃO: %s
+                DATA LIMITE: %s
+                STATUS: %s
+                
+                (1) Gerenciar produtos da lista
+                (2) Alterar dados da lista
+                (3) Desativar lista
+                
+                (R) Retornar ao menu anterior
+                
+                Opção: """,
+                giftList.getCode(),
+                giftList.getName(),
+                giftList.getDescription(),
+                giftList.getCreatedAt(),
+                giftList.getExpirationDateFormated(),
+                giftList.isActive() ? "Ativado" : "Desativado"
             );
-            System.out.print(menu);
 
             option = scanner.nextLine().trim().toUpperCase();
 
