@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import model.Product;
 import repository.product.ProductRepository;
 
@@ -31,6 +33,15 @@ public final class ProductController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Product> findAll() {
+        try {
+            return this.repository.read();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return List.of();
     }
 
     public int create(final String name, final String description, final String gtin) {

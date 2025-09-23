@@ -1,6 +1,8 @@
 package repository;
 import java.io.File;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Entity;
 
@@ -87,6 +89,30 @@ public class DBFile<T extends Entity> {
             }
         }
         return null;
+    }
+
+    public List<T> read() throws Exception {
+        T obj;
+        short tam;
+        byte[] b;
+        byte lapide;
+        
+        file.seek(HEAD_LENGTH);
+        List<T> list = new ArrayList<T>();
+
+        while(file.length() > file.getFilePointer()){
+            obj = clazz.getConstructor().newInstance();
+            lapide = file.readByte();
+            if(lapide==' ') {
+                tam = file.readShort();
+                b = new byte[tam];
+                file.read(b);
+                obj.fromByteArray(b);
+                list.add(obj);
+            }
+        }
+            
+        return list;
     }
 
     public boolean delete(int id) throws Exception {

@@ -53,8 +53,7 @@ public final class ProductMenuView extends View {
     }
 
     private void listAllProducts() {
-        // TODO: fzr
-        this.alertMessage(">> [Products - not implemented yet]");
+        this.nextPage(ListProductView.INSTANCE);
     }
 
     private void newProducts() {

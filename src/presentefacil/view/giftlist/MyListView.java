@@ -71,7 +71,7 @@ public final class MyListView extends View {
         } while (!option.equals("R"));
     }
 
-    private void handleListSelection(GiftList list) {
+    private void handleListSelection(final GiftList list) {
         this.nextPage(ListDetailsView.INSTANCE.set(list.getId()));
     }
 
