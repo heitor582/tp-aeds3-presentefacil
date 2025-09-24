@@ -45,12 +45,9 @@ public class ListProductView extends View {
             }
 
             menuBuilder.append(String.format(
-                    """
-                            %s
-                            %s
-                            """,
-                    (page > 1) ? "(A) Página anterior" : "",
-                    (page < maxPage) ? "(P) Próxima página" : ""));
+                    "%s%s",
+                    (page > 1) ? "\n(A) Página anterior\n" : "",
+                    (page < maxPage) ? "\n(P) Próxima página" : ""));
 
             System.out.printf(
                     """

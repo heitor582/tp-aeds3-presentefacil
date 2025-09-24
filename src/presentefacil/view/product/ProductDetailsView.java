@@ -2,8 +2,6 @@ package view.product;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import controller.GiftListController;
 import controller.ProductController;
 import model.GiftList;
@@ -30,9 +28,9 @@ public final class ProductDetailsView extends View {
     protected void viewDisplay() {
         String option;
         List<GiftList> found = GiftListController.INSTANCE.findGiftListsByProductId(id);
-        Stream<GiftList> mine = found.stream().filter(gift -> gift.getId() == id);
+        List<GiftList> mine = found.stream().filter(gift -> gift.getId() == id).toList();
 
-        String list = mine.map(l -> "- " + l.getName() + " (" + (l.isActive() ? "Ativado" : "Desativado") + ")")
+        String list = mine.stream().map(l -> "- " + l.getName() + " (" + (l.isActive() ? "Ativado" : "Desativado") + ")")
     .collect(Collectors.joining("\n"));
 
         do {
@@ -40,8 +38,8 @@ public final class ProductDetailsView extends View {
             this.reload();
             
             System.out.printf("""
-                    NOME: %s
                     GTIN-13: %s
+                    NOME: %s
                     DESCRIÇÃO: %s
                     STATUS: %s
 
@@ -61,7 +59,7 @@ public final class ProductDetailsView extends View {
                     product.getDescription(),
                     product.isActive() ? "Ativado" : "Desativado",
                     list,
-                    found.size() - mine.count()
+                    found.size() - mine.size()
             );
 
             option = scanner.nextLine().trim().toUpperCase();
@@ -87,7 +85,7 @@ public final class ProductDetailsView extends View {
     }
 
     private void editProductData() {
-       this.nextPage(EditProductView.INSTANCE);
+       this.nextPage(EditProductView.INSTANCE.setProductId(id));
     }
 
     private void deactive() {
