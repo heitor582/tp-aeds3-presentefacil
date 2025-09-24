@@ -87,8 +87,7 @@ public final class ProductDetailsView extends View {
     }
 
     private void editProductData() {
-        // TODO: Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'editProductData'");
+       this.nextPage(EditProductView.INSTANCE);
     }
 
     private void deactive() {

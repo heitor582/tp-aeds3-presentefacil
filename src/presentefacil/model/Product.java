@@ -41,7 +41,7 @@ public final class Product extends Entity {
             final String gtin) {
         return new Product(-1, name, description, true, gtin);
     }
-    
+
     public String getName() {
         return this.name;
     }
@@ -70,6 +70,11 @@ public final class Product extends Entity {
         dos.write(gtin.getBytes());
         dos.writeBoolean(isActive);
         return baos.toByteArray();
+    }
+
+    public static Product from(final String name, final String description, final String gtin, final int id,
+            final boolean newStatus) {
+        return new Product(id, name, description, newStatus, gtin);
     }
 
 }

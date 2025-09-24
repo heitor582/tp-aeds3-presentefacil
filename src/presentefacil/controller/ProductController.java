@@ -66,4 +66,12 @@ public final class ProductController {
     public boolean deactivate(int id) {
         return this.changeStatus(id, false);
     }
+
+    public boolean update(final Product product) {
+        try {
+            return repository.update(product);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
