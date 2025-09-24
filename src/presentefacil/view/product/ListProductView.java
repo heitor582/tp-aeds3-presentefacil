@@ -19,9 +19,9 @@ public class ListProductView extends View {
         super("Listagem", true);
         OFFSET = 0;
         list = ProductController.INSTANCE.findAll();
-        MAX = list.size() < 10 ? list.size() : 10;
-        maxPage = list.size() > 0 ? (int) Math.ceil((list.size() / MAX)) : 0;
-        page = maxPage>0 ? 1 : 0;
+        MAX = 10;
+        maxPage = list.size() > 0 ? (int) Math.ceil((list.size() / (double) MAX)) : 0;
+        page = maxPage > 0 ? 1 : 0;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ListProductView extends View {
             if (list.isEmpty()) {
                 menuBuilder.append("Nenhum Produto encontrado.\n");
             } else {
-                for (int i = OFFSET; i < OFFSET + MAX; i++) {
+                for (int i = OFFSET; i < Math.min(OFFSET + MAX, list.size()); i++) {
                     Product product = list.get(i);
                     menuBuilder.append(
                             String.format("(%d) %s %s\n", i + 1,
@@ -94,20 +94,15 @@ public class ListProductView extends View {
     }
 
     private void previousPageList() {
-        if (OFFSET > MAX) {
+        if (OFFSET >= MAX) {
             OFFSET -= MAX;
             page--;
         }
     }
 
     private void nextPageList() {
-        int offset = OFFSET;
-        if (OFFSET + MAX < list.size())
+        if (OFFSET + MAX < list.size()) {
             OFFSET += MAX;
-        else if (OFFSET + MAX > list.size())
-            OFFSET += (list.size() - OFFSET);
-
-        if (offset != OFFSET) {
             page++;
         }
     }
