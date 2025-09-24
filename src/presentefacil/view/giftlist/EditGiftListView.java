@@ -17,7 +17,7 @@ public final class EditGiftListView extends View {
         super("Editar Lista de Presentes", true);
     }
 
-    public EditGiftListView setGiftListId(final int giftListId) {
+    public EditGiftListView set(final int giftListId) {
         this.giftListId = giftListId;
         return this;
     }

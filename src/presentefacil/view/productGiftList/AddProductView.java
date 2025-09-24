@@ -15,8 +15,9 @@ public final class AddProductView extends View {
 
     private int giftListId = -1;
 
-    public void setGiftListId(final int giftListId) {
+    public AddProductView set(final int giftListId) {
         this.giftListId = giftListId;
+        return this;
     }
 
     @Override
@@ -28,7 +29,7 @@ public final class AddProductView extends View {
                     (1) Buscar produtos por GTIN
                     (2) Listar todos os produtos
 
-                    (S) Sair
+                    (R) Retornar ao menu anterior
 
                     Opção: """;
             System.out.print(menu);
@@ -75,6 +76,6 @@ public final class AddProductView extends View {
     }
 
     private void listAll() {
-        this.nextPage(ListAddProductView.INSTANCE);
+        this.nextPage(ListAddProductView.INSTANCE.setGiftListId(giftListId));
     }
 }

@@ -52,10 +52,8 @@ public final class ProductGiftListDetailsView extends View {
                     product.getGtin(),
                     product.getName(),
                     product.getDescription(),
-                    product.isActive() ? "Ativado" : "Desativado",
                     productGiftList.getQuantity(),
                     productGiftList.getDescription()
-
             );
 
             option = scanner.nextLine().trim().toUpperCase();
@@ -85,7 +83,7 @@ public final class ProductGiftListDetailsView extends View {
 
     private void editObservation() {
         System.out.println("Digite a nova obs: ");
-        String newOBS = scanner.nextLine().trim().toUpperCase();
+        String newOBS = scanner.nextLine().trim();
         productGiftList.changeDescription(newOBS);
         ProductGiftListController.INSTANCE.update(productGiftList);
     }

@@ -9,17 +9,18 @@ import shared.IsNumber;
 import shared.Pair;
 import view.View;
 
-public final class ProductManagementView extends View{
-public static final ProductManagementView INSTANCE = new ProductManagementView();
+public final class ProductManagementView extends View {
+    public static final ProductManagementView INSTANCE = new ProductManagementView();
     private int giftListId = -1;
     private List<Pair<ProductGiftList, Product>> list = List.of();
+
     private ProductManagementView() {
         super("Produtos", true);
-        list = ProductGiftListController.INSTANCE.findAllByGiftListId(giftListId);
     }
 
-    public void setGiftListId(final int id){
+    public ProductManagementView set(final int id) {
         this.giftListId = id;
+        return this;
     }
 
     @Override
@@ -27,6 +28,7 @@ public static final ProductManagementView INSTANCE = new ProductManagementView()
         String option;
 
         do {
+            list = ProductGiftListController.INSTANCE.findAllByGiftListId(giftListId);
             StringBuilder menuBuilder = new StringBuilder();
             if (list.isEmpty()) {
                 menuBuilder.append("Nenhum Produto encontrado.\n");
@@ -76,7 +78,7 @@ public static final ProductManagementView INSTANCE = new ProductManagementView()
     }
 
     private void addProduct() {
-        this.nextPage(AddProductView.INSTANCE);
+        this.nextPage(AddProductView.INSTANCE.set(giftListId));
     }
 
     private void handleListSelection(final ProductGiftList product) {

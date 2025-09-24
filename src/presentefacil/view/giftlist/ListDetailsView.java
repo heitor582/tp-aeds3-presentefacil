@@ -76,14 +76,14 @@ public final class ListDetailsView extends View {
     }
 
     private void manageProducts() {
-        this.nextPage(ProductManagementView.INSTANCE);
+        this.nextPage(ProductManagementView.INSTANCE.set(id));
     }
 
     private void editListData() {
-        this.nextPage(EditGiftListView.INSTANCE.setGiftListId(giftList.getId()));
+        this.nextPage(EditGiftListView.INSTANCE.set(id));
     }
 
     private void deactive() {
-        GiftListController.INSTANCE.deactivate(giftList.getId());
+        GiftListController.INSTANCE.deactivate(id);
     }
 }

@@ -26,8 +26,9 @@ public final class ListAddProductView extends View {
         page = maxPage > 0 ? 1 : 0;
     }
 
-    public void setGiftListId(final int giftListId) {
+    public ListAddProductView setGiftListId(final int giftListId) {
         this.giftListId = giftListId;
+        return this;
     }
 
     @Override
