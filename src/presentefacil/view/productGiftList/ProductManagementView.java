@@ -76,7 +76,7 @@ public static final ProductManagementView INSTANCE = new ProductManagementView()
     }
 
     private void addProduct() {
-        //TODO:
+        // TODO:
     }
 
     private void handleListSelection(final ProductGiftList product) {

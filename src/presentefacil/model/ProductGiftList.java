@@ -12,6 +12,15 @@ public final class ProductGiftList extends Entity {
     private int quantity = 0;
     private String description;
 
+    public void changeQuantity(int q) {
+        if(q<0) return;
+        this.quantity = q;
+    }
+
+    public void changeDescription(final String description){
+        this.description = description;
+    }
+
     public int getProductId() {
         return this.productId;
     }
@@ -48,7 +57,7 @@ public final class ProductGiftList extends Entity {
         this.description = description;
     }
 
-    public ProductGiftList create(
+    public static ProductGiftList create(
             final int productId,
             final int giftListId,
             final int quantity,

@@ -70,4 +70,20 @@ public final class ProductGiftListController {
         return null;
     }
 
+    public boolean update(final ProductGiftList productGiftList) {
+       try {
+            return repository.update(productGiftList);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean delete(final int productGiftListId) {
+       try {
+            return repository.delete(productGiftListId);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

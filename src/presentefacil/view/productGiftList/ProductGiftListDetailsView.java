@@ -4,6 +4,7 @@ import controller.ProductController;
 import controller.ProductGiftListController;
 import model.Product;
 import model.ProductGiftList;
+import shared.IsNumber;
 import view.View;
 
 public final class ProductGiftListDetailsView extends View {
@@ -33,7 +34,7 @@ public final class ProductGiftListDetailsView extends View {
         do {
             this.set(productGiftListId);
             this.reload();
-            
+
             System.out.printf("""
                     NOME: %s
                     GTIN-13: %s
@@ -83,14 +84,27 @@ public final class ProductGiftListDetailsView extends View {
     }
 
     private void editObservation() {
-       //TODO:
+        System.out.println("Digite a nova obs: ");
+        String newOBS = scanner.nextLine().trim().toUpperCase();
+        productGiftList.changeDescription(newOBS);
+        ProductGiftListController.INSTANCE.update(productGiftList);
     }
 
     private void remove() {
-        //TODO:
+        ProductGiftListController.INSTANCE.delete(productGiftListId);
     }
 
     private void changeQuantity() {
-        //TODO:
+        System.out.println("Digite a nova quantidade: ");
+        String newQ = scanner.nextLine().trim().toUpperCase();
+        if (IsNumber.validate(newQ)) {
+            int nq = Integer.parseInt(newQ);
+            if (nq < 0)
+                System.out.println("Tentar novamente com um valor válido");
+            productGiftList.changeQuantity(nq);
+            ProductGiftListController.INSTANCE.update(productGiftList);
+        } else {
+            System.out.println("Tentar novamente com um valor válido");
+        }
     }
 }
