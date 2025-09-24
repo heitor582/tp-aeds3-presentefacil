@@ -29,7 +29,7 @@ public final class ProductController {
     public Product findById(final int id) {
         try {
             return this.repository.read(id);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         return null;

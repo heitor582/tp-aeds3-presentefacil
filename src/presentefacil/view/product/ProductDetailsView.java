@@ -2,10 +2,11 @@ package view.product;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import controller.GiftListController;
 import controller.ProductController;
+import controller.ProductGiftListController;
 import model.GiftList;
 import model.Product;
+import shared.Pair;
 import view.View;
 
 public final class ProductDetailsView extends View {
@@ -14,7 +15,7 @@ public final class ProductDetailsView extends View {
     public static final ProductDetailsView INSTANCE = new ProductDetailsView();
 
     private ProductDetailsView() {
-        super("Detalhes do produto", false);
+        super("Detalhes do produto", true);
     }
 
     public ProductDetailsView set(final int id) {
@@ -27,7 +28,7 @@ public final class ProductDetailsView extends View {
     @Override
     protected void viewDisplay() {
         String option;
-        List<GiftList> found = GiftListController.INSTANCE.findGiftListsByProductId(id);
+        List<GiftList> found = ProductGiftListController.INSTANCE.findAllByProductId(id).stream().map(Pair::getSecond).toList();
         List<GiftList> mine = found.stream().filter(gift -> gift.getId() == id).toList();
 
         String list = mine.stream().map(l -> "- " + l.getName() + " (" + (l.isActive() ? "Ativado" : "Desativado") + ")")

@@ -3,6 +3,7 @@ package view.giftlist;
 import controller.GiftListController;
 import model.GiftList;
 import view.View;
+import view.productGiftList.ProductManagementView;
 
 public final class ListDetailsView extends View {
     public static final ListDetailsView INSTANCE = new ListDetailsView();
@@ -75,7 +76,7 @@ public final class ListDetailsView extends View {
     }
 
     private void manageProducts() {
-        this.alertMessage(">> [Manage products - not implemented yet]");
+        this.nextPage(ProductManagementView.INSTANCE);
     }
 
     private void editListData() {

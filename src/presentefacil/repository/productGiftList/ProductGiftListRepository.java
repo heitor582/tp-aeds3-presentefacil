@@ -43,4 +43,17 @@ public final class ProductGiftListRepository extends DBFile<ProductGiftList> {
         }
         return giftListsProduct;
     }
+
+    public List<ProductGiftList> findProductsByGiftListId(int giftListId) throws Exception {
+        List<ProductGiftList> giftListsProduct = new ArrayList<ProductGiftList>();
+        IdIdIndexPair searchPair = new IdIdIndexPair(giftListId, -1);
+        List<IdIdIndexPair> pairs = this.giftListIndirectIndex.read(searchPair);
+        for (IdIdIndexPair pair : pairs) {
+            ProductGiftList productGiftList = super.read(pair.getID2());
+            if (productGiftList != null) {
+                giftListsProduct.add(productGiftList);
+            }
+        }
+        return giftListsProduct;
+    }
 }

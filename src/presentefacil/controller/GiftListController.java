@@ -5,20 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 import model.GiftList;
-import model.ProductGiftList;
 import repository.giftlist.GiftListRepository;
-import repository.productGiftList.ProductGiftListRepository;
 import repository.GlobalMemory;
 
 public final class GiftListController {
     public final static GiftListController INSTANCE = new GiftListController();
     private GiftListRepository repository;
-    private ProductGiftListRepository productGiftListRepository;
 
     private GiftListController() {
         try {
             this.repository = new GiftListRepository();
-            this.productGiftListRepository = new ProductGiftListRepository();
         } catch (final Exception e) {
             e.printStackTrace();
         }
@@ -108,17 +104,6 @@ public final class GiftListController {
             });
         } catch (final Exception e) {
             return false;
-        }
-    }
-
-    public List<GiftList> findGiftListsByProductId(final int productId){
-        try {
-            List<Integer> list = productGiftListRepository.findGiftListsByProductId(productId)
-            .stream().map(ProductGiftList::getGiftListId).toList();
-
-            return this.repository.findAllByIdIn(list);
-        } catch (final Exception e) {
-            return List.of();
         }
     }
 }

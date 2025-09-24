@@ -7,7 +7,7 @@ import model.Product;
 import shared.IsNumber;
 import view.View;
 
-public class ListProductView extends View {
+public final class ListProductView extends View {
     public static final ListProductView INSTANCE = new ListProductView();
     private int OFFSET = 0;
     private int MAX = 10;

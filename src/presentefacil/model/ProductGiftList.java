@@ -16,6 +16,14 @@ public final class ProductGiftList extends Entity {
         return this.productId;
     }
 
+    public String getDescription(){
+        return this.description;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
+    }
+
     public int getGiftListId() {
         return this.giftListId;
     }
