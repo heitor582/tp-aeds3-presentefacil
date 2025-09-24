@@ -71,7 +71,7 @@ public final class ProductGiftListController {
     }
 
     public boolean update(final ProductGiftList productGiftList) {
-       try {
+        try {
             return repository.update(productGiftList);
         } catch (Exception e) {
             return false;
@@ -79,10 +79,20 @@ public final class ProductGiftListController {
     }
 
     public boolean delete(final int productGiftListId) {
-       try {
+        try {
             return repository.delete(productGiftListId);
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public int create(final int giftListId, final int productId) {
+        try {
+            ProductGiftList list = ProductGiftList.create(
+                    productId, giftListId);
+            return repository.create(list);
+        } catch (final Exception e) {
+            return -1;
         }
     }
 

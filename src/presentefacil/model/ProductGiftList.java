@@ -65,6 +65,12 @@ public final class ProductGiftList extends Entity {
         return new ProductGiftList(-1, productId, giftListId, quantity, description, true);
     }
 
+    public static ProductGiftList create(
+            final int productId,
+            final int giftListId) {
+        return new ProductGiftList(-1, productId, giftListId, 0, "", true);
+    }
+
     @Override
     public void fromByteArray(byte[] array) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(array);
