@@ -3,12 +3,18 @@ package repository.product;
 import model.Product;
 import repository.DBFile;
 import repository.ExtensibleHash;
+import repository.giftlist.IdShareCodeIndexPair;
 
 public final class ProductRepository extends DBFile<Product> {
     private ExtensibleHash<IdGTINCodeIndexPair> indirectIndex;
 
     public ProductRepository() throws Exception {
         super(Product.class);
+        this.indirectIndex = new ExtensibleHash<IdGTINCodeIndexPair>(
+                IdGTINCodeIndexPair.class.getConstructor(),
+                5,
+                "product/id.gtin",
+                "product/id.gtin");
     }
 
     public int create(final Product product) throws Exception {

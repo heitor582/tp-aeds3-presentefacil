@@ -6,6 +6,7 @@ import controller.ProductController;
 import controller.ProductGiftListController;
 import model.GiftList;
 import model.Product;
+import repository.GlobalMemory;
 import shared.Pair;
 import view.View;
 
@@ -29,7 +30,7 @@ public final class ProductDetailsView extends View {
     protected void viewDisplay() {
         String option;
         List<GiftList> found = ProductGiftListController.INSTANCE.findAllByProductId(id).stream().map(Pair::getSecond).toList();
-        List<GiftList> mine = found.stream().filter(gift -> gift.getId() == id).toList();
+        List<GiftList> mine = found.stream().filter(gift -> gift.getUserId() == GlobalMemory.getUserId()).toList();
 
         String list = mine.stream().map(l -> "- " + l.getName() + " (" + (l.isActive() ? "Ativado" : "Desativado") + ")")
     .collect(Collectors.joining("\n"));

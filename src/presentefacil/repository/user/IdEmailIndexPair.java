@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import repository.ExtensibleHashContract;
 import shared.StringValidate;
@@ -51,8 +52,16 @@ public final class IdEmailIndexPair implements ExtensibleHashContract {
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
+
         dos.writeInt(this.id);
-        dos.writeUTF(this.email);
+
+        byte[] emailBytes = this.email.getBytes(StandardCharsets.UTF_8);
+        byte[] emailBuffer = new byte[26];
+        int length = Math.min(emailBytes.length, emailBuffer.length);
+        System.arraycopy(emailBytes, 0, emailBuffer, 0, length);
+
+        dos.write(emailBuffer);
+
         return baos.toByteArray();
     }
 
@@ -61,7 +70,11 @@ public final class IdEmailIndexPair implements ExtensibleHashContract {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
         this.id = dis.readInt();
-        this.email = dis.readUTF();
+
+        byte[] emailBuffer = new byte[26];
+        dis.readFully(emailBuffer);
+
+        this.email = new String(emailBuffer, StandardCharsets.UTF_8).trim();
     }
 
     @Override
