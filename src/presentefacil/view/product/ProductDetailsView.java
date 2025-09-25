@@ -29,25 +29,26 @@ public final class ProductDetailsView extends View {
     @Override
     protected void viewDisplay() {
         String option;
-        List<GiftList> found = ProductGiftListController.INSTANCE.findAllByProductId(id).stream().map(Pair::getSecond).toList();
+        List<GiftList> found = ProductGiftListController.INSTANCE.findAllByProductId(id).stream().map(Pair::getSecond)
+                .toList();
         List<GiftList> mine = found.stream().filter(gift -> gift.getUserId() == GlobalMemory.getUserId()).toList();
-
-        String list = mine.stream().map(l -> "- " + l.getName() + " (" + (l.isActive() ? "Ativado" : "Desativado") + ")")
-    .collect(Collectors.joining("\n"));
+        String list = "";
+        if (mine.size() > 0) {
+            list = "Aparece nas minhas listas:\n" +
+                    mine.stream().map(l -> "- " + l.getName() + " (" + (l.isActive() ? "Ativado" : "Desativado") + ")")
+                            .collect(Collectors.joining("\n"));
+        }
 
         do {
             this.set(id);
             this.reload();
-            
             System.out.printf("""
                     GTIN-13: %s
                     NOME: %s
                     DESCRIÇÃO: %s
                     STATUS: %s
 
-                    Aparece nas minhas listas:
                     %s
-
                     Aparece também em mais %d listas de outras pessoas.
 
                     (1) Alterar os dados do produto
@@ -61,8 +62,7 @@ public final class ProductDetailsView extends View {
                     product.getDescription(),
                     product.isActive() ? "Ativado" : "Desativado",
                     list,
-                    found.size() - mine.size()
-            );
+                    found.size() - mine.size());
 
             option = scanner.nextLine().trim().toUpperCase();
 
@@ -87,7 +87,7 @@ public final class ProductDetailsView extends View {
     }
 
     private void editProductData() {
-       this.nextPage(EditProductView.INSTANCE.setProductId(id));
+        this.nextPage(EditProductView.INSTANCE.setProductId(id));
     }
 
     private void deactive() {

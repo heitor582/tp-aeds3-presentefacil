@@ -20,7 +20,7 @@ public final class GiftList extends Entity {
     private LocalDate createdAt = LocalDate.now();
     private Optional<LocalDate> expirationDate = null;
     private String shareCode = "";
-    private int userId = -1;;
+    private int userId = -1;
 
     public GiftList() {
     }
@@ -34,7 +34,7 @@ public final class GiftList extends Entity {
             final String shareCode,
             final int userId,
             final boolean status) {
-        super(id);
+        super(id, status);
         this.name = StringValidate.requireNonBlank(name);
         this.detailedDescription = detailedDescription;
         this.createdAt = createdAt;
@@ -114,6 +114,7 @@ public final class GiftList extends Entity {
         this.expirationDate = Optional.ofNullable(optionalExpDate == -1 ? null : LocalDate.ofEpochDay(optionalExpDate));
         dis.read(shareCode);
         this.shareCode = new String(shareCode);
+        this.userId = dis.readInt();
         this.isActive = dis.readBoolean();
     }
 
@@ -128,6 +129,7 @@ public final class GiftList extends Entity {
         dos.writeInt((int) this.createdAt.toEpochDay());
         dos.writeInt(this.expirationDate.map(expDate -> (int) expDate.toEpochDay()).orElse(-1));
         dos.write(this.shareCode.getBytes());
+        dos.writeInt(userId);
         dos.writeBoolean(this.isActive);
         return baos.toByteArray();
     }

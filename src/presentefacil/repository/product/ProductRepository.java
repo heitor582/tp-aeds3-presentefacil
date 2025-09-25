@@ -3,7 +3,6 @@ package repository.product;
 import model.Product;
 import repository.DBFile;
 import repository.ExtensibleHash;
-import repository.giftlist.IdShareCodeIndexPair;
 
 public final class ProductRepository extends DBFile<Product> {
     private ExtensibleHash<IdGTINCodeIndexPair> indirectIndex;
