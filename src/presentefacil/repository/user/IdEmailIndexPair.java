@@ -42,7 +42,7 @@ public class IdEmailIndexPair implements ExtensibleHashContract {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         dos.writeInt(this.id);
-        dos.writeUTF(this.email);
+        dos.write(this.email.getBytes());
         return baos.toByteArray();
     }
 
@@ -50,8 +50,10 @@ public class IdEmailIndexPair implements ExtensibleHashContract {
     public void fromByteArray(final byte[] ba) throws IOException{
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
+        byte[] code = new byte[26];
         this.id = dis.readInt();
-        this.email = dis.readUTF();
+        dis.read(code);
+        this.email = new String(code);
     }
 
     @Override
