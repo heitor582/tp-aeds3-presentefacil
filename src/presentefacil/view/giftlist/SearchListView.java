@@ -2,10 +2,10 @@ package view.giftlist;
 
 import controller.GiftListController;
 import model.GiftList;
-import shared.NonBlank;
+import shared.StringValidate;
 import view.View;
 
-public class SearchListView extends View {
+public final class SearchListView extends View {
     public static final SearchListView INSTANCE = new SearchListView();
 
     private SearchListView() {
@@ -17,20 +17,19 @@ public class SearchListView extends View {
         System.out.println("Digite o código da lista a buscar: (ou R para voltar)");
         String code = scanner.nextLine().trim();
 
-        if(NonBlank.isNotValid(code) || (!code.equals("R") && code.length()<10)){
+        if (StringValidate.isBlank(code) || (!code.equals("R") && code.length() < 10)) {
             this.alertMessage("Codigo Inválido");
             return;
-        } else if(code.equals("R")){
+        } else if (code.equals("R")) {
             return;
         }
 
         GiftList foundList = GiftListController.INSTANCE.findByShareCode(code);
-        if(foundList != null) {
+        if (foundList != null) {
             this.nextPage(ListDetailsView.INSTANCE.set(foundList.getId()));
-        }else{
+        } else {
             this.alertMessage("List with code %s not found", code);
         }
         return;
     }
 }
-

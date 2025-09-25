@@ -7,38 +7,40 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import repository.ExtensibleHashContract;
+import shared.StringValidate;
 
-public class IdShareCodeIndexPair implements ExtensibleHashContract {
+public final class IdShareCodeIndexPair implements ExtensibleHashContract {
     private int id = -1;
     private String shareCode = "";
     private short SIZE = 14;
 
-    public IdShareCodeIndexPair(){};
+    public IdShareCodeIndexPair() {
+    };
 
-    private IdShareCodeIndexPair(final int id, final String shareCode){
+    private IdShareCodeIndexPair(final int id, final String shareCode) {
         this.id = id;
-        this.shareCode = shareCode;
+        this.shareCode = StringValidate.requireNonBlank(shareCode);
     }
 
-    public static IdShareCodeIndexPair create(final int id, final String shareCode){
+    public static IdShareCodeIndexPair create(final int id, final String shareCode) {
         return new IdShareCodeIndexPair(id, shareCode);
     }
 
-    public String getShareCode(){
+    public String getShareCode() {
         return this.shareCode;
     }
 
-    public int getId(){
+    public int getId() {
         return this.id;
     }
 
     @Override
-    public short size(){
+    public short size() {
         return this.SIZE;
     }
 
     @Override
-    public byte[] toByteArray() throws IOException{
+    public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         dos.writeInt(this.id);
@@ -47,7 +49,7 @@ public class IdShareCodeIndexPair implements ExtensibleHashContract {
     }
 
     @Override
-    public void fromByteArray(final byte[] ba) throws IOException{
+    public void fromByteArray(final byte[] ba) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
         byte[] shareCode = new byte[10];

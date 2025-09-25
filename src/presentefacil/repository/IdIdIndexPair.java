@@ -1,4 +1,4 @@
-package repository.giftlist;
+package repository;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,18 +6,16 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import repository.BPlusTreeContract;
-
-public class IdIdIndexPair implements BPlusTreeContract<IdIdIndexPair> {
-  private int userId;
-  private int listId;
+public final class IdIdIndexPair implements BPlusTreeContract<IdIdIndexPair> {
+  private int id1;
+  private int id2;
   private short TAMANHO = 8;
 
-  public int getUserId() {
-   return this.userId; 
+  public int getID1() {
+   return this.id1; 
   }
-  public int getListId() {
-   return this.listId; 
+  public int getID2() {
+   return this.id2; 
   }
 
   public IdIdIndexPair() {
@@ -28,10 +26,10 @@ public class IdIdIndexPair implements BPlusTreeContract<IdIdIndexPair> {
     this(id, -1);
   }
 
-  public IdIdIndexPair(int id, int listId) {
+  public IdIdIndexPair(int id1, int id2) {
     try {
-      this.userId = id;
-      this.listId = listId;
+      this.id1 = id1;
+      this.id2 = id2;
     } catch (Exception ec) {
       ec.printStackTrace();
     }
@@ -39,7 +37,7 @@ public class IdIdIndexPair implements BPlusTreeContract<IdIdIndexPair> {
 
   @Override
   public IdIdIndexPair clone() {
-    return new IdIdIndexPair(this.userId, this.listId);
+    return new IdIdIndexPair(this.id1, this.id2);
   }
 
   public short size() {
@@ -47,24 +45,24 @@ public class IdIdIndexPair implements BPlusTreeContract<IdIdIndexPair> {
   }
 
   public int compareTo(IdIdIndexPair a) {
-    if (this.userId != a.userId)
-      return this.userId - a.userId;
+    if (this.id1 != a.id1)
+      return this.id1 - a.id1;
     else
-      return this.listId == -1 ? 0 : this.listId - a.listId;
+      return this.id2 == -1 ? 0 : this.id2 - a.id2;
   }
 
   public byte[] toByteArray() throws IOException {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);
-    dos.writeInt(this.userId);
-    dos.writeInt(this.listId);
+    dos.writeInt(this.id1);
+    dos.writeInt(this.id2);
     return baos.toByteArray();
   }
 
   public void fromByteArray(byte[] ba) throws IOException {
     ByteArrayInputStream bais = new ByteArrayInputStream(ba);
     DataInputStream dis = new DataInputStream(bais);
-    this.userId = dis.readInt();
-    this.listId = dis.readInt();
+    this.id1 = dis.readInt();
+    this.id2 = dis.readInt();
   }
 }

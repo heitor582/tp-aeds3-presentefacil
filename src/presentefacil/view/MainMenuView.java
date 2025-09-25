@@ -3,10 +3,12 @@ package view;
 import controller.UserController;
 import view.giftlist.MyListView;
 import view.giftlist.SearchListView;
+import view.product.ProductMenuView;
 import view.user.MyDataView;
 
-public class MainMenuView extends View {
+public final class MainMenuView extends View {
     public static final MainMenuView INSTANCE = new MainMenuView();
+
     private MainMenuView() {
         super("Início", true);
     }
@@ -17,14 +19,14 @@ public class MainMenuView extends View {
 
         do {
             String menu = """
-                (1) Meus dados
-                (2) Minhas listas
-                (3) Produtos
-                (4) Buscar lista
+                    (1) Meus dados
+                    (2) Minhas listas
+                    (3) Produtos
+                    (4) Buscar lista
 
-                (S) Sair
+                    (S) Sair
 
-                Opção: """;
+                    Opção: """;
             System.out.print(menu);
 
             option = scanner.nextLine().trim().toUpperCase();
@@ -65,7 +67,7 @@ public class MainMenuView extends View {
     }
 
     private void handleProducts() {
-        this.alertMessage(">> [Products - not implemented yet]");
+        this.nextPage(ProductMenuView.INSTANCE);
     }
 
     private void handleSearchList() {

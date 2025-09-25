@@ -1,6 +1,6 @@
 package repository;
 
-public class GlobalMemory {
+public final class GlobalMemory {
     private static int userId = -1;
     public static void setUserId(int userId) {
         GlobalMemory.userId = userId;

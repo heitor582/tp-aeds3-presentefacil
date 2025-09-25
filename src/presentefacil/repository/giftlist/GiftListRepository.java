@@ -7,27 +7,26 @@ import model.GiftList;
 import repository.BPlusTree;
 import repository.DBFile;
 import repository.ExtensibleHash;
+import repository.IdIdIndexPair;
 
-public class GiftListRepository extends DBFile<GiftList>  {
+public final class GiftListRepository extends DBFile<GiftList> {
     private BPlusTree<IdIdIndexPair> userIndirectIndex;
     private ExtensibleHash<IdShareCodeIndexPair> indirectIndex;
 
     public GiftListRepository() throws Exception {
         super(GiftList.class);
         this.userIndirectIndex = new BPlusTree<IdIdIndexPair>(
-            IdIdIndexPair.class.getConstructor(), 
-            5, 
-            "giftlist/userId.giftListId"
-        );
+                IdIdIndexPair.class.getConstructor(),
+                5,
+                "giftlist/userId.giftListId");
         this.indirectIndex = new ExtensibleHash<IdShareCodeIndexPair>(
-            IdShareCodeIndexPair.class.getConstructor(), 
-            5,
-            "giftlist/id.sharecode",
-            "giftlist/id.sharecode"
-        );
+                IdShareCodeIndexPair.class.getConstructor(),
+                5,
+                "giftlist/id.sharecode",
+                "giftlist/id.sharecode");
     }
 
-    public int create(final GiftList list) throws Exception{
+    public int create(final GiftList list) throws Exception {
         int id = super.create(list);
         this.indirectIndex.create(IdShareCodeIndexPair.create(list.getId(), list.getCode()));
         this.userIndirectIndex.create(new IdIdIndexPair(list.getUserId(), id));
@@ -38,13 +37,25 @@ public class GiftListRepository extends DBFile<GiftList>  {
         List<GiftList> giftLists = new ArrayList<GiftList>();
         IdIdIndexPair searchPair = new IdIdIndexPair(userId, -1);
         List<IdIdIndexPair> pairs = this.userIndirectIndex.read(searchPair);
-        for(IdIdIndexPair pair : pairs){
-            GiftList giftList = super.read(pair.getListId());
-            if(giftList != null){
+        for (IdIdIndexPair pair : pairs) {
+            GiftList giftList = super.read(pair.getID2());
+            if (giftList != null) {
                 giftLists.add(giftList);
             }
         }
         return giftLists;
+    }
+
+    public List<GiftList> findAllByIdIn(final List<Integer> ids) throws Exception {
+        return ids.stream().map(t -> {
+            try {
+                return read(t);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).toList();
+
     }
 
     public GiftList findByShareCode(final String shareCode) throws Exception {
@@ -53,8 +64,9 @@ public class GiftListRepository extends DBFile<GiftList>  {
 
         try {
             IdShareCodeIndexPair pair = this.indirectIndex.read(shareCode.hashCode());
-            
-            if (pair == null) return null;
+
+            if (pair == null)
+                return null;
             id = pair.getId();
 
             giftList = super.read(id);

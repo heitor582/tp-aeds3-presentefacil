@@ -5,7 +5,7 @@ import view.user.LoginView;
 import view.user.ReactivateUserView;
 import view.user.SignUpView;
 
-public class StartMenuView extends View {
+public final class StartMenuView extends View {
     public static final StartMenuView INSTANCE = new StartMenuView();
     UserController controller = UserController.INSTANCE;
 
@@ -16,15 +16,15 @@ public class StartMenuView extends View {
     @Override
     public void viewDisplay() {
         String option;
-        do {             
+        do {
             String menu = """
-                (1) Login
-                (2) Novo usuário
-                (3) Ativar usuário novamente
+                    (1) Login
+                    (2) Novo usuário
+                    (3) Ativar usuário novamente
 
-                (S) Sair
+                    (S) Sair
 
-                Opção: """;
+                    Opção: """;
             System.out.print(menu);
             option = scanner.nextLine().trim().toUpperCase();
 
@@ -54,10 +54,12 @@ public class StartMenuView extends View {
     private void login() {
         this.nextPage(LoginView.INSTANCE);
     }
+
     private void reactivate() {
         this.nextPage(ReactivateUserView.INSTANCE);
     }
-    private void signup()  {
+
+    private void signup() {
         this.nextPage(SignUpView.INSTANCE);
-    } 
+    }
 }

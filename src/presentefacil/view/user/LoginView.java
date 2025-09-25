@@ -1,11 +1,12 @@
 package view.user;
 
 import controller.UserController;
-import shared.NonBlank;
+
+import shared.StringValidate;
 import view.MainMenuView;
 import view.View;
 
-public class LoginView extends View {
+public final class LoginView extends View {
     public static final LoginView INSTANCE = new LoginView();
 
     private LoginView() {
@@ -23,16 +24,16 @@ public class LoginView extends View {
         System.out.println("Digite sua senha : ");
         password = scanner.nextLine();
 
-        if (NonBlank.isNotValid(email) || NonBlank.isNotValid(password)) {
+        if (StringValidate.isBlank(email) || StringValidate.isBlank(password)) {
             this.alertMessage("Todos os campos são obrigatórios!");
             return;
         }
 
         boolean login = UserController.INSTANCE.login(email, password);
 
-        if(login){
+        if (login) {
             super.nextPage(MainMenuView.INSTANCE);
-        }else{
+        } else {
             this.alertMessage("Email ou senha incorretos!!!");
         }
     }
