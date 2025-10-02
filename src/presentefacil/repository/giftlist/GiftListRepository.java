@@ -76,4 +76,13 @@ public final class GiftListRepository extends DBFile<GiftList> {
 
         return giftList;
     }
+
+    @Override
+    public boolean delete(final int id) throws Exception {
+        GiftList gf = this.read(id);
+        if(gf == null) return false;
+        this.indirectIndex.delete(gf.getCode().hashCode());
+        this.userIndirectIndex.delete(new IdIdIndexPair(gf.getUserId(), id));
+        return super.delete(id);
+    }
 }

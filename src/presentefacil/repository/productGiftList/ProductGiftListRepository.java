@@ -56,4 +56,13 @@ public final class ProductGiftListRepository extends DBFile<ProductGiftList> {
         }
         return giftListsProduct;
     }
+
+    @Override
+    public boolean delete(final int id) throws Exception {
+        ProductGiftList pg = this.read(id);
+        if(pg == null) return false;
+        this.productIndirectIndex.delete(new IdIdIndexPair(pg.getProductId(), id));
+        this.giftListIndirectIndex.delete(new IdIdIndexPair(pg.getGiftListId(), id));
+        return super.delete(id);
+    }
 }
