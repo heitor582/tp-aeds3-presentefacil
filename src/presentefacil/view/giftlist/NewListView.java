@@ -41,7 +41,7 @@ public final class NewListView extends View {
         }
 
         if (StringValidate.isBlank(name) || StringValidate.isBlank(description)) {
-            this.alertMessage("Email e descrição são obrigatórios!");
+            this.alertMessage("Nome e descrição são obrigatórios!");
             return;
         }
 

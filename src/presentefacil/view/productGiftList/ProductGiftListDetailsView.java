@@ -90,6 +90,7 @@ public final class ProductGiftListDetailsView extends View {
 
     private void remove() {
         ProductGiftListController.INSTANCE.delete(productGiftListId);
+        this.back();
     }
 
     private void changeQuantity() {
