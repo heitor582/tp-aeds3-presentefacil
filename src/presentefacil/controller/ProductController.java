@@ -63,6 +63,10 @@ public final class ProductController {
         }
     }
 
+    public boolean activate(int id) {
+        return this.changeStatus(id, true);
+    }
+
     public boolean deactivate(int id) {
         return this.changeStatus(id, false);
     }

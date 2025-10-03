@@ -52,7 +52,7 @@ public final class ProductDetailsView extends View {
                     Aparece também em mais %d listas de outras pessoas.
 
                     (1) Alterar os dados do produto
-                    (2) Inativar o produto
+                    (2) %s o produto
 
                     (R) Retornar ao menu anterior
 
@@ -62,7 +62,8 @@ public final class ProductDetailsView extends View {
                     product.getDescription(),
                     product.isActive() ? "Ativado" : "Desativado",
                     list,
-                    found.size() - mine.size());
+                    found.size() - mine.size(),
+                    product.isActive() ? "Inativar" : "Ativar");
 
             option = scanner.nextLine().trim().toUpperCase();
 
@@ -71,7 +72,11 @@ public final class ProductDetailsView extends View {
                     editProductData();
                     break;
                 case "2":
-                    deactive();
+                    if (product.isActive()) {
+                        deactive();
+                    } else {
+                        active();
+                    }
                     break;
                 case "R":
                     this.back();
@@ -88,6 +93,10 @@ public final class ProductDetailsView extends View {
 
     private void editProductData() {
         this.nextPage(EditProductView.INSTANCE.setProductId(id));
+    }
+
+    private void active() {
+        ProductController.INSTANCE.activate(product.getId());
     }
 
     private void deactive() {
