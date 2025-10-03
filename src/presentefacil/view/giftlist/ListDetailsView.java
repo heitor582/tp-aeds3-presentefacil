@@ -29,26 +29,28 @@ public final class ListDetailsView extends View {
             this.reload();
 
             System.out.printf("""
-                    CÓDIGO: %s
-                    NOME: %s
-                    DESCRIÇÃO: %s
-                    DATA DE CRIAÇÃO: %s
-                    DATA LIMITE: %s
-                    STATUS: %s
+                CÓDIGO: %s
+                NOME: %s
+                DESCRIÇÃO: %s
+                DATA DE CRIAÇÃO: %s
+                DATA LIMITE: %s
+                STATUS: %s
 
-                    (1) Gerenciar produtos da lista
-                    (2) Alterar dados da lista
-                    (3) Desativar lista
+                (1) Gerenciar produtos da lista
+                (2) Alterar dados da lista
+                (3) %s lista
 
-                    (R) Retornar ao menu anterior
+                (R) Retornar ao menu anterior
 
-                    Opção: """,
-                    giftList.getCode(),
-                    giftList.getName(),
-                    giftList.getDescription(),
-                    giftList.getCreatedAt(),
-                    giftList.getExpirationDateFormated(),
-                    giftList.isActive() ? "Ativado" : "Desativado");
+                Opção: """,
+                giftList.getCode(),
+                giftList.getName(),
+                giftList.getDescription(),
+                giftList.getCreatedAt(),
+                giftList.getExpirationDateFormated(),
+                giftList.isActive() ? "Ativado" : "Desativado",
+                giftList.isActive() ? "Desativar" : "Ativar"
+            );
 
             option = scanner.nextLine().trim().toUpperCase();
 
@@ -60,7 +62,11 @@ public final class ListDetailsView extends View {
                     editListData();
                     break;
                 case "3":
-                    deactive();
+                    if (giftList.isActive()) {
+                        deactive();
+                    } else {
+                        active();
+                    }
                     break;
                 case "R":
                     this.back();
@@ -81,6 +87,10 @@ public final class ListDetailsView extends View {
 
     private void editListData() {
         this.nextPage(EditGiftListView.INSTANCE.set(id));
+    }
+
+    private void active() {
+        GiftListController.INSTANCE.activate(id);
     }
 
     private void deactive() {

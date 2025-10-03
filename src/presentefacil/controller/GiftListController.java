@@ -86,6 +86,10 @@ public final class GiftListController {
         }
     }
 
+    public boolean activate(final int id) {
+        return this.changeStatus(id, true);
+    }
+
     public boolean deactivate(final int id) {
         return this.changeStatus(id, false);
     }

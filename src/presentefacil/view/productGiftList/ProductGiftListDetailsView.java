@@ -24,6 +24,7 @@ public final class ProductGiftListDetailsView extends View {
         this.product = ProductController.INSTANCE.findById(productGiftList.getProductId());
 
         this.viewName = product.getName();
+
         return this;
     }
 
@@ -89,7 +90,13 @@ public final class ProductGiftListDetailsView extends View {
     }
 
     private void remove() {
-        ProductGiftListController.INSTANCE.delete(productGiftListId);
+        boolean ok = ProductGiftListController.INSTANCE.delete(productGiftListId);
+        if (ok) {
+            System.out.println("Produto removido com sucesso.");
+            this.back();
+        } else {
+            System.out.println("Falha ao remover o produto.");
+        }
     }
 
     private void changeQuantity() {
