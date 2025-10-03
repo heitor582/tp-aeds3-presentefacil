@@ -21,21 +21,9 @@ public final class ProductGiftListDetailsView extends View {
         this.productGiftList = ProductGiftListController.INSTANCE.findById(productGiftListId);
         this.productGiftListId = productGiftListId;
 
-        if (this.productGiftList == null) {
-            System.out.println("Produto não encontrado nesta lista (já pode ter sido removido).");
-            this.product = null;
-            this.viewName = "Produto inexistente";
-            return this;
-        }
-
         this.product = ProductController.INSTANCE.findById(productGiftList.getProductId());
 
-        if (this.product == null) {
-            System.out.println("Produto não encontrado no catálogo.");
-            this.viewName = "Produto desconhecido";
-        } else {
-            this.viewName = product.getName();
-        }
+        this.viewName = product.getName();
 
         return this;
     }
