@@ -39,6 +39,14 @@ public final class UserRepository extends DBFile<User> {
 
         return user;
     }
+    
+    @Override
+    public boolean delete(int id) throws Exception {
+        User user = this.read(id);
+        if(user == null) return false;
+        this.indirectIndex.delete(user.getEmail().hashCode());
+        return super.delete(id);
+    }
 
     public void updateIndirectIndex(final User user, final String oldEmail) throws Exception {
         this.indirectIndex.delete(oldEmail.hashCode());
