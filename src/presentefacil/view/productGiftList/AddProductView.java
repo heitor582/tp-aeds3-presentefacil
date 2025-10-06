@@ -63,16 +63,22 @@ public final class AddProductView extends View {
             String gtin = StringValidate.requireMinSize(scanner.nextLine().trim(), 13);
 
             Product product = ProductController.INSTANCE.findByGTIN(gtin);
+            if (product == null) {
+                this.alertMessage("Produto não encontrado para esse GTIN.");
+                return;
+            }
+
             int newId = ProductGiftListController.INSTANCE.create(giftListId, product.getId());
             if(newId != -1){
                 this.nextPage(ProductGiftListDetailsView.INSTANCE.set(newId));
             } else {
-                throw new Exception();
+                this.alertMessage("Esse produto já está na lista.");
             }
-        } catch (final Exception e) {
-            this.alertMessage("Digite um GTIN valido");
+        } catch (IllegalArgumentException e) {
+            this.alertMessage("Digite um GTIN válido.");
+        } catch (Exception e) {
+            this.alertMessage("Erro inesperado: " + e.getMessage());
         }
-
     }
 
     private void listAll() {
