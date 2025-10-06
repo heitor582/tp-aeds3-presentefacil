@@ -26,9 +26,9 @@ public final class NewProductView extends View {
         int resultId = ProductController.INSTANCE.create(name, description, gtin);
 
         if (resultId == -1) {
-            System.out.println("Erro ao criar o Produto.");
+            this.alertMessage("Erro ao criar o Produto.");
         } else {
-            System.out.println("Produto criado com sucesso!");
+            this.alertMessage("Produto criado com sucesso!");
         }
     }
 }

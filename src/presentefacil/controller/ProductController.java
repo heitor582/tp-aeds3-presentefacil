@@ -46,6 +46,8 @@ public final class ProductController {
 
     public int create(final String name, final String description, final String gtin) {
         try {
+            Product p = this.findByGTIN(gtin);
+            if(p != null) return -1;
             Product product = Product.create(name, description, gtin);
             return repository.create(product);
         } catch (final Exception e) {

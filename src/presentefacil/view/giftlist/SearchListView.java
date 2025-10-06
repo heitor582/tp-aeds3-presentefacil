@@ -15,7 +15,7 @@ public final class SearchListView extends View {
     @Override
     public void viewDisplay() {
         System.out.println("Digite o código da lista a buscar: (ou R para voltar)");
-        String code = scanner.nextLine().trim().toUpperCase();
+        String code = scanner.nextLine().trim();
 
         if (StringValidate.isBlank(code) || (!code.equals("R") && code.length() < 10)) {
             this.alertMessage("Codigo Inválido");

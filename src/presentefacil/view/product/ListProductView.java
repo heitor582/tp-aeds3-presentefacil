@@ -17,6 +17,10 @@ public final class ListProductView extends View {
 
     private ListProductView() {
         super("Listagem", true);
+        set();
+    }
+
+    private void set() {
         OFFSET = 0;
         list = ProductController.INSTANCE.findAll();
         MAX = 10;
@@ -27,7 +31,7 @@ public final class ListProductView extends View {
     @Override
     protected void viewDisplay() {
         String option;
-
+        set();
         do {
             StringBuilder menuBuilder = new StringBuilder(String.format(
                     "Página %d de %d \n\n", page, maxPage));
