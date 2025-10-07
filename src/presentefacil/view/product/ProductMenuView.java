@@ -15,8 +15,9 @@ public final class ProductMenuView extends View {
         do {
             String menu = """
                 (1) Buscar produtos por GTIN
-                (2) Listar todos os produtos
-                (3) Cadastrar um novo produto
+                (2) Buscar produtos por Nome
+                (3) Listar todos os produtos
+                (4) Cadastrar um novo produto
 
                 (R) Retornar ao menu anterior
 
@@ -30,9 +31,12 @@ public final class ProductMenuView extends View {
                     searchByGTIN();
                     break;
                 case "2":
-                    listAllProducts();
+                    searchByName();
                     break;
                 case "3":
+                    listAllProducts();
+                    break;
+                case "4":
                     newProducts();
                     break;
                 case "R":
@@ -48,8 +52,12 @@ public final class ProductMenuView extends View {
         } while (!option.equals("S"));
     }
 
+    private void searchByName() {
+        this.nextPage(SearchByProductView.INSTANCE);
+    }
+
     private void searchByGTIN() {
-        this.nextPage(SearchProductView.INSTANCE);
+        this.nextPage(SearchByGTINProductView.INSTANCE);
     }
 
     private void listAllProducts() {

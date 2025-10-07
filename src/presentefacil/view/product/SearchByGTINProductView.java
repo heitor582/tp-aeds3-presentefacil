@@ -4,10 +4,10 @@ import controller.ProductController;
 import model.Product;
 import view.View;
 
-public final class SearchProductView extends View {
-    public static final SearchProductView INSTANCE = new SearchProductView();
+public final class SearchByGTINProductView extends View {
+    public static final SearchByGTINProductView INSTANCE = new SearchByGTINProductView();
 
-    private SearchProductView() {
+    private SearchByGTINProductView() {
         super("Buscar produto", false);
     }
 
