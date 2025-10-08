@@ -39,7 +39,7 @@ O sistema conta com uma interface intuitiva, composta pelas seguintes telas prin
   ![Tela de Dados de Produtos](imagens/tela_dadosproduto.png)
 
 - **Tela de Produtos inseridos na lista:**  
-  ![Tela de Produtos inseridos na Lista](imagens/produtolista.png)
+  ![Tela de Produtos inseridos na Lista](imagens/tela_produtolista.png)
 
 - **Tela de Dados dos Produtos inseridos na lista:**  
   ![Tela de Produtos](imagens/tela_detalhesprodutolista.png)
