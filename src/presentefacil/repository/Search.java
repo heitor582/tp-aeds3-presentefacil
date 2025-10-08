@@ -1,52 +1,63 @@
 package repository;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class Search {
     private final InvertedList iv;
     public static final Set<String> STOP_WORDS = new HashSet<>(Set.of(
-    "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "?", 
-    "a", "à", "agora", "ainda", "além", "algmas", "alguns", "ali", "ambos", "antes", "apenas", "apoio", 
-    "aquela", "aquelas", "aquele", "aqueles", "aqui", "as", "assim", "até", "atrás", 
-    "bem", "bom", 
-    "cada", "cá", "coisa", "com", "como", "contra", "contudo", "cuja", "cujas", "cujo", "cujos", 
-    "da", "das", "de", "dela", "dele", "deles", "demais", "depois", "desde", "dessa", "desse", "desta", "deste", "disto", 
-    "do", "dos", 
-    "e", "é", "ela", "elas", "ele", "eles", "em", "enquanto", "entre", "era", "eram", "essa", "essas", "esse", "esses", 
-    "esta", "está", "estão", "estas", "estava", "estavam", "este", "estes", "eu", 
-    "foi", "foram", 
-    "há", 
-    "isso", "isto", 
-    "já", 
-    "lá", "lhe", "lhes", 
-    "mais", "mas", "me", "mesma", "mesmas", "mesmo", "mesmos", "meu", "meus", "minha", "minhas", "muito", "muitos", 
-    "na", "nas", "nem", "no", "nos", "nós", "nossa", "nossas", "nosso", "nossos", "num", "numa", "nunca", 
-    "o", "os", "ou", "onde", 
-    "para", "pela", "pelas", "pelo", "pelos", "per", "perante", "pode", "podem", "pois", "por", "porque", "porém", 
-    "pouco", "primeiro", 
-    "qual", "quais", "quando", "quanto", "que", "quem", 
-    "se", "sem", "seu", "seus", "só", "sob", "sobre", "sua", "suas", 
-    "tal", "também", "te", "tem", "têm", "tenho", "ter", "teu", "teus", "toda", "todas", "todo", "todos", 
-    "tu", "tua", "tuas", "tudo", 
-    "um", "uma", "umas", "uns", 
-    "vai", "vão", 
-    "você", "vocês"
-));
+            "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "?",
+            "a", "à", "agora", "ainda", "além", "algmas", "alguns", "ali", "ambos", "antes", "apenas", "apoio",
+            "aquela", "aquelas", "aquele", "aqueles", "aqui", "as", "assim", "até", "atrás",
+            "bem", "bom",
+            "cada", "cá", "coisa", "com", "como", "contra", "contudo", "cuja", "cujas", "cujo", "cujos",
+            "da", "das", "de", "dela", "dele", "deles", "demais", "depois", "desde", "dessa", "desse", "desta", "deste",
+            "disto",
+            "do", "dos",
+            "e", "é", "ela", "elas", "ele", "eles", "em", "enquanto", "entre", "era", "eram", "essa", "essas", "esse",
+            "esses",
+            "esta", "está", "estão", "estas", "estava", "estavam", "este", "estes", "eu",
+            "foi", "foram",
+            "há",
+            "isso", "isto",
+            "já",
+            "lá", "lhe", "lhes",
+            "mais", "mas", "me", "mesma", "mesmas", "mesmo", "mesmos", "meu", "meus", "minha", "minhas", "muito",
+            "muitos",
+            "na", "nas", "nem", "no", "nos", "nós", "nossa", "nossas", "nosso", "nossos", "num", "numa", "nunca",
+            "o", "os", "ou", "onde",
+            "para", "pela", "pelas", "pelo", "pelos", "per", "perante", "pode", "podem", "pois", "por", "porque",
+            "porém",
+            "pouco", "primeiro",
+            "qual", "quais", "quando", "quanto", "que", "quem",
+            "se", "sem", "seu", "seus", "só", "sob", "sobre", "sua", "suas",
+            "tal", "também", "te", "tem", "têm", "tenho", "ter", "teu", "teus", "toda", "todas", "todo", "todos",
+            "tu", "tua", "tuas", "tudo",
+            "um", "uma", "umas", "uns",
+            "vai", "vão",
+            "você", "vocês"));
 
     public Search(final InvertedList iv) {
         this.iv = iv;
     }
 
-    public List<String> removeStopWords(final String text) {
-        List<String> s = Arrays.asList(text.split(" "));
-        s.removeIf(STOP_WORDS::contains);
+    public static String removeAccents(final String text) {
+        if (text == null)
+            return null;
+        String normalized = Normalizer.normalize(text, Normalizer.Form.NFD);
+        return normalized.replaceAll("\\p{M}", ""); // removes diacritical marks
+    }
 
-        return s;
+    public List<String> removeStopWords(final String text) {
+        List<String> s = Arrays.asList(removeAccents(text).toLowerCase().split(" "));
+
+        return s.stream().filter(v -> !Objects.isNull(v) && !STOP_WORDS.contains(v)).toList();
     }
 
     public void delete(final String text, final int id) {
@@ -58,6 +69,11 @@ public class Search {
                 e.printStackTrace();
             }
         });
+        try {
+            this.iv.decrementaEntidades();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void create(final String text, final int id) {
@@ -72,10 +88,16 @@ public class Search {
                 e.printStackTrace();
             }
         });
+        try {
+            this.iv.incrementaEntidades();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public List<Integer> search(final String text, final int total) {
+    public List<Integer> search(final String text) throws Exception {
         List<String> s = removeStopWords(text);
+        int total = this.iv.numeroEntidades();
 
         HashMap<Integer, Float> m = new HashMap<>();
         s.forEach(v -> {
@@ -86,7 +108,8 @@ public class Search {
                 if (r.size() > 0) {
                     float idf = total / r.size();
                     r.forEach(e -> {
-                        m.put(e.getId(), m.getOrDefault(e.getId(), 0f) + e.getFrequencia() * idf);
+                        float newWeight = m.getOrDefault(e.getId(), 0f) + (e.getFrequencia() * idf);
+                        m.put(e.getId(), (float) Math.log(newWeight));
                     });
                 }
             } catch (Exception e) {

@@ -84,7 +84,7 @@ public final class ProductRepository extends DBFile<Product> {
     }
 
     public List<Product> searchByName(final String name) throws Exception {
-        List<Integer> ids = this.search.search(name, this.count());
+        List<Integer> ids = this.search.search(name);
 
         return ids.stream()
                 .map(t -> {
