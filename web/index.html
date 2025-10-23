@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TP4</title>
+
+    <script src="db.js"></script>
+    <script src="app.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-950 min-h-screen px-40 py-10">
+
+    <div class="px-6">
+        <h1 class="text-3xl font-bold text-center text-zinc-50 mb-8 select-none">GERENCIADOR DE PRODUTOS (TP4)</h1>
+
+        <form onsubmit="event.preventDefault(); adicionarProduto();"
+            class="flex flex-col md:flex-row bg-zinc-900 p-4 gap-4 mb-8 items-center border-2 border-transparent rounded-xl focus-within:border-lime-300 transition-all shadow">
+            <input type="hidden" id="idEdicao">
+
+            <input type="text" id="name" placeholder="NOME DO PRODUTO" autocomplete="off" maxlength="255"
+                class="w-48 bg-transparent text-zinc-100 focus:outline-none select-none">
+
+            <hr class="h-6 border-l border-gray-600">
+
+            <input type="text" id="desc" placeholder="DESCRIÇÃO DO PRODUTO" autocomplete="off" maxlength="255"
+                class="flex-1 bg-transparent text-zinc-100 focus:outline-none select-none">
+
+            <hr class="h-6 border-l border-gray-600">
+
+            <input type="text" id="gtin" placeholder="GTIN-13" autocomplete="off" maxlength="13"
+                class="w-32 bg-transparent text-zinc-100 focus:outline-none select-none">
+
+            <hr class="h-6 border-l border-gray-600">
+
+            <button type="submit"
+                class="bg-lime-300 hover:bg-lime-500 text-lime-950 font-bold px-4 py-2 rounded-lg transition-colors select-none">
+                SALVAR
+            </button>
+            <button type="button" onclick="limparFormulario()"
+                class="bg-zinc-800 hover:bg-zinc-600 text-zinc-200 font-bold px-4 py-2 rounded-lg transition-colors select-none">
+                LIMPAR
+            </button>
+        </form>
+
+        <h2 class="text-xl text-zinc-200 font-semibold mb-4 flex items-center gap-3 select-none">
+            <i class="fas fa-table"></i>
+            TABELA DE PRODUTOS
+        </h2>
+
+        <form id="filtros" class="flex md:flex-row gap-4 mb-4 items-center"
+            onsubmit="event.preventDefault(); atualizarTabela();">
+            <input type="text" autocomplete="off" id="filtroNome" placeholder="NOME" maxlength="255"
+                class="w-48 bg-zinc-900 text-zinc-100 p-2 rounded-lg focus:outline-lime-300">
+
+            <input type="text" autocomplete="off" id="filtroGtin" placeholder="GTIN" maxlength="13"
+                class="w-32 bg-zinc-900 text-zinc-100 p-2 rounded-lg focus:outline-lime-300">
+
+            <select id="filtroStatus" class="bg-zinc-900 text-zinc-100 p-2 rounded focus:outline-none appearance-none">
+                <option value="">TODOS</option>
+                <option value="true">ATIVO</option>
+                <option value="false">INATIVO</option>
+            </select>
+
+            <hr class="h-6 border-l border-gray-600">
+
+            <button type="submit"
+                class="bg-lime-300 hover:bg-lime-500 text-lime-950 font-bold px-4 py-2 rounded-lg transition-colors">
+                FILTRAR
+            </button>
+
+            <button type="button" onclick="limparFiltros()"
+                class="bg-zinc-800 hover:bg-zinc-600 text-zinc-200 font-bold px-4 py-2 rounded-lg transition-colors">
+                LIMPAR
+            </button>
+        </form>
+
+        <table id="tabela-produtos" class="min-w-full text-center">
+            <thead class="bg-zinc-900 text-zinc-300">
+                <tr>
+                    <th class="py-2">ID</th>
+                    <th class="py-2">NOME</th>
+                    <th class="py-2">DESCRIÇÃO</th>
+                    <th class="py-2">GTIN-13</th>
+                    <th class="py-2">STATUS</th>
+                    <th class="py-2">AÇÕES</th>
+                </tr>
+            </thead>
+            <tbody class="bg-zinc-800 text-zinc-300 border border-zinc-500"></tbody>
+        </table>
+
+        <h2 class="text-xl text-zinc-200 font-semibold mt-8 mb-4 flex items-center gap-3 select-none">
+            <i class="fas fa-box"></i>
+            ARQUIVO LÓGICO (json)
+        </h2>
+        <pre id="arquivo" class="bg-zinc-900 text-zinc-300 p-4 border border-lime-300 rounded-lg"></pre>
+
+        <h2 class="text-xl text-zinc-200 font-semibold mt-8 mb-4 flex items-center gap-3 select-none">
+            <i class="fas fa-hard-drive"></i>
+            ARQUIVO BINÁRIO SIMULADO (bytes)
+        </h2>
+        <table id="tabela-bin" class="min-w-full text-center table-fixed w-full">
+            <thead class="bg-zinc-900 text-zinc-300">
+                <tr></tr>
+            </thead>
+            <tbody class="bg-zinc-800 text-zinc-300"></tbody>
+        </table>
+
+        <h2 class="text-xl text-zinc-200 font-semibold mt-8 mb-4 flex items-center gap-3 select-none">
+            <i class="fas fa-font"></i>
+            ARQUIVO BINÁRIO DECODIFICADO (char)
+        </h2>
+        <table id="tabela-texto" class="min-w-full text-center table-fixed w-full">
+            <thead class="bg-zinc-900 text-zinc-300">
+                <tr></tr>
+            </thead>
+            <tbody class="bg-zinc-800 text-zinc-300"></tbody>
+        </table>
+
+
+        <div class="flex justify-end mt-8">
+            <button onclick="limparBancoDeDados()"
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg select-none">
+                APAGAR TODOS OS PRODUTOS
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>
