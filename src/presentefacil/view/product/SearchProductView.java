@@ -14,7 +14,7 @@ public final class SearchProductView extends View {
     @Override
     protected void viewDisplay() {
         System.out.println("Digite o GTIN do produto a buscar: (ou R para voltar)");
-        String code = scanner.nextLine().trim().toUpperCase();
+        String code = scanner.nextLine().trim();
 
         if(code == null || code.isBlank() || (!code.equals("R") && code.length()<13)){
             this.alertMessage("GTIN Inválido");
