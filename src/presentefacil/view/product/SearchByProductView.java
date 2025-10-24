@@ -1,7 +1,7 @@
 package view.product;
 
 import java.util.List;
-
+import java.util.function.Consumer;
 import controller.ProductController;
 import model.Product;
 import shared.IsNumber;
@@ -9,9 +9,16 @@ import view.View;
 
 public final class SearchByProductView extends View {
     public static final SearchByProductView INSTANCE = new SearchByProductView();
+    private Consumer<Product> function = null;
 
     private SearchByProductView() {
         super("Buscar produto por nome", false);
+        this.function = (product) -> handleListSelection(product);
+    }
+
+    public SearchByProductView setFunction(Consumer<Product> function) {
+        this.function = function;
+        return this;
     }
 
     @Override
@@ -58,7 +65,7 @@ public final class SearchByProductView extends View {
                         if (IsNumber.validate(option)) {
                             int listNumber = Integer.parseInt(option);
                             if (listNumber >= 1 && listNumber <= products.size()) {
-                                handleListSelection(products.get(listNumber - 1));
+                                this.function.accept(products.get(listNumber - 1));
                             }
                         } else {
                             System.out.println("Opção inválida. Tente novamente.");

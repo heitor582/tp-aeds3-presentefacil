@@ -1,10 +1,10 @@
 package view.productGiftList;
 
-import controller.ProductController;
 import controller.ProductGiftListController;
 import model.Product;
-import shared.StringValidate;
 import view.View;
+import view.product.SearchByGTINProductView;
+import view.product.SearchByProductView;
 
 public final class AddProductView extends View {
     public static final AddProductView INSTANCE = new AddProductView();
@@ -27,7 +27,8 @@ public final class AddProductView extends View {
         do {
             String menu = """
                     (1) Buscar produtos por GTIN
-                    (2) Listar todos os produtos
+                    (2) Buscar produtos por Nome
+                    (3) Listar todos os produtos
 
                     (R) Retornar ao menu anterior
 
@@ -41,6 +42,9 @@ public final class AddProductView extends View {
                     searchByGTIN();
                     break;
                 case "2":
+                    searchByName();
+                    break;
+                case "3":
                     listAll();
                     break;
                 case "R":
@@ -57,31 +61,23 @@ public final class AddProductView extends View {
     }
 
     private void searchByGTIN() {
-        //TODO: Criar uma view depois
-        try {
-            System.out.println("Digite o GTIN-13: ");
-            String gtin = StringValidate.requireMinSize(scanner.nextLine().trim(), 13);
-
-            Product product = ProductController.INSTANCE.findByGTIN(gtin);
-            if (product == null) {
-                this.alertMessage("Produto não encontrado para esse GTIN.");
-                return;
-            }
-
-            int newId = ProductGiftListController.INSTANCE.create(giftListId, product.getId());
-            if(newId != -1){
-                this.nextPage(ProductGiftListDetailsView.INSTANCE.set(newId));
-            } else {
-                this.alertMessage("Esse produto já está na lista.");
-            }
-        } catch (IllegalArgumentException e) {
-            this.alertMessage("Digite um GTIN válido.");
-        } catch (Exception e) {
-            this.alertMessage("Erro inesperado: " + e.getMessage());
-        }
+        this.nextPage(SearchByGTINProductView.INSTANCE.setFunction(product -> create(product)));
     }
 
     private void listAll() {
         this.nextPage(ListAddProductView.INSTANCE.setGiftListId(giftListId));
+    }
+
+    private void searchByName() {
+        this.nextPage(SearchByProductView.INSTANCE.setFunction(product -> create(product)));
+    }
+
+    private void create(final Product product) {
+        int newId = ProductGiftListController.INSTANCE.create(giftListId, product.getId());
+        if (newId != -1) {
+            this.nextPage(ProductGiftListDetailsView.INSTANCE.set(newId));
+        } else {
+            this.alertMessage("Esse produto já está na lista.");
+        }
     }
 }
