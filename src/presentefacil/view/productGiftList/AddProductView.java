@@ -73,6 +73,10 @@ public final class AddProductView extends View {
     }
 
     private void create(final Product product) {
+        if(!product.isActive()) {
+            this.alertMessage("Produto desativado");
+            return;
+        }
         int newId = ProductGiftListController.INSTANCE.create(giftListId, product.getId());
         if (newId != -1) {
             this.nextPage(ProductGiftListDetailsView.INSTANCE.set(newId));
