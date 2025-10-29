@@ -1,4 +1,5 @@
 package repository;
+
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -11,63 +12,62 @@ public class DBFile<T extends Entity> {
     private RandomAccessFile file;
     private Class<T> clazz;
     ExtensibleHash<IdAddressIndexPair> directIndex;
-    
+
     public DBFile(final Class<T> clazz) throws Exception {
         this.clazz = clazz;
 
         String className = this.clazz.getSimpleName().toLowerCase();
         String geralDirName = "data";
         File dir = new File(geralDirName);
-        if(!dir.exists())
+        if (!dir.exists())
             dir.mkdir();
 
-        String dirName = geralDirName+"/"+className;
+        String dirName = geralDirName + "/" + className;
         dir = new File(dirName);
-        if(!dir.exists())
+        if (!dir.exists())
             dir.mkdir();
 
-        String fileName = dirName+"/"+className+".db";
+        String fileName = dirName + "/" + className + ".db";
         file = new RandomAccessFile(fileName, "rw");
-        if(file.length()<HEAD_LENGTH) {
+        if (file.length() < HEAD_LENGTH) {
             file.writeInt(0);
             file.writeLong(-1);
         }
 
         directIndex = new ExtensibleHash<>(
-            IdAddressIndexPair.class.getConstructor(),
-            4,
-            className+"/"+className,
-            className+"/"+className
-        );
+                IdAddressIndexPair.class.getConstructor(),
+                4,
+                className + "/" + className,
+                className + "/" + className);
     }
 
     public int create(T obj) throws Exception {
         file.seek(0);
-        int nextId = file.readInt()+1;
+        int nextId = file.readInt() + 1;
         file.seek(0);
         file.writeInt(nextId);
         obj.setId(nextId);
         byte[] b = obj.toByteArray();
 
         long address = getDeleted(b.length);
-        if(address == -1){
+        if (address == -1) {
             file.seek(file.length());
             address = file.getFilePointer();
             file.writeByte(' ');
             file.writeShort(b.length);
-            file.write(b); 
+            file.write(b);
         } else {
             file.seek(address);
             file.writeByte(' ');
             file.skipBytes(2);
-            file.write(b); 
+            file.write(b);
         }
-        
+
         directIndex.create(IdAddressIndexPair.create(nextId, address));
 
         return obj.getId();
     }
-    
+
     public T read(int id) throws Exception {
         T obj;
         short tam;
@@ -75,16 +75,16 @@ public class DBFile<T extends Entity> {
         byte lapide;
 
         IdAddressIndexPair pid = directIndex.read(id);
-        if(pid!=null) {
+        if (pid != null) {
             file.seek(pid.getAddress());
             obj = clazz.getConstructor().newInstance();
             lapide = file.readByte();
-            if(lapide==' ') {
+            if (lapide == ' ') {
                 tam = file.readShort();
                 b = new byte[tam];
                 file.read(b);
                 obj.fromByteArray(b);
-                if(obj.getId()==id)
+                if (obj.getId() == id)
                     return obj;
             }
         }
@@ -96,14 +96,14 @@ public class DBFile<T extends Entity> {
         short tam;
         byte[] b;
         byte lapide;
-        
+
         file.seek(HEAD_LENGTH);
         List<T> list = new ArrayList<T>();
 
-        while(file.length() > file.getFilePointer()){
+        while (file.length() > file.getFilePointer()) {
             obj = clazz.getConstructor().newInstance();
             lapide = file.readByte();
-            if(lapide==' ') {
+            if (lapide == ' ') {
                 tam = file.readShort();
                 b = new byte[tam];
                 file.read(b);
@@ -111,7 +111,7 @@ public class DBFile<T extends Entity> {
                 list.add(obj);
             }
         }
-            
+
         return list;
     }
 
@@ -122,17 +122,17 @@ public class DBFile<T extends Entity> {
         byte lapide;
 
         IdAddressIndexPair pie = directIndex.read(id);
-        if(pie!=null) {
+        if (pie != null) {
             file.seek(pie.getAddress());
             obj = clazz.getConstructor().newInstance();
             lapide = file.readByte();
-            if(lapide==' ') {
+            if (lapide == ' ') {
                 tam = file.readShort();
                 b = new byte[tam];
                 file.read(b);
                 obj.fromByteArray(b);
 
-                if(obj.getId()==id && directIndex.delete(id)) {
+                if (obj.getId() == id && directIndex.delete(id)) {
                     file.seek(pie.getAddress());
                     file.write('*');
                     addDeleted(tam, pie.getAddress());
@@ -150,41 +150,39 @@ public class DBFile<T extends Entity> {
         byte lapide;
 
         IdAddressIndexPair pie = directIndex.read(novoObj.getId());
-        if(pie!=null) {
+        if (pie != null) {
             file.seek(pie.getAddress());
             obj = clazz.getConstructor().newInstance();
             lapide = file.readByte();
-            if(lapide==' ') {
+            if (lapide == ' ') {
                 tam = file.readShort();
                 b = new byte[tam];
                 file.read(b);
                 obj.fromByteArray(b);
-                if(obj.getId()==novoObj.getId()) {
+                if (obj.getId() == novoObj.getId()) {
                     byte[] b2 = novoObj.toByteArray();
-                    short tam2 = (short)b2.length;
-                    if(tam2 <= tam) {
-                        file.seek(pie.getAddress()+3);
+                    short tam2 = (short) b2.length;
+                    if (tam2 <= tam) {
+                        file.seek(pie.getAddress() + 3);
                         file.write(b2);
-                    }
-                    else {
+                    } else {
                         file.seek(pie.getAddress());
                         file.write('*');
-                        addDeleted(tam, pie.getAddress());                        
-                        long novoaddress = getDeleted(b.length);   
-                        if(novoaddress == -1) {   
+                        addDeleted(tam, pie.getAddress());
+                        long novoaddress = getDeleted(b.length);
+                        if (novoaddress == -1) {
                             file.seek(file.length());
                             novoaddress = file.getFilePointer();
-                            file.writeByte(' ');       
-                            file.writeShort(tam2);       
-                            file.write(b2);              
+                            file.writeByte(' ');
+                            file.writeShort(tam2);
+                            file.write(b2);
                         } else {
                             file.seek(novoaddress);
-                            file.writeByte(' ');       
-                            file.skipBytes(2);         
-                            file.write(b2);              
+                            file.writeByte(' ');
+                            file.skipBytes(2);
+                            file.write(b2);
                         }
 
-                        
                         directIndex.update(IdAddressIndexPair.create(novoObj.getId(), novoaddress));
                     }
                     return true;
@@ -195,59 +193,59 @@ public class DBFile<T extends Entity> {
     }
 
     public void addDeleted(int necessaryLength, long newAddress) throws Exception {
-        long previous = 4; 
+        long previous = 4;
         file.seek(previous);
-        long address = file.readLong(); 
+        long address = file.readLong();
         long next = -1;
         int length;
-        if(address==-1) {  
+        if (address == -1) {
             file.seek(4);
             file.writeLong(newAddress);
-            file.seek(newAddress+3);
+            file.seek(newAddress + 3);
             file.writeLong(-1);
         } else {
             do {
-                file.seek(address+1);
+                file.seek(address + 1);
                 length = file.readShort();
                 next = file.readLong();
-                if(length > necessaryLength) {  
-                    if(previous == 4) 
+                if (length > necessaryLength) {
+                    if (previous == 4)
                         file.seek(previous);
                     else
-                        file.seek(previous+3);
+                        file.seek(previous + 3);
                     file.writeLong(newAddress);
-                    file.seek(newAddress+3);
+                    file.seek(newAddress + 3);
                     file.writeLong(address);
                     break;
                 }
-                if(next == -1) {  
-                    file.seek(address+3);
+                if (next == -1) {
+                    file.seek(address + 3);
                     file.writeLong(newAddress);
-                    file.seek(newAddress+3);
+                    file.seek(newAddress + 3);
                     file.writeLong(-1);
                     break;
                 }
                 previous = address;
                 address = next;
-            } while (address!=-1);
+            } while (address != -1);
         }
     }
-    
+
     public long getDeleted(int necessaryLength) throws Exception {
-        long previous = 4; 
+        long previous = 4;
         file.seek(previous);
-        long address = file.readLong(); 
-        long next = -1; 
+        long address = file.readLong();
+        long next = -1;
         int length;
-        while(address != -1) {
-            file.seek(address+1);
+        while (address != -1) {
+            file.seek(address + 1);
             length = file.readShort();
             next = file.readLong();
-            if(length > necessaryLength) {  
-                if(previous == 4)  
+            if (length > necessaryLength) {
+                if (previous == 4)
                     file.seek(previous);
                 else
-                    file.seek(previous+3);
+                    file.seek(previous + 3);
                 file.writeLong(next);
                 break;
             }

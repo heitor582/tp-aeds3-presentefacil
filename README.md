@@ -132,3 +132,16 @@ O projeto foi estruturado em diversas classes para garantir modularidade e organ
 
 - **O trabalho é original e não a cópia de um trabalho de outro grupo?**  
   Sim. O trabalho é original, desenvolvido integralmente pelo grupo.
+## Checklist TP3
+- **O índice invertido com os termos dos nomes dos produtos foi criado usando a classe ListaInvertida?**
+  Sim. Utilizamos a classe já disponibilizada.
+- **É possível buscar produtos por palavras no menu de manutenção de produtos?**
+  Sim. É possível tanto por nome, quanto por GTIN;
+- **É possível buscar produtos por palavras na hora de acrescentá-los às listas dos usuários?**
+  Sim. É possível tanto por nome, quanto por GTIN;
+- **O trabalho compila corretamente?**
+  Sim. O projeto compila sem erros.
+- **O trabalho está completo e funcionando sem erros de execução?**
+  Sim. Todas as funcionalidades foram testadas e estão operacionais.
+- **O trabalho é original e não a cópia de um trabalho de outro grupo?**
+  Sim. O trabalho é original, desenvolvido integralmente pelo grupo.

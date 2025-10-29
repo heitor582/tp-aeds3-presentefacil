@@ -280,7 +280,6 @@ public class ExtensibleHash<T extends ExtensibleHashContract> {
     construtor = ct;
     quantidadeDadosPorCesto = n;
     nomeArquivoDiretorio = "data/" + nd + ".d.db";
-    ;
     nomeArquivoCestos = "data/" + nc + ".c.db";
 
     File file = new File(this.nomeArquivoDiretorio);
