@@ -50,12 +50,11 @@ public final class ProductGiftListDetailsView extends View {
                     (R) Retornar ao menu anterior
 
                     Opção: """,
-                    product.getGtin(),
                     product.getName(),
+                    product.getGtin(),
                     product.getDescription(),
                     productGiftList.getQuantity(),
-                    productGiftList.getDescription()
-            );
+                    productGiftList.getDescription());
 
             option = scanner.nextLine().trim().toUpperCase();
 

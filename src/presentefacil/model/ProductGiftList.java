@@ -13,11 +13,12 @@ public final class ProductGiftList extends Entity {
     private String description;
 
     public void changeQuantity(int q) {
-        if(q<0) return;
+        if (q < 0)
+            return;
         this.quantity = q;
     }
 
-    public void changeDescription(final String description){
+    public void changeDescription(final String description) {
         this.description = description;
     }
 
@@ -25,7 +26,7 @@ public final class ProductGiftList extends Entity {
         return this.productId;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
 
@@ -68,7 +69,7 @@ public final class ProductGiftList extends Entity {
     public static ProductGiftList create(
             final int productId,
             final int giftListId) {
-        return new ProductGiftList(-1, productId, giftListId, 0, "", true);
+        return new ProductGiftList(-1, productId, giftListId, 1, "", true);
     }
 
     @Override

@@ -106,10 +106,10 @@ public class Search {
                 r = Arrays.asList(this.iv.read(v));
 
                 if (r.size() > 0) {
-                    float idf = total / r.size();
+                    float idf = (float) Math.log(total / r.size());
                     r.forEach(e -> {
                         float newWeight = m.getOrDefault(e.getId(), 0f) + (e.getFrequencia() * idf);
-                        m.put(e.getId(), (float) Math.log(newWeight));
+                        m.put(e.getId(), newWeight);
                     });
                 }
             } catch (Exception e) {
