@@ -42,7 +42,14 @@ O sistema conta com uma interface intuitiva, composta pelas seguintes telas prin
   ![Tela de Produtos inseridos na Lista](imagens/tela_produtolista.png)
 
 - **Tela de Dados dos Produtos inseridos na lista:**  
-  ![Tela de Produtos](imagens/tela_detalhesprodutolista.png)
+  ![Tela de Produtos](imagens/tela_detalhesprodutolista.png)]
+---
+### TP3
+- **Tela de busca por nome de produto**  
+  ![Tela de Busca produto por nome](imagens/buscaNome.png)]
+
+- **Tela de busca por nome para adicionar produto**  
+  ![Tela de Busca produto por nome para adicionar a lista](imagens/buscaNome2.png)]
 
 ## Classes Criadas
 
