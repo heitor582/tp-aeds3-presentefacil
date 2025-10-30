@@ -46,7 +46,7 @@ O sistema conta com uma interface intuitiva, composta pelas seguintes telas prin
 ---
 ### TP3
 - **Tela de busca por nome de produto**  
-  ![Tela de Busca produto por nome](imagens/buscaNome.png)]
+  ![Tela de Busca produto por nome](imagens/buscaNome.png)] 
 
 - **Tela de busca por nome para adicionar produto**  
   ![Tela de Busca produto por nome para adicionar a lista](imagens/buscaNome2.png)]
