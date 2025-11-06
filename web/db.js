@@ -73,15 +73,19 @@ class LocalDB {
             status: 1
         };
 
-        const totalLength = 2 + datalens.id + datalens.namelen + nameBytes + datalens.desclen + descBytes + datalens.gtin + datalens.status;
+        const totalLength = 1 + 2 + datalens.id + datalens.namelen + nameBytes + datalens.desclen + descBytes + datalens.gtin + datalens.status;
 
         const buffer = new ArrayBuffer(totalLength);
         const view = new DataView(buffer);
 
         let offset = 0;
 
+        const lapideChar = obj.deleted ? '*' : ' ';
+        view.setUint8(offset, lapideChar.charCodeAt(0));
+        offset += 1;
+
         // obj length
-        view.setInt16(offset, totalLength - 2);
+        view.setInt16(offset, totalLength - 3);
         offset += 2;
 
         // id

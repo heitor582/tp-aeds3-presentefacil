@@ -19,29 +19,29 @@
     </style>
 </head>
 
-<body class="bg-zinc-950 min-h-screen px-40 py-10">
+<body class="bg-zinc-950 min-h-screen md:px-40 py-10">
 
     <div class="px-6">
         <h1 class="text-3xl font-bold text-center text-zinc-50 mb-8 select-none">GERENCIADOR DE PRODUTOS (TP4)</h1>
 
         <form onsubmit="event.preventDefault(); adicionarProduto();"
-            class="flex flex-col md:flex-row bg-zinc-900 p-4 gap-4 mb-8 items-center border-2 border-transparent rounded-xl focus-within:border-lime-300 transition-all shadow">
+            class="flex flex-col md:flex-row bg-zinc-900 p-4 gap-4 mb-8 md:items-center border-2 border-transparent rounded-xl focus-within:border-lime-300 transition-all shadow">
             <input type="hidden" id="idEdicao">
 
             <input type="text" id="name" placeholder="NOME DO PRODUTO" autocomplete="off" maxlength="255"
                 class="w-48 bg-transparent text-zinc-100 focus:outline-none select-none">
 
-            <hr class="h-6 border-l border-gray-600">
+            <hr class="md:h-6 border-l border-gray-600">
 
             <input type="text" id="desc" placeholder="DESCRIÇÃO DO PRODUTO" autocomplete="off" maxlength="255"
                 class="flex-1 bg-transparent text-zinc-100 focus:outline-none select-none">
 
-            <hr class="h-6 border-l border-gray-600">
+            <hr class="md:h-6 border-l border-gray-600">
 
             <input type="text" id="gtin" placeholder="GTIN-13" autocomplete="off" maxlength="13"
                 class="w-32 bg-transparent text-zinc-100 focus:outline-none select-none">
 
-            <hr class="h-6 border-l border-gray-600">
+            <hr class="md:h-6 border-l border-gray-600">
 
             <button type="submit"
                 class="bg-lime-300 hover:bg-lime-500 text-lime-950 font-bold px-4 py-2 rounded-lg transition-colors select-none">
@@ -58,13 +58,13 @@
             TABELA DE PRODUTOS
         </h2>
 
-        <form id="filtros" class="flex md:flex-row gap-4 mb-4 items-center"
+        <form id="filtros" class="flex flex-col md:flex-row gap-4 mb-4 md:items-center"
             onsubmit="event.preventDefault(); atualizarTabela();">
             <input type="text" autocomplete="off" id="filtroNome" placeholder="NOME" maxlength="255"
-                class="w-48 bg-zinc-900 text-zinc-100 p-2 rounded-lg focus:outline-lime-300">
+                class="md:w-48 bg-zinc-900 text-zinc-100 p-2 rounded-lg focus:outline-lime-300">
 
             <input type="text" autocomplete="off" id="filtroGtin" placeholder="GTIN" maxlength="13"
-                class="w-32 bg-zinc-900 text-zinc-100 p-2 rounded-lg focus:outline-lime-300">
+                class="md:w-32 bg-zinc-900 text-zinc-100 p-2 rounded-lg focus:outline-lime-300">
 
             <select id="filtroStatus" class="bg-zinc-900 text-zinc-100 p-2 rounded focus:outline-none appearance-none">
                 <option value="">TODOS</option>
@@ -72,7 +72,7 @@
                 <option value="false">INATIVO</option>
             </select>
 
-            <hr class="h-6 border-l border-gray-600">
+            <hr class="md:h-6 border-l border-gray-600">
 
             <button type="submit"
                 class="bg-lime-300 hover:bg-lime-500 text-lime-950 font-bold px-4 py-2 rounded-lg transition-colors">
