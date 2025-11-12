@@ -123,12 +123,65 @@ function mostrarArquivoBinario() {
   const produtos = db.readAll();
   let allBytes = [];
 
-  const header = [0x00, 0x01, 0x02, 0x03];
+  const total = produtos.length;
+  const header = [
+    (total >> 24) & 0xFF,
+    (total >> 16) & 0xFF,
+    (total >> 8) & 0xFF,
+    total & 0xFF
+  ];
 
-  //allBytes.push(...header);
+  for (let i = 7; i >= 0; i--)
+    header.push(0xFF);
+
+  let byteMeta = [];
+
+  for (let i = 0; i < 4; i++)
+    byteMeta.push(`QUANTIDADE DE PRODUTOS: ${total}`);
+
+  for (let i = 0; i < 8; i++)
+    byteMeta.push(`ENDEREÇO DOS ESPAÇOS LIVRES: FF${i.toString(16).padStart(2, "0").toUpperCase()}`);
+
+  allBytes.push(...header);
 
   for (const p of produtos) {
     const bytes = db.toBytes(p);
+
+    const name = p.name;
+    const desc = p.desc;
+    const gtin = p.gtin;
+
+    // record length
+    for (let i = 0; i < 2; i++)
+      byteMeta.push(`TAMANHO DO REGISTRO: ${bytes.length - 2}`);
+
+    // id (4 bytes)
+    for (let i = 0; i < 4; i++)
+      byteMeta.push(`ID: ${p.id}`);
+
+    // name length (2 bytes)
+    for (let i = 0; i < 2; i++)
+      byteMeta.push(`TAMANHO DO NOME: ${name.length}`);
+
+    // name bytes
+    for (let i = 0; i < name.length; i++)
+      byteMeta.push(`NOME: "${name}"`);
+
+    // desc length (2 bytes)
+    for (let i = 0; i < 2; i++)
+      byteMeta.push(`TAMANHO DA DESCRIÇÃO: ${desc.length}`);
+
+    // desc bytes
+    for (let i = 0; i < desc.length; i++)
+      byteMeta.push(`DESCRIÇÃO: "${desc}"`);
+
+    // gtin (13 bytes)
+    for (let i = 0; i < 13; i++)
+      byteMeta.push(`GTIN: "${gtin}"`);
+
+    // status
+    byteMeta.push(`STATUS: ${p.status === 1 ? "Ativo" : "Inativo"}`);
+
     allBytes.push(...bytes);
   }
 
@@ -140,8 +193,10 @@ function mostrarArquivoBinario() {
       td.className = "border border-zinc-500 w-1/16";
       const byte = allBytes[i + j];
       if (byte !== undefined) {
+        const idx = i + j;
         td.textContent = byte.toString(16).padStart(2, "0").toUpperCase();
-        td.dataset.index = i + j;
+        td.dataset.index = idx;
+        td.title = byteMeta[idx] || "";
         tr.appendChild(td);
       }
     }
@@ -175,29 +230,87 @@ function adicionarHoverInterativo() {
   const bytesTd = document.querySelectorAll("#tabela-bin td");
   const charsTd = document.querySelectorAll("#tabela-texto td");
 
+  function getRecordRange(idx) {
+    let ptr = 12;
+
+    if (idx >= ptr) {
+      while (ptr < bytesTd.length) {
+        const lenHigh = parseInt(bytesTd[ptr + 1].textContent, 16);
+        const lenLow = parseInt(bytesTd[ptr + 2].textContent, 16);
+        const recordSize = (lenHigh << 8) | lenLow;
+        const start = ptr;
+        const end = ptr + 3 + recordSize - 1;
+
+        if (idx >= start && idx <= end) {
+          return { start, end };
+        }
+
+        ptr = end + 1;
+      }
+
+      return null;
+    } else {
+      const start = 0;
+      const end = ptr - 1;
+
+      return { start, end };
+    }
+  };
+
+  function highlightRecord(start, end, add) {
+    for (let i = start; i <= end; i++) {
+      if (bytesTd[i]) bytesTd[i].classList[add ? 'add' : 'remove']("bg-lime-300/20");
+      if (charsTd[i]) charsTd[i].classList[add ? 'add' : 'remove']("bg-lime-300/20");
+    }
+  }
+
   bytesTd.forEach(td => {
     td.addEventListener("mouseenter", () => {
       const idx = td.dataset.index;
+
+      const range = getRecordRange(idx);
+      if (range) highlightRecord(range.start, range.end, true);
+
+      td.classList.remove("bg-lime-300/20");
       td.classList.add("bg-lime-300", "text-zinc-950");
-      if (charsTd[idx]) charsTd[idx].classList.add("bg-lime-300", "text-zinc-950");
+      if (charsTd[idx]) {
+        charsTd[idx].classList.remove("bg-lime-300/20");
+        charsTd[idx].classList.add("bg-lime-300", "text-zinc-950");
+      }
     });
     td.addEventListener("mouseleave", () => {
       const idx = td.dataset.index;
       td.classList.remove("bg-lime-300", "text-zinc-950");
       if (charsTd[idx]) charsTd[idx].classList.remove("bg-lime-300", "text-zinc-950");
+
+      const range = getRecordRange(idx);
+      if (range) highlightRecord(range.start, range.end, false);
     });
   });
 
   charsTd.forEach(td => {
     td.addEventListener("mouseenter", () => {
-      const idx = td.dataset.index;
+      const idx = Number(td.dataset.index);
+
+      const range = getRecordRange(idx);
+      if (range) highlightRecord(range.start, range.end, true);
+
+      td.classList.remove("bg-lime-300/20");
       td.classList.add("bg-lime-300", "text-zinc-950");
-      if (bytesTd[idx]) bytesTd[idx].classList.add("bg-lime-300", "text-zinc-950");
+      if (bytesTd[idx]) {
+        bytesTd[idx].classList.remove("bg-lime-300/20");
+        bytesTd[idx].classList.add("bg-lime-300", "text-zinc-950");
+      }
     });
+
     td.addEventListener("mouseleave", () => {
-      const idx = td.dataset.index;
+      const idx = Number(td.dataset.index);
+
       td.classList.remove("bg-lime-300", "text-zinc-950");
       if (bytesTd[idx]) bytesTd[idx].classList.remove("bg-lime-300", "text-zinc-950");
+
+      const range = getRecordRange(idx);
+      if (range) highlightRecord(range.start, range.end, false);
     });
   });
 }
